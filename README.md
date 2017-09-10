@@ -72,7 +72,7 @@ Then push the newly build image `docker push ${DOCKER_ID_USER}/bnb-starter-kit:0
 
 You can now pulled it somewhere else and run it by using the following command `${DOCKER_ID_USER}/bnb-starter-kit:latest`. Create a `.env` file using the `.env.sample` as a guide and copy the `docker-compose.yml`.
 
-WORKING: `docker run --name bnb-starter-kit --net host --env-file=.env  heijden/bnb-starter-kit`
+WORKING: `docker run -d --name bnb-starter-kit --net host --env-file=.env  heijden/bnb-starter-kit`
 NOT WORKING: Run `docker-compose up -d` to run the container.
 
 Note: Make you have a version of mongodb running and that the host corresponds to the one specified in `.env`.
@@ -145,19 +145,9 @@ think about how to source .env inside the container
 
 ### Back End
 
-use bcryptjs package cause bcrypt-node aint working
-
-duplicate key error when seeding more then once.... why?
---> database is not dropped immediately when call back is called?
-
 simplify checkAuthenticated - checkPermissions combination
 `req.writefields` is probably not there
 
-debug colors are gawn... ;(
-
-remove config package?
-
-remove logs functionality..? heroku storage is limited... :/
 
 ### Front End
 
@@ -177,22 +167,8 @@ remove logs functionality..? heroku storage is limited... :/
 
 Fix contact redux form returning undefined instead of {}
 
-Add redirects to actions (history.push in thunk not working ...?
-signIn signOut etc createListing update etc.
-
-If and how to preventDefault() with redux form ??
-
-1) UserForm is not updating when error is set in the state :/
-
 @@@ Is SVG favicon working ...?
 
-
-### Final TODO
-
-use concurrently module to restart app if it dies in production (if not okay, try forever module)
-concurrently not found wheninstalled globally in container .... why?
-Dockerfile: `RUN npm install -g --silent concurrently`
-package.json: `NODE_ENV=production concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"`
 
 
 ## TODO ***
@@ -245,6 +221,8 @@ map needs to now bounds and size (!)
 Use `marginBounds` array to make sure that markers are not shown when on border of map.
 
 ### Back end ***
+
+debug colors are gawn... ;(
 
 find a way to both source enviroment and set it in docker using a single file!
 
