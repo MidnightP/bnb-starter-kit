@@ -130,14 +130,12 @@ async.series([
 
 	(cb) => {
 
-		if(process.env.SEED === '1') {
-			if(NODE_ENV === 'production') log.warn(new Error('Seeding in production! Ten seconds to exit process...'))
+		if(process.env.SEED !== '1') return cb()
 
-			setTimeout(()=> {
-				require('./seeds')()
-				cb()
-			}, NODE_ENV === 'production' ? 10000 : 0)
-		}
+		if(NODE_ENV === 'production') cb(new Error('Cannot seed in production!'))
+
+		require('./seeds')()
+		cb()
 	},
 
 	(cb) => {

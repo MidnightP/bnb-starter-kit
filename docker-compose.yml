@@ -4,6 +4,7 @@ services:
   bnb-starter-kit:
     container_name: bnb-starter-kit
     image:          ${DOCKER_ID_USER}/bnb-starter-kit:latest
+    network: host
     ports:
       - 4000:4000
       - 6000:6000

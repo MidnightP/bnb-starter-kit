@@ -65,14 +65,17 @@ To Change the language of the random generator use e.g. `const faker = require('
 
 When the app is ready to go live and the production build has succeeded, build a Docker container.
 
-Place a file named `.env` in the root of the project and add the necessary envorinment variables, as defined in the file `.env.sample`.
 
 If you are using a docker registry make sure you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
 Then push the newly build image `docker push ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` to the registry.
 
-You can now pulled it somewhere else and run it by using the following command `docker run -d --net host --name bnb-starter-kit ${DOCKER_ID_USER}/bnb-starter-kit:latest`.
+You can now pulled it somewhere else and run it by using the following command `${DOCKER_ID_USER}/bnb-starter-kit:latest`. Create a `.env` file using the `.env.sample` as a guide and copy the `docker-compose.yml`.
 
+WORKING: `docker run --name bnb-starter-kit --net host --env-file=.env  heijden/bnb-starter-kit`
+NOT WORKING: Run `docker-compose up -d` to run the container.
+
+Note: Make you have a version of mongodb running and that the host corresponds to the one specified in `.env`.
 
 ## What you should now
 
@@ -186,13 +189,10 @@ If and how to preventDefault() with redux form ??
 
 ### Final TODO
 
-how to source .env ?
-
-how to push image to repo ?
-
-how to run image on the right ports ?
-
 use concurrently module to restart app if it dies in production (if not okay, try forever module)
+concurrently not found wheninstalled globally in container .... why?
+Dockerfile: `RUN npm install -g --silent concurrently`
+package.json: `NODE_ENV=production concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"`
 
 
 ## TODO ***
