@@ -1,0 +1,39 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+.listings-container {
+  padding: 0px;
+}
+
+.map {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  height: 30%;
+  background-color: white;
+}
+
+.searchfield {
+  width: 100%;
+  z-index: 20;
+  height: 7%;
+  position: fixed;
+  top: 29%;
+  opacity: 80;
+}
+
+/*TODO figure out how to best hide the scrollbar...
+.listings-list {
+  overflow-y: scroll;
+  position: fixed;
+  height: 57%;
+  top: 43%;
+}*/
+
+/*TODO why is this placed on the left....!?
+.listings-meta {
+  top: 43%;
+  position: absolute;
+  text-align: center;
+}*/

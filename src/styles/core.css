@@ -1,0 +1,139 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0px;
+}
+
+label {
+  margin: 5px;
+  padding: 5px;
+}
+
+input {
+  margin: 5px;
+  padding: 5px;
+  border: 0px;
+  background: lightgrey;
+}
+
+.form-field {
+}
+
+button {
+  margin: 5px;
+  padding: 5px;
+  border: 0px;
+}
+
+.container {
+}
+
+/* TODO check widgets library about styling -> which classNames to use?
+
+.rw-widget {
+	margin: 5px;
+	padding: 5px;
+	background: lightgrey;
+}
+
+.rc-slider {
+	margin: 5px;
+	padding: 5px;
+	background: lightgrey;
+}
+
+*/
+
+.navbar {
+  background-color: white;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  height: 9%;
+}
+
+.app-container {
+  position: absolute;
+  top: 12%;
+  width: 100%;
+}
+
+.link-router {
+  color: black;
+  text-decoration: none;
+}
+
+.dropzone-preview {
+  width: 80px;
+}
+
+.error {
+  color: red;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  background: url(/icons/whatshot/web/ic_whatshot_black_24dp_2x.png);
+  margin: 50px;
+  margin-left: 45%;
+
+  /* don't need -webkit*/
+  /*-webkit-animation-name: spin;
+  -webkit-animation-duration: 500ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;*/
+
+  -moz-animation-name: spin;
+  -moz-animation-duration: 500ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 500ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@-ms-keyframes spin {
+  from {
+    -ms-transform: rotate(-50deg);
+  }
+  to {
+    -ms-transform: rotate(310deg);
+  }
+}
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(-50deg);
+  }
+  to {
+    -moz-transform: rotate(310deg);
+  }
+}
+
+/* don't need -webkit*/
+/*@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(-50deg);
+  }
+  to {
+    -webkit-transform: rotate(310deg);
+  }
+}*/
+
+@keyframes spin {
+  from {
+    transform: rotate(-50deg);
+  }
+  to {
+    transform: rotate(310deg);
+  }
+}

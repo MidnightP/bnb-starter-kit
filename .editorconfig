@@ -1,0 +1,40 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+
+# Change these settings to your own preference
+indent_style = tab
+indent_size = 4
+
+# It's recommended to keep these unchanged
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = false
+
+[*.pug]
+indent_style = tab
+indent_size = 4
+trim_trailing_whitespace = false
+[*.jade]
+indent_style = tab
+indent_size = 4
+trim_trailing_whitespace = false
+[*.md]
+trim_trailing_whitespace = false
+[**.cson]
+indent_style = tab
+indent_size = 4
+[**.coffee]
+indent_style = tab
+indent_size = 4
+[**.rb]
+indent_style = tab
+indent_size = 4
+[**.js]
+indent_style = tab
+indent_size = 4

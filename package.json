@@ -1,0 +1,62 @@
+{
+  "name": "bnb-starter-kit",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "8.4.x"
+  },
+  "scripts": {
+    "start": "REACT_APP_API_HOST=localhost REACT_APP_API_PORT=4000 NODE_ENV=development DEBUG=app:* concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "start:prod": "NODE_ENV=production concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"",
+    "server": "nodemon server/main.js",
+    "client": "react-scripts start",
+    "build": "NODE_ENV=development react-scripts build",
+    "build:prod": "NODE_ENV=production react-scripts build",
+    "test": "REACT_APP_API_HOST=localhost REACT_APP_API_PORT=4000 NODE_ENV=test react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "concurrently": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "debug": "^3.0.0",
+    "deep-equal": "^1.0.1",
+    "express": "^4.15.4",
+    "faker": "^4.1.0",
+    "file-loader": "^0.11.2",
+    "google-map-react": "^0.24.0",
+    "ip": "^1.1.5",
+    "moment": "^2.18.1",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.6",
+    "mongoose-softdelete": "^0.6.3",
+    "node-cron": "^1.2.1",
+    "node-geocoder": "^3.19.0",
+    "nodemailer": "^4.0.1",
+    "ramda": "^0.24.1",
+    "rc-slider": "^8.3.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-dropzone": "^4.0.0",
+    "react-flexbox-grid": "^1.1.4",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.11",
+    "react-widgets": "^3.4.8",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.3",
+    "redux-thunk": "^2.2.0",
+    "serve": "^6.0.6",
+    "supercluster": "^2.3.0",
+    "underscore": "^1.8.3",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

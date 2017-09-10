@@ -1,0 +1,17 @@
+{
+	"verbose": true,
+	"ignore": [
+		".git",
+		"node_modules",
+		"src"
+	],
+	"watch": [
+		"seeds/*.js",
+		"server/*.js",
+		"server/*.json",
+		"server/**/*.js",
+		"config/**/*.json",
+		"config/**/*.js",
+		"bin/**/*.js"
+	]
+}
