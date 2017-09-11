@@ -8,7 +8,7 @@ const {
 	sanitizeInput,
 	singleton,
 	notZero
-}       = require('../lib/utils')
+} = require('../lib/utils')
 
 const { Listing }   = require('../models')
 
@@ -28,6 +28,7 @@ const { defaultLimit, allowedSearchArbitrary, limitDefault } = services.listing
 
 exports.readMany = (req, res, next) => {
 
+	const GeoCoder = req.app.get('GeoCoder')
 
 	let searchAttributes
 
@@ -121,6 +122,7 @@ exports.readMany = (req, res, next) => {
 
 	if(zipcode) {
 		const input = sanitizeInput(zipcode)
+
 		GeoCoder.geocode(input, (err, result) => {
 			if(err) return next(err)
 
@@ -135,6 +137,7 @@ exports.readMany = (req, res, next) => {
 				return next(err)
 			}
 			getListings()
+
 		}, {
 			language: googleMapsLanguage,
 			region: googleMapsRegion

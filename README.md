@@ -53,7 +53,7 @@ If all configuration is in place you should now can now visiti the webapp in the
 
 In order to start with a freshly seeded MongoDB, run with the `SEED` flag:
 
-`SEED=1 npm start`
+`npm run start:seed`
 
 It is now possible to login with **test@test.com** and password **123456**.
 
@@ -64,7 +64,6 @@ To Change the language of the random generator use e.g. `const faker = require('
 ##### production
 
 When the app is ready to go live and the production build has succeeded, build a Docker container.
-
 
 If you are using a docker registry make sure you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
@@ -141,16 +140,9 @@ How to run database migrations
 
 css or sass or scss or less in combination with create-react-app ?
 
-think about how to source .env inside the container
-
 ### Back End
 
-simplify checkAuthenticated - checkPermissions combination
-`req.writefields` is probably not there
-
-
 ### Front End
-
 
 1) Can we get the buffer (in the back-end) from the preview reference to the blob? Probably not.
 
@@ -167,19 +159,24 @@ simplify checkAuthenticated - checkPermissions combination
 
 Fix contact redux form returning undefined instead of {}
 
-@@@ Is SVG favicon working ...?
+### production
+
+figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
+
+
 
 
 
 ## TODO ***
-
-
 ### Small Bugs ***
 
 @@@ `faker.image.image()` and `faker.image.imageUrl()` and `faker.image.city()` give url that generates random image on every get
 	How to fixate image faker after seeding ?
 
 ### Questions ***
+
+use uniform error messages (!) to let the the front end know what to do!
+We don't need descriptive messages since no one is using the api yet.
 
 @@@ Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
 

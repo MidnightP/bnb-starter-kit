@@ -9,7 +9,7 @@ import { getErrorObject } from '../../lib'
 import { actions } from './reducer'
 import { resetError } from '../../store/error'
 import { ListingCard, Map } from '../../components'
-import { SearchField } from './components'
+import SearchField from './SearchField'
 
 import './listings.css'
 import 'react-widgets/dist/css/react-widgets.css'

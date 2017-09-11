@@ -90,11 +90,11 @@ const session = (req, res, cb) => {
 			}
 		})
 	} else {
+
 		req.user = null
 
 		// TODO Set anonymous token here.
 		// First decide how to deal with it when getting the user in authentication routes.
-
 		cb()
 	}
 }
@@ -109,7 +109,6 @@ const permissions = (req, res, cb) => {
 	if(method === 'GET') {
 
 		// Go ahead
-
 		req.allowances = allAllowances
 
 		return cb()
@@ -118,14 +117,14 @@ const permissions = (req, res, cb) => {
 
 
 	const receivedFields = Object.keys(body)
-	const allowedFields = allAllowances[req.grantName][req.serviceName][req.method]
+	const allowedFields = allAllowances[req.grantName][req.serviceName][req.method].filter((field) => field[0] !== "-")
+	console.log('CHECK THIS. ARE WE FILTERING RIGHT ?', allowedFields)
 
 	const notAllowedFields = R.difference(receivedFields, allowedFields)
 
 	if(notAllowedFields.length === 0) {
 
 		// Go ahead
-
 		req.allowances = allAllowances
 
 		return cb()
@@ -133,8 +132,7 @@ const permissions = (req, res, cb) => {
 	}
 
 	// Please piss off
-
-	const err = new Error(`Rejected:Fields(${notAllowedFields.join(', ')})`)
+	const err = new Error(`Rejected:${notAllowedFields.join(', ')}`)
 	err.status = 400
 	cb(err)
 }

@@ -2,8 +2,8 @@ const mongoose    = require('mongoose')
 const soft_delete = require('mongoose-softdelete')
 const log         = require('../lib/log')('models:listing')
 
-const { singleton }                         = require('../lib/utils')
 const { validateHook, validateCoordinates } = require('./helpers')
+const { GeoCoder } = require('../lib')
 
 const Schema = mongoose.Schema
 
@@ -33,9 +33,6 @@ listingSchema.post('validate', function(error, doc, next) {
 })
 
 listingSchema.pre('save', async function(next) {
-	log.info('Geo coding listing coordinates based on zipcode')
-
-	const GeoCoder = singleton.get('GeoCoder')
 
 	try {
 		const data = await GeoCoder.geocode(this.zipcode)
@@ -43,6 +40,7 @@ listingSchema.pre('save', async function(next) {
 	} catch (e) {
 		log.error(e)
 	} finally {
+		log.info('Geo coded listing coordinates based on zipcode')
 		next()
 	}
 })

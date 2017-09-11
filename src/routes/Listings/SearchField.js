@@ -6,8 +6,8 @@ import Slider, { createSliderWithTooltip } from 'rc-slider'
 
 import 'rc-slider/assets/index.css'
 
-import { Dropdown } from '../../../components'
-import config from '../../../config'
+import { Dropdown } from '../../components'
+import config from '../../config'
 
 const { __radiusMax__ } = config
 
@@ -39,7 +39,7 @@ class SearchField extends Component {
 	}
 
 	getListings(overrides) {
-		this.props.onSubmit(_.extend(this.state, overrides))
+		this.props.onSubmit(Object.assign({}, this.state, overrides))
 	}
 
 	handleZipcode(e) {
@@ -48,7 +48,7 @@ class SearchField extends Component {
 		const overrides = { zipcode: value }
 		if(length < this.state.zipcode.length) {
 			if(!length) {
-				this.setState(_.extend(overrides, { radius: null }))
+				this.setState(Object.assign({}, overrides, { radius: null }))
 			} else {
 				this.setState(overrides)
 			}
@@ -68,15 +68,10 @@ class SearchField extends Component {
 	}
 
 	handleCategories(selected) {
-		if(selected.name === 'All') {
-			const overrides = { category: null }
-			this.setState(overrides)
-			this.getListings(overrides)
-		} else {
-			const overrides = { category: selected._id }
-			this.setState(overrides)
-			this.getListings(overrides)
-		}
+		console.log('SELECTED', selected)
+		const overrides = { category: selected }
+		this.setState(overrides)
+		this.getListings(overrides)
 	}
 
 	handleRadius(value) {
@@ -88,12 +83,14 @@ class SearchField extends Component {
 	}
 
 	render() {
+		const categories = [].concat(this.props.categories, [{ _id: null, name: 'All' }])
+
 		return (
 			<form style={styles.form} onSubmit={this.handleSubmit.bind(this)}>
 				<Row>
 					<Col xs={12} md={4} style={styles.field}>
 						<Dropdown placeholder="Categorie"
-							data={this.props.categories}
+							data={categories}
 							valueField="_id"
 							textField="name"
 							onChange={this.handleCategories.bind(this)}/>
@@ -122,7 +119,7 @@ class SearchField extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	categories: [].concat(state.general.categories, [{_id: null, name: 'All'}]),
+	categories: state.general.categories,
 	loading: state.loading.active,
 })
 

@@ -4,7 +4,6 @@ const R          = require('ramda')
 
 const config                     = require('../config')
 const { Contact, Listing, User } = require('../models')
-const { singleton }              = require('../lib/utils')
 
 const { grants, websiteTitle }   = config
 
@@ -14,7 +13,7 @@ const { grants, websiteTitle }   = config
 
 exports.post = (req, res, next) => {
 
-	const mailTransporter = singleton.get('mailTransporter')
+	const mailTransporter = req.app.get('mailTransporter')
 
 	const { message } = req.body
 	const listingId = req.params._id

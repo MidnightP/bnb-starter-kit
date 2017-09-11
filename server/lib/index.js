@@ -2,5 +2,6 @@ module.exports = {
 	CronTask: require('./CronTask'),
 	jobs: require('./jobs'),
 	log: require('./log'),
-	utils: require('./utils')
+	utils: require('./utils'),
+	GeoCoder: require('./GeoCoder')
 }

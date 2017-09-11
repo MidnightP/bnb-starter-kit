@@ -13,19 +13,17 @@ export const MultiSelect = ({ input, data, valueField, textField }) =>
 		valueField={valueField}
 		textField={textField}/>
 
-export const Dropdown = ({ input, data, valueField, textField, placeholder }) => {
-	console.log('DATA', data)
-	console.log('INPUT', input)
-	console.log('TEXTFIELD', textField)
-	console.log('VALUEFIELD', valueField)
+
+// TODO Why doesnt onChange pick up our value using the valueField prop?
+// If it doesn't use it, then what is the prop for?
+export const Dropdown = ({ input, data, valueField, textField, placeholder, onChange }) => {
 	return (
-		<ReactDropdownList {...input}
+		<ReactDropdownList
 			placeholder={placeholder}
 			data={data}
 			valueField={valueField}
 			textField={textField}
-			// TODO Why doesnt onChange pick up our value using the valueField prop?
-			onChange={(selection) => input.onChange(selection[valueField])} />
+			onChange={(selection) => onChange(selection[valueField])} />
 	)
 }
 

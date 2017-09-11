@@ -5,12 +5,11 @@ module.exports = {
 		httpOnly: true
 	},
 	reaperInterval: '*/5 * * * *',
-
 	// TODO use this:
 	// viewRoutes: ['/', 'advertenties'],
 	viewRoutes: ['*'],
-	apiVersion: '0.1',
-	authVersion: '0.1',
+	apiVersion: '1',
+	authVersion: '1',
 	corsOptions: {
 		origin: ['http://localhost:3000'],
 		allowedHeaders: ['Content-Type', 'Authorization'],

@@ -9,17 +9,16 @@ const express      = require('express')
 const http         = require('http')
 const path         = require('path')
 const mongoose     = require('mongoose')
-const NodeGeocoder = require('node-geocoder')
+const { Geocoder } = require('./lib')
 const debug        = require('debug')('app:main')
 
-const { api, auth }      = require('./routes')
 const { handleEnd }      = require('./middleware')
 const log                = require('./lib/log')()
 const pckg               = require('../package.json')
 const config             = require('./config')
 const { jobs, CronTask } = require('./lib')
 
-const { singleton, constructMongoUri } = require('./lib/utils')
+const { mongoUri } = require('./lib/utils')
 
 const __apibase__     = `/api/v${config.apiVersion}`
 const __authbase__    = `/auth/v${config.authVersion}`
@@ -37,14 +36,6 @@ const {
 
 if(!fs.existsSync(logsPath)) fs.mkdir(logsPath)
 
-mongoose.Promise = global.Promise
-
-const mongoUri = constructMongoUri()
-singleton.set('mongoUri', mongoUri)
-
-log.info(`Registering Mongoose models`)
-require('./models')
-
 process.on('unhandledRejection', (error, promise) => {
 	log.error('Unhandled Rejection: \nPromise:', promise, '\Error:', error)
 
@@ -53,7 +44,16 @@ process.on('unhandledRejection', (error, promise) => {
 	// promise.resolve()
 })
 
-singleton.set('mailTransporter', nodemailer.createTransport({
+mongoose.Promise = global.Promise
+
+log.info(`Registering Mongoose models`)
+require('./models')
+
+app.set('mongoUri', mongoUri)
+
+app.set('Geocoder', Geocoder)
+
+app.set('mailTransporter', nodemailer.createTransport({
 		host: process.env.EMAIL_HOST,
 		port: process.env.EMAIL_PORT,
 		secure: true, // secure:true for port 465, secure:false for port 587
@@ -64,16 +64,6 @@ singleton.set('mailTransporter', nodemailer.createTransport({
 	})
 )
 
-singleton.set('GeoCoder', NodeGeocoder({
-		provider: 'google',
-		httpAdapter: 'https',
-		apiKey: process.env.GOOGLE_API_WEBSERVER,
-		language: 'nl',
-		region: 'nl',
-		formatter: null
-	})
-)
-
 app.disable('x-powered-by')
 
 app.use(cors(corsOptions))
@@ -81,10 +71,9 @@ app.use(cors(corsOptions))
 	.use(bodyParser.urlencoded({ extended: false }))
 	.use(cookieParser(config.cookieSecret))
 	.use(compress())
-	.use(__apibase__, api)
-	.use(__authbase__, auth)
+	.use(__apibase__, require('./routes/api'))
+	.use(__authbase__, require('./routes/auth'))
 	.use(handleEnd)
-
 
 // TODO Do we need this?
 // app.use(express.static(project.paths.public()))
@@ -126,16 +115,6 @@ async.series([
 		server.on('error', (error) => log.error('Server error', error))
 
 		server.listen(REACT_APP_API_PORT, REACT_APP_API_HOST, cb)
-	},
-
-	(cb) => {
-
-		if(process.env.SEED !== '1') return cb()
-
-		if(NODE_ENV === 'production') cb(new Error('Cannot seed in production!'))
-
-		require('./seeds')()
-		cb()
 	},
 
 	(cb) => {

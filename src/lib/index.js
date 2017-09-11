@@ -7,7 +7,6 @@ const { __apiBase__, __authBase__ } = config
 
 export const capitalizeFirst = string => string.charAt(0).toUpperCase() + string.slice(1)
 
-// TODO unnecessary escape ?
 export const sanitize = input => input ? input.replace(/[-[\]/{}()*+?.^$|<>]/g, '\\$&').trim() : ''
 
 export const getErrorObject = (error) => ({

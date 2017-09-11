@@ -6,10 +6,11 @@ const { validateHook, toLowerFirst } = require('./helpers')
 const Schema = mongoose.Schema
 
 const locationSchema = new Schema({
-		text:             { type: String, required: true, trim: true, set: toLowerFirst },
+		name:             { type: String, required: true, trim: true, set: toLowerFirst },
 		image:            { type: String, required: true }
 	}, {
-		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
+		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt'
+	}
 })
 
 locationSchema.plugin(soft_delete)

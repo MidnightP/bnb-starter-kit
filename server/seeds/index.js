@@ -3,9 +3,9 @@ const async = require('async')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
-const { singleton } = require('../lib/utils')
 const log = require('../lib/log')('seed')
 const { Listing, Category, Location, User, Review } = require('../models')
+const { mongoUri } = require('../lib/utils')
 
 const usersData = require('./users')
 const listingsData = require('./listings')
@@ -59,8 +59,6 @@ const saveListings = (cb) => {
 
 const create2dIndexes = (cb) => {
 
-	const mongoUri = singleton.get('mongoUri')
-
 	MongoClient.connect(mongoUri, (error, db) => {
 		if(error) return cb(error)
 
@@ -91,28 +89,32 @@ const seedDatabase = (cb) => {
 	], cb)
 }
 
-module.exports = () => {
-
-	mongoose.connection.db.dropDatabase((error) => {
-		if(error) return log.error(error)
-
-		// TODO how can we recieve duplicate key errors after database has been dropped?
-
-		log.info(`Dropped ${process.env.NODE_ENV} DB`)
-
-		async.series([
-
-			seedDatabase,
-
-			// NOTE this triggers model hooks
-			saveListings,
-
-			create2dIndexes
-
-		], (error) => {
-			if(error) log.error(error)
-
-			log.info('Inserted seed data')
-		})
-	})
+const dropDatabase = (cb) => {
+	log.info(`Dropping ${process.env.NODE_ENV} DB`)
+	mongoose.connection.db.dropDatabase(cb)
 }
+
+const connectMongoose = (cb) => {
+	log.info('Connecting Mongoose to: ', mongoUri)
+	mongoose.connect(mongoUri, cb)
+}
+
+
+async.series([
+
+	connectMongoose,
+
+	dropDatabase,
+
+	seedDatabase,
+
+	// NOTE this triggers model hooks
+	saveListings,
+
+	create2dIndexes
+
+], (error) => {
+	if(error) throw error
+
+	log.info('Inserted seed data. Done after geocode...')
+})

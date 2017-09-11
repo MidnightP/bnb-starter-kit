@@ -3,8 +3,8 @@ import text from '../text'
 const { user, listingOwner } = text.alias
 
 export default {
-	__apiBase__: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/api/v0.1`,
-	__authBase__: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/auth/v0.1`,
+	__apiBase__: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/api/v1`,
+	__authBase__: `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/auth/v1`,
 	__queryDefaults__: {
 		limit: 10,
 		sort: { createdAt: 1 }

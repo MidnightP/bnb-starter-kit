@@ -15,7 +15,7 @@ const {
 
 const auth = DB_USER ? DB_USER + ':' + DB_PASSWORD + '@' : ''
 
-exports.constructMongoUri = () => `mongodb://${auth}${DB_HOST}:${DB_PORT}/${DB_NAME}`
+exports.mongoUri = `mongodb://${auth}${DB_HOST}:${DB_PORT}/${DB_NAME}`
 
 exports.sanitizeInput = (input) => input ? input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&').trim() : ''
 
@@ -31,12 +31,4 @@ exports.setReviewsMeta = (doc) => {
 		doc.ratingAverage = doc.reviews.reduce((prev, next) => prev.rating + next.rating ) / doc.reviewCount
 	}
 	return doc
-}
-
-exports.singleton = {
-	set: (key, value) => {
-		this[key] = value
-		return value
-	},
-	get: (key) => (this[key])
 }
