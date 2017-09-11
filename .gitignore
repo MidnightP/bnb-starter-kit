@@ -1,5 +1,6 @@
 logs
 data
+*.env
 .env
 /node_modules
 /coverage
