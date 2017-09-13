@@ -5,4 +5,5 @@ module.exports = {
 	checkMongoId: require('./checkMongoId'),
 	setServiceName: require('./setServiceName'),
 	setUserService: require('./setUserService'),
+	errorHandler: require('./errorHandler'),
 }

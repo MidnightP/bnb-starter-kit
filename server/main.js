@@ -13,11 +13,13 @@ const { Geocoder }  = require('./lib')
 const debug         = require('debug')('app:main')
 const mongoSanitize = require('express-mongo-sanitize')
 
-const { handleEnd }      = require('./middleware')
 const log                = require('./lib/log')()
-const pckg               = require('../package.json')
 const config             = require('./config')
 const { jobs, CronTask } = require('./lib')
+const {
+	handleEnd,
+	errorHandler
+} = require('./middleware')
 
 const { mongoUri } = require('./lib/utils')
 
@@ -65,9 +67,9 @@ app.set('mailTransporter', nodemailer.createTransport({
 	})
 )
 
-app.disable('x-powered-by')
-
-app.use(cors(corsOptions))
+app
+	.disable('x-powered-by')
+	.use(cors(corsOptions))
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: false }))
 	.use(cookieParser(config.cookieSecret))
@@ -76,28 +78,8 @@ app.use(cors(corsOptions))
 	.use(__apibase__, require('./routes/api'))
 	.use(__authbase__, require('./routes/auth'))
 	.use(handleEnd)
+	.use(errorHandler)
 
-// TODO Do we need this?
-// app.use(express.static(project.paths.public()))
-// Serve static assets from ~/public since Webpack is unaware of
-// these files. This middleware doesn't need to be enabled outside
-// of development since this directory will be copied into ~/dist
-// when the application is compiled.
-
-app.use((error, req, res, next) => {
-
-	debug('Error middleware recieved error:', error)
-
-	res.status(error.status || 500)
-		.json({
-			message: error.message,
-			code:    error.status || 500,
-			name:    error.name || error.status || 500,
-			version: pckg.version
-		})
-})
-
-// TODO rewrite this flow using async
 const server = http.createServer(app)
 
 async.series([

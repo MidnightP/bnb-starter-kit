@@ -1,10 +1,10 @@
+const error = new Error(`Rejected:Unauthorized`)
+
+error.status = 401
+
 module.exports = (req, res, next) => {
+	if(!req.user) return next(error)
 
 	// Succes!
-	if(req.user) return next()
-
-	// Please sign in
-	const err = new Error(`Rejected:Unauthorized`)
-	err.status = 401
-	return next(err)
+	next()
 }

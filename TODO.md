@@ -10,21 +10,14 @@ supercluster   ^2.3.0  →  ^3.0.0
 ### Back End
 
 
-
 ### Front End
 
-title tag in index.html is overwritten... by....?
+0) cookie is not set in req.headers, nor in req.cookies
+because we don't receive it after sign in!
+prevents us both from using session (being actaully signed in) and signing out
 
 1) Can we get the buffer (in the back-end) from the preview reference to the blob? Probably not.
-
-<!--  solved ?
-2) we're note receiving the value
-	---------------- `ValidationError for User (59791055ece30f12358101c7)`
-	`ValidationError: role: Cast to String failed for value "{ name: 'Buyer', value: 'user' }" at path "role"` -->
-
-@@@ Is prefix coming through right in userform ?
-
-@@@ style widgets not simply working (consult respective widgets libraries -> which classNames to use?)
+```Cast to Buffer failed for value "{ '0': { preview: 'blob:http://localhost:3000/5e6035e9-9e36-49f3-9284-827de71a0358' } }" at path "avatar"```
 
 @@@ selector not defined in ContactForm !?!?
 
@@ -33,7 +26,6 @@ Fix contact redux form returning undefined instead of {}
 ### production
 
 figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
-
 
 
 ### Small Bugs ***
@@ -88,6 +80,9 @@ map needs to now bounds and size (!)
 Use `marginBounds` array to make sure that markers are not shown when on border of map.
 
 ### Back end ***
+
+find out from where (in file structure) it is best do migrations and seeds
+preferably outside Docker container (using production config) or preferably in Docker container where production already applies?
 
 debug colors are gawn... ;(
 

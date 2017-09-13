@@ -55,48 +55,36 @@ const malicious = (req, res, cb) => {
 // Store known IP's on userToken (put it on all requests with redux middleware)
 
 const session = (req, res, cb) => {
-	debug('using session')
+	debug('session')
 
-	let token = ''
-
-	if(req.cookies) {
-		token = req.headers.token
-	} else if(req.cookies) {
-		token = req.cookies.token
-	}
-
-	delete req.user
+	const token = req.headers.token ? req.headers.token : req.cookies.token
+	console.log('REQ.HEADERS', req.headers)
+	console.log('REQ.COOKIES', req.cookies)
 
 	if(token) {
-		UserToken.validate(token, (error, userToken) => {
+		return UserToken.validate(token, (error, userToken) => {
 			if (error) return cb(err)
-
 			if(!userToken) {
+				debug('user token is not valid')
 				res.cookie('token', 'deleted', cookieOptions)
-				req.user = null
 				return cb()
-			} else {
-				User.findOne({ _id: userToken.userId, deleted: false }, (error, user) => {
-					if (error) return cb(error)
-
-					if(user) {
-						req.user = user
-						return cb()
-					} else {
-						req.user = null
-						return cb()
-					}
-				})
 			}
+
+			User.findOne({ _id: userToken.userId, deleted: false }, (error, user) => {
+				if (error) return cb(error)
+
+				req.user = user
+
+				debug(`placed user ${user.firstName} on request`)
+
+				cb()
+			})
 		})
-	} else {
-
-		req.user = null
-
-		// TODO Set anonymous token here.
-		// First decide how to deal with it when getting the user in authentication routes.
-		cb()
 	}
+
+	// TODO Set anonymous token here.
+	// First decide how to deal with it when getting the user in authentication routes.
+	cb()
 }
 
 const permissions = (req, res, cb) => {

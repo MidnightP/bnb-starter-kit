@@ -1,6 +1,6 @@
 # BnB Starter Kit
 
-This template is written for starters with a bnb. The essence of this web app is, of course, the back end. The front end (heroku link) is meant only to display and use its features. Nonetheless, the app is production ready.
+This template is written for starters with a bnb. The essence of this web app is, of course, the back end. The front end is meant only to display and use its features. Nonetheless, the app is production ready.
 
 The starter kit is setup in a Rails kind of fashion, with familiar features like database migrations, seeders... (TODO add more). I recommend at least a beginner level with Javascript / Node. Yet, the code is also highly useful for more experienced developers who want to spin up a conventional BnB quickly.
 
@@ -35,9 +35,6 @@ export DB_PORT="xxxxx"
 ```
 
 Replace the secrets with your own, generated with the respective services. Make sure to create the right Google Javascript API-keys. The GOOGLE_API_WEBSERVER key needs to be a **webserver key (webservers, cron jobs enz.)**, which needs to whitelist the relevant IP-address or multiple IP-addresses. The REACT_APP_GOOGLE_API_BROWSER key needs to be a key for **HTTP-requests (websites)**, which needs to whitelist the relevant host names, that is `localhost:3000` for starters.
-
-In production on Heroku, you can set the content of your environment as explained here: https://devcenter.heroku.com/articles/config-vars
-
 
 You are ready to go!
 
@@ -128,3 +125,7 @@ To change e.g. the name of the website, change the field `websiteTitle` in both 
 How to run database migrations
 1) add explanation
 2) add simple example migration
+
+##### To do's
+
+For an overview of my current to do's, go here[https://github.com/MidnightP/bnb-starter-kit/blob/master/TODO.md]

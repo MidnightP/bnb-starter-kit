@@ -19,9 +19,7 @@ class UserForm extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-
-		// NOTE temporarily commented out
-		// this.validate(nextProps)
+		this.validate(nextProps)
 	}
 
 	validate(props) {

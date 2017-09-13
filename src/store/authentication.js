@@ -52,6 +52,8 @@ export const signUp = () => {
 			json: values
 		}
 
+		console.log('VALUES', values)
+
 		dispatch(setLoading('signUp'))
 
 		authRequestWrapper.post(httpOptions, (error, body, response) => {
