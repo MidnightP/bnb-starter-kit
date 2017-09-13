@@ -14,12 +14,12 @@ const styles = {
 		borderRadius: '50%'
 	},
 	categoryImage: {
-		width: '320px',
+		width: '80px',
+		height: '80px',
+		borderRadius: '50%'
 	},
 	locationImage: {
-		width: '100px',
-		height: '100px',
-		borderRadius: '50%'
+		width: '240px'
 	},
 	text: {
 		margin: '4px',
@@ -47,17 +47,13 @@ const styles = {
 class ListingCard extends Component {
 
 	onMouseEnter() {
-		console.log("on MOUSE enter");
 		const { _id, expanded } = this.props
-		if(expanded) return
-		this.props.setHighlightedListing(_id)
+		if(!expanded) this.props.setHighlightedListing(_id)
 	}
 
 	onMouseLeave() {
-		console.log("on MOUSE leave");
 		const { expanded } = this.props
-		if(expanded) return
-		this.props.setHighlightedListing()
+		if(!expanded) this.props.setHighlightedListing()
 	}
 
 	render() {
@@ -74,102 +70,96 @@ class ListingCard extends Component {
 		console.log("ARE WE highlighted ?", highlight);
 
 		return (
-			<Row>
-				<Col xs={12}
-					style={ highlight ? _.extend(styles.listingHighlight, styles.listing) : styles.listing }>
+			<div style={ highlight ? Object.assign({}, styles.listingHighlight, styles.listing) : styles.listing }
+				onMouseEnter={this.onMouseEnter.bind(this)}
+				onMouseLeave={this.onMouseLeave.bind(this)}
+				onClick={ () => link ? history.push(link) : null }>
 
-					<div onMouseEnter={this.onMouseEnter.bind(this)}
-						onMouseLeave={this.onMouseLeave.bind(this)}
-						onClick={ () => link ? history.push(link) : null }>
-						<Row>
+				<Row>
+					<Col xs={6}>
+						<img alt={firstName} style={styles.avatar} src={avatar}/>
+						<h1 style={styles.text}>{firstName}</h1>
+						<p style={styles.text}> PRICE: {price}</p>
+					</Col>
+					{
+						expanded ?
 							<Col xs={6}>
-								<img alt={firstName} style={styles.avatar} src={avatar}/>
-								<h1 style={styles.text}>{firstName}</h1>
-								<p style={styles.text}> PRICE: {price}</p>
+								<Map listings={[this.props]}/>
 							</Col>
-							{
-								expanded ?
-									<Col xs={6}>
-										<Map listings={[this.props]}/>
-									</Col>
-								: null
-							}
-						</Row>
+						: null
+					}
+				</Row>
 
-						<Row>
-							<Col xs={12}>
-								<p style={styles.text}>{ expanded ? description : description.substring(0, 250).trim() + '...' }</p>
-							</Col>
-						</Row>
+				<Row>
+					<Col xs={12}>
+						<p style={styles.text}>
+							{ expanded ? description : description.substring(0, 250).trim() + '...' }
+						</p>
+					</Col>
+				</Row>
 
-						<Row>
-							<Col xs={12}>
-								<p style={styles.text}> AMOUNT OF REVIEWS:
-									<span style={styles.number}>{reviewCount}</span>
-								</p>
+				<Row>
+					<Col xs={9}>
+						<p style={styles.text}> AMOUNT OF REVIEWS:
+							<span style={styles.number}>{reviewCount}</span>
+						</p>
 
-								<p style={styles.text}> AVERAGE RATING: </p>
-								<div style={styles.number}>{ratingAverage}</div>
+						<p style={styles.text}> AVERAGE RATING: </p>
+						<div style={styles.number}>{ratingAverage}</div>
 
-								{
-									expanded ?
-										<div>
-											<p style={styles.text}> LISTED SINCE: {createdAt}</p>
-											<p style={styles.text}> USER JOINED AT: {user.createdAt}</p>
-										</div>
-									: null
-								}
+						{
+							expanded ?
+								<div>
+									<p style={styles.text}> LISTED SINCE: {createdAt}</p>
+									<p style={styles.text}> USER JOINED AT: {user.createdAt}</p>
+								</div>
+							: null
+						}
 
-								{
-									activeLocation ?
-										<div>
-											<p style={styles.text}>{activeLocation.name}</p>
-											<img alt={activeLocation.name} style={styles.locationImage} src={activeLocation.image} />
-										</div>
-									: null
-								}
+						{
+							activeLocation ?
+								<div>
+									<p style={styles.text}>{activeLocation.name}</p>
+									<img alt={activeLocation.name} style={styles.locationImage} src={activeLocation.image} />
+								</div>
+							: null
+						}
 
-								<p style={styles.text}> CATEGORIES: </p>
-								{
-									activeCategories.map((c, i) => {
-										return (
-											<div  key={c._id + '-' + i}>
-												<p style={styles.text} key={c.name}>{c.name}</p>
-												<img alt={c.name} style={styles.categoryImage} src={c.image} />
-											</div>
-										)
-									})
-								}
-							</Col>
-						</Row>
-					</div>
-
-					<Row>
-						<Col xs={12}>
-							{
-								// expanded ?
-								true ?
+						{
+							expanded ?
 								<Row>
 									<Col>
 										<ContactForm />
 									</Col>
 								</Row>
-								: null
-							}
-							{
-								// expanded ?
-								true ?
+							: null
+						}
+						{
+							expanded ?
 								<Row>
 									<Col>
 										<ReviewForm />
 									</Col>
 								</Row>
-								: null
-							}
-						</Col>
-					</Row>
-				</Col>
-			</Row>
+							: null
+						}
+
+					</Col>
+					<Col xs={3}>
+						<p style={styles.text}> CATEGORIES: </p>
+						{
+							activeCategories.map((c, i) => {
+								return (
+									<div  key={c._id + '-' + i}>
+										<p style={styles.text} key={c.name}>{c.name}</p>
+										<img alt={c.name} style={styles.categoryImage} src={c.image} />
+									</div>
+								)
+							})
+						}
+					</Col>
+				</Row>
+			</div>
 		)
 	}
 }

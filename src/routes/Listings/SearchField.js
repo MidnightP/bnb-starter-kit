@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import _ from 'underscore'
 import { Row, Col } from 'react-flexbox-grid'
 import Slider, { createSliderWithTooltip } from 'rc-slider'
 

@@ -115,10 +115,8 @@ const permissions = (req, res, cb) => {
 
 	}
 
-
 	const receivedFields = Object.keys(body)
 	const allowedFields = allAllowances[req.grantName][req.serviceName][req.method].filter((field) => field[0] !== "-")
-	console.log('CHECK THIS. ARE WE FILTERING RIGHT ?', allowedFields)
 
 	const notAllowedFields = R.difference(receivedFields, allowedFields)
 

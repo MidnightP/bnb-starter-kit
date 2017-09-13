@@ -12,44 +12,44 @@
     "build:prod": "better-npm-run build:prod",
     "test": "better-npm-run test",
     "eject": "react-scripts eject",
-	"seed": "node server/seeds/index.js"
+    "seed": "node server/seeds/index.js"
   },
   "betterScripts": {
     "start": {
-        "command": "concurrently --kill-others \"nodemon server/main.js\" \"react-scripts start\"",
-        "env": {
-            "BROWSER": "none",
-            "REACT_APP_API_HOST": "localhost",
-            "REACT_APP_API_PORT": 4000,
-            "NODE_ENV": "development",
-            "DEBUG": "app:*"
-        }
+      "command": "concurrently --kill-others \"nodemon server/main.js\" \"react-scripts start\"",
+      "env": {
+        "BROWSER": "none",
+        "REACT_APP_API_HOST": "localhost",
+        "REACT_APP_API_PORT": 4000,
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
     },
     "start:prod": {
-        "command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"",
-        "env": {
-            "NODE_ENV":"production"
-        }
+      "command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"",
+      "env": {
+        "NODE_ENV": "production"
+      }
     },
     "build": {
-        "command": "react-scripts build",
-        "env": {
-            "NODE_ENV": "development"
-        }
+      "command": "react-scripts build",
+      "env": {
+        "NODE_ENV": "development"
+      }
     },
     "build:prod": {
-        "command": "react-scripts build",
-        "env": {
-            "NODE_ENV": "production"
-        }
+      "command": "react-scripts build",
+      "env": {
+        "NODE_ENV": "production"
+      }
     },
     "test": {
-        "command": "react-scripts test --env=jsdom",
-        "env": {
-            "REACT_APP_API_HOST": "localhost",
-            "REACT_APP_API_PORT": "4000",
-            "NODE_ENV": "test"
-        }
+      "command": "react-scripts test --env=jsdom",
+      "env": {
+        "REACT_APP_API_HOST": "localhost",
+        "REACT_APP_API_PORT": "4000",
+        "NODE_ENV": "test"
+      }
     }
   },
   "dependencies": {
@@ -64,6 +64,7 @@
     "debug": "^3.0.0",
     "deep-equal": "^1.0.1",
     "express": "^4.15.4",
+    "express-mongo-sanitize": "^1.3.2",
     "faker": "^4.1.0",
     "file-loader": "^0.11.2",
     "google-map-react": "^0.24.0",
@@ -84,13 +85,13 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
-    "react-scripts": "1.0.11",
-    "react-widgets": "^3.4.8",
+    "react-scripts": "1.0.13",
+    "react-widgets": "^4.0.0",
     "redux": "^3.7.2",
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "serve": "^6.0.6",
-    "supercluster": "^2.3.0",
+    "supercluster": "^3.0.0",
     "underscore": "^1.8.3",
     "winston": "^2.3.1"
   },

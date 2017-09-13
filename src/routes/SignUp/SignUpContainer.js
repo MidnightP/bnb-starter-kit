@@ -30,7 +30,6 @@ class SignUp extends PureComponent {
 const selector = formValueSelector('user')
 
 const mapStateToProps = (state) => {
-	const { error } = state
 
 	const { password, passwordConfirmation, email, firstName, lastName, avatar, avatarUrl, role } = selector(state, 'email', 'firstName', 'lastName', 'avatar', 'avatarUrl', 'role', 'password', 'passwordConfirmation')
 

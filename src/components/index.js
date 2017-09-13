@@ -6,7 +6,9 @@ import Map         from './Map'
 import ReviewCard  from './ReviewCard'
 import ReviewForm  from './ReviewForm'
 import UserForm    from './UserForm'
-import { Dropdown, MultiSelect, Dropzone } from './widgets'
+import Dropdown    from './Dropdown'
+import Dropzone    from './Dropzone'
+import MultiSelect from './MultiSelect'
 
 export {
 	ContactForm,

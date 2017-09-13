@@ -71,8 +71,10 @@ exports.authenticate = (req, res, next) => {
 
 exports.signUp = (req, res, next) => {
 
-	// TODO should this be an instance of File ?
+	console.log('REQ.BODY', req.body)
 	console.log('REQ.BODY.AVATAR', req.body.avatar)
+	console.log('TYPEOF REQ.BODY.AVATAR', typeof req.body.avatar)
+	console.log('REQ.BODY.AVATAR INSTANCEOF BUFFER', req.body.avatar instanceof Buffer)
 
 	if(!req.body) {
 		const err = new Error(`Attempt to sign up without form data.`)

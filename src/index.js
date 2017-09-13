@@ -6,6 +6,7 @@ import createStore from './store/createStore'
 import registerServiceWorker from './registerServiceWorker'
 
 import './styles/core.css'
+import 'react-widgets/dist/css/react-widgets.css'
 
 const initialState = window.__INITIAL_STATE__
 const store = createStore(initialState)

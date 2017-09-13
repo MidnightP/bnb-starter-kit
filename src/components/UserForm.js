@@ -3,10 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import { Field, reduxForm } from 'redux-form'
 
-import { Dropzone, Dropdown } from './widgets'
+import { Dropdown, Dropzone } from './'
 import config from '../config'
-
-import 'react-widgets/dist/css/react-widgets.css'
 
 const { roles } = config.user
 
@@ -69,7 +67,7 @@ class UserForm extends Component {
 
 	render() {
 
-		const { mode, errorName, errorMessage, errorCode, avatar, avatarUrl, fakeProp } = this.props
+		const { mode, errorMessage, errorCode, avatar, avatarUrl } = this.props
 
 		// TODO pull form field right (using css, but how...?) so that they are all aligned....
 
