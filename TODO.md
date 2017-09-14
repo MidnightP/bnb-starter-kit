@@ -16,8 +16,24 @@ supercluster   ^2.3.0  →  ^3.0.0
 because we don't receive it after sign in!
 prevents us both from using session (being actaully signed in) and signing out
 
-1) Can we get the buffer (in the back-end) from the preview reference to the blob? Probably not.
-```Cast to Buffer failed for value "{ '0': { preview: 'blob:http://localhost:3000/5e6035e9-9e36-49f3-9284-827de71a0358' } }" at path "avatar"```
+1) Can we get the buffer (in the back-end) from the preview reference to the blob?
+supposedly we need:
+```
+blob
+
+var reader = new Reader()
+
+/** e.g. readAsText**/
+reader.readAsText(blob)
+
+/** check if it's onload or on('load', () => {}) **/
+reader.onLoad((res) => {
+	console.log(res)
+	})
+
+```
+But the reader keeps `reader.readyState === 1 && reader.result === ""`
+
 
 @@@ selector not defined in ContactForm !?!?
 

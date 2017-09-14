@@ -17,11 +17,8 @@ const userSchema = new Schema({
 		role:               { type: String, required: true, enum: { values: roles } },
 		password:           { type: String },
 
-		// TODO how will we store avatar?
-		// cloudinary -> Object
-		// firebase -> url (?)
 		avatarUrl:          { type: String },
-		avatar:             { type: Buffer },
+		// avatar:             { type: Buffer },
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 })

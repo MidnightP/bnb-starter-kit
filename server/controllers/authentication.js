@@ -2,6 +2,7 @@ const debug  = require('debug')('app:routes:authentication')
 const bcrypt = require('bcrypt')
 const async  = require('async')
 const R      = require('ramda')
+const fs     = require('fs')
 
 const config                       = require('../config')
 const getLogger                    = require('../lib/log')
@@ -70,17 +71,14 @@ exports.authenticate = (req, res, next) => {
 }
 
 exports.signUp = (req, res, next) => {
+	if(!req.body) {
+		const err = new Error(`Attempt to sign up without form data.`)
+		err.status = 404
+		err.name = `Missing:FormData`
+		return next(err)
+	}
 
 	const { body } = req
-
-	console.log("is it an array???", Array.isArray(req.body.avatar))
-	console.log('REQ.BODY.AVATAR', req.body.avatar)
-
-	const avatar = body.avatar
-
-	console.log('REQ.BODY.AVATAR', avatar)
-	console.log('TYPEOF REQ.BODY.AVATAR', typeof avatar)
-	console.log('REQ.BODY.AVATAR INSTANCEOF BUFFER', avatar instanceof Buffer)
 
 	if(!body) {
 		const err = new Error(`Attempt to sign up without form data.`)
@@ -89,16 +87,42 @@ exports.signUp = (req, res, next) => {
 		return next(err)
 	}
 
+	const avatar = body.avatar[0]
+
+	delete body.avatar
+
+	console.log('AVATAR', avatar)
+	console.log('TYPEOF AVATAR', typeof avatar)
+
 	async.waterfall([
+
 		(cb) => {
-			new User(body)
-				.save((err, user) => {
+			cb(null, new User(body))
+		},
+
+		(user, cb) => {
+			async.parallel({
+
+				user: (cb) => {
+					user.save((err, user) => {
 						if (err) return cb(err)
 
 						debug(user.email + ' signing up')
 						cb(null, user)
 					})
-		}, (user, cb) => {
+				},
+
+				avatar: (cb) => fs.writeFile(avatar, `../../public/avatars/${user._id}.jpg`, cb)
+
+			}, (error, { user }) => {
+				if(error) return cb(error)
+
+				cb(null, user)
+			})
+
+		},
+
+		(user, cb) => {
 
 			const { password } = req.body
 
@@ -113,7 +137,9 @@ exports.signUp = (req, res, next) => {
 						cb(null, user)
 					})
 			})
-		}, (user, cb) => {
+		},
+
+		(user, cb) => {
 			new UserToken({ userId: user._id })
 				.save((err, userToken) => {
 					if (err) return cb(err)

@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import { Field, reduxForm } from 'redux-form'
 
-import { Dropdown, Dropzone } from './'
+import Dropzone from './Dropzone'
+import Dropdown from './Dropdown'
 import config from '../config'
 
 const { roles } = config.user
