@@ -9,12 +9,12 @@ supercluster   ^2.3.0  →  ^3.0.0
 
 ### Back End
 
+Is `req.body.referrer` not used?
 
 ### Front End
 
-0) cookie is not set in req.headers, nor in req.cookies
-because we don't receive it after sign in!
-prevents us both from using session (being actaully signed in) and signing out
+`Set-Cookie` header not working.....
+START HERE https://github.com/request/request/issues/2747
 
 1) Can we get the buffer (in the back-end) from the preview reference to the blob?
 supposedly we need:

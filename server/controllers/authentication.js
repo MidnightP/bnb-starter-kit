@@ -8,7 +8,7 @@ const config                       = require('../config')
 const getLogger                    = require('../lib/log')
 const { User, Listing, UserToken } = require('../models')
 
-const { cookieOptions }            = config
+const { cookieOptions } = config
 
 // TODO this should be middleware. On /authentication route or also routes?
 const getListingId = (user, cb) => {
@@ -152,11 +152,8 @@ exports.signUp = (req, res, next) => {
 
 			res.cookie('token', userToken.token, cookieOptions)
 
-			if (req.body.referrer) {
-				req.body.refferer = req.body.refferer + '?set_token=' + userToken.token
-			} else {
-				req.body.referrer = req.headers.origin
-			}
+			req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
+			req.body.referrer += '?set_token=' + userToken.token
 
 			res.body = {
 				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
@@ -243,11 +240,8 @@ exports.signIn = (req, res, next) => {
 
 		res.cookie('token', userToken.token, cookieOptions)
 
-		if(req.body.referrer) {
-			req.body.referrer = req.body.referrer + '?set_token=' + token.token
-		} else {
-			req.body.refferer = req.headers.origin + '?set_token=' + userToken.token
-		}
+		req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
+		req.body.referrer += '?set_token=' + userToken.token
 
 		res.body = {
 			user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)

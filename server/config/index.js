@@ -2,7 +2,8 @@ module.exports = {
 	cookieSecret: 'AXFGAhjdsa78ui2jq3e9y^&TY*Y@Hdjsa5ctygjn^%@Tyugehjds8UHJSKKA)SAJCNA',
 	cookieOptions: {
 		maxAge: 86400000,
-		httpOnly: true
+		httpOnly: true,
+		path: ""
 	},
 	reaperInterval: '*/5 * * * *',
 	// TODO use this:
