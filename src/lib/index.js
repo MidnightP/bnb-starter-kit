@@ -21,15 +21,15 @@ class RequestWrapper {
 
 		if(!baseUrl) console.error('Must provide request wrapper a baseUrl')
 
-		this.baseAmount       = 200
+		this.baseUrl          = baseUrl
 		this.retryTimes       = 4
+		this.baseAmount       = 200
 		this.maxTimeout       = 1000
 		this.retryStatusCodes = [ 500, 502 ]
-		this.baseUrl          = baseUrl
 
 		this.http = request.defaults({
 			baseUrl: this.baseUrl,
-			json:    true
+			json: true
 		})
 	}
 
@@ -49,6 +49,12 @@ class RequestWrapper {
 	}
 
 	delete(httpOptions, cb) {
+		if(typeof httpOptions === 'string') {
+			return this.request({
+				uri: httpOptions
+			}, cb)
+		}
+
 		const options = Object.assign({}, httpOptions, { method: 'DELETE' })
 		this.request(options, cb)
 	}

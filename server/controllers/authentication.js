@@ -154,6 +154,7 @@ exports.signUp = (req, res, next) => {
 
 			req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
 			req.body.referrer += '?set_token=' + userToken.token
+			console.log(`redirecting to ${req.body.referer}`)
 
 			res.body = {
 				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
@@ -241,7 +242,12 @@ exports.signIn = (req, res, next) => {
 		res.cookie('token', userToken.token, cookieOptions)
 
 		req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
-		req.body.referrer += '?set_token=' + userToken.token
+		console.log('REQ.BODY.REFFERER', req.body.refferer)
+		req.body.referrer += '?set_token='
+		console.log('REQ.BODY.REFERRER', req.body.referrer)
+		console.log('USERTOKEN.TOKEN', userToken.token)
+		req.body.referrer += userToken.token
+		console.log(`redirecting to ${req.body.referer}`)
 
 		res.body = {
 			user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)

@@ -286,7 +286,8 @@ const deleteListing = (req, res, next) => {
 			listing.softdelete((err, deletedDoc) => {
 				if(err) return handleEnd(err)
 
-				if (!req.body.referrer) req.body.referrer = req.headers.origin
+				// TODO think about redirecting
+				// if (!req.body.referrer) req.body.referrer = req.headers.origin
 
 				res.body = {
 					_id: deletedDoc._id

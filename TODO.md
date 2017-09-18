@@ -51,6 +51,8 @@ figure out how to use `serve build` and then run the docker container locally an
 
 ### Questions ***
 
+SEO friendly HTMl and CSS. How?
+
 use uniform error messages (!) to let the the front end know what to do!
 We don't need descriptive messages since no one is using the api yet.
 
@@ -63,6 +65,8 @@ We don't need descriptive messages since no one is using the api yet.
 https://github.com/chenglou/react-motion
 
 ### Front end ***
+
+why is the first http request to api an OPTIONS reqest?
 
 In index.html, if possible use variables for things likewebsitetitle
 
