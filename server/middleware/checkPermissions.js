@@ -58,8 +58,9 @@ const session = (req, res, cb) => {
 	debug('session')
 
 	const token = req.headers.token ? req.headers.token : req.cookies.token
-	console.log('REQ.HEADERS', req.headers)
 	console.log('REQ.COOKIES', req.cookies)
+	console.log('REQ.SIGNEDCOOKIES', req.signedCookies)
+	console.log('REQ.HEADERS', req.headers)
 
 	if(token) {
 		return UserToken.validate(token, (error, userToken) => {

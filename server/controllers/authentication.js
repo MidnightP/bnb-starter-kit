@@ -37,7 +37,7 @@ exports.authenticate = (req, res, next) => {
 		if (err) return next(err)
 
 		if(!userToken) {
-			res.cookie('token', 'deleted', cookieOptions)
+			res.clearCookie('token', cookieOptions)
 			const err = new Error(`Token is expired.`)
 			err.status = 403
 			err.name = `Expired Token`
@@ -48,7 +48,7 @@ exports.authenticate = (req, res, next) => {
 			if(err) return next(err)
 
 			if(!user) {
-				res.cookie('token', 'deleted', cookieOptions)
+				res.clearCookie('token', cookieOptions)
 				const err = new Error(`User not found.`)
 				err.status = 404
 				err.name = `NotFound:User`
@@ -150,11 +150,10 @@ exports.signUp = (req, res, next) => {
 		}], (err, user, userToken) => {
 			if (err) return next(err)
 
-			res.cookie('token', userToken.token, cookieOptions)
+			res.cookie('token', userToken.token, Object.assign({}, cookieOptions, { domain: req.headers.origin }))
 
-			req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
-			req.body.referrer += '?set_token=' + userToken.token
-			console.log(`redirecting to ${req.body.referer}`)
+			// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
+			// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
 
 			res.body = {
 				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
@@ -239,15 +238,10 @@ exports.signIn = (req, res, next) => {
 			if (err) return next(err)
 		}
 
-		res.cookie('token', userToken.token, cookieOptions)
+		res.cookie('token', userToken.token, Object.assign({}, cookieOptions, { domain: `${process.env.REACT_APP_API_HOST}` + ':' + `${process.env.REACT_APP_API_PORT}` }))
 
-		req.body.refferer = req.body.refferer ? req.body.referrer : req.headers.origin
-		console.log('REQ.BODY.REFFERER', req.body.refferer)
-		req.body.referrer += '?set_token='
-		console.log('REQ.BODY.REFERRER', req.body.referrer)
-		console.log('USERTOKEN.TOKEN', userToken.token)
-		req.body.referrer += userToken.token
-		console.log(`redirecting to ${req.body.referer}`)
+		// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
+		// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
 
 		res.body = {
 			user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)

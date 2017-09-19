@@ -70,9 +70,9 @@ app.set('mailTransporter', nodemailer.createTransport({
 app
 	.disable('x-powered-by')
 	.use(cors(corsOptions))
+	.use(cookieParser(config.cookieSecret))
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: false }))
-	.use(cookieParser(config.cookieSecret))
 	.use(mongoSanitize())
 	.use(compress())
 	.use(__apibase__, require('./routes/api'))

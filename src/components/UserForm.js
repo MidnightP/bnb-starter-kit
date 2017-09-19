@@ -177,7 +177,7 @@ class UserForm extends Component {
 								<button type="submit" disabled={this.state.disabled}>
 							*/}
 							<button type="submit" >
-								{ mode === 'signUp' ? 'Registreren' : mode === 'signIn' ? 'Inloggen' : null }
+								{ mode === 'signUp' ? 'Sign up' : mode === 'signIn' ? 'Sign in' : null }
 							</button>
 						</form>
 						<div>
@@ -189,7 +189,7 @@ class UserForm extends Component {
 							<NavLink to={`/signup`}
 								activeStyle={{ display: 'none' }}
 								activeClassName='change-mode'>
-								<button>Want to register?</button>
+								<button>Want to create an account?</button>
 							</NavLink>
 							{
 								errorMessage ?
