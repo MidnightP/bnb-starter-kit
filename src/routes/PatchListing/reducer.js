@@ -21,8 +21,8 @@ export const patchListing = () => {
 		const { values, _id } = getState().form.listing
 
 		const httpOptions = {
-			uri: `/listings/${_id}`,
-			json: values
+			url: `/listings/${_id}`,
+			data: values
 		}
 
 		apiRequestWrapper.post(httpOptions, (error, body) => {

@@ -20,8 +20,8 @@ export const createListing = () => {
 		let { values } = getState().form.listing
 
 		const httpOptions = {
-			uri: '/listings',
-			json: values
+			url: '/listings',
+			data: values
 		}
 
 		apiRequestWrapper.post(httpOptions, (error, body) => {

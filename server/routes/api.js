@@ -1,27 +1,27 @@
 const express = require('express')
+const cors = require('cors')
 
-const { setServiceName, checkPermissions, checkAuthenticated, checkMongoId } = require('../middleware')
+const { setServiceName, checkPermissions, rejectNotAuthenticated, checkMongoId } = require('../middleware')
 const { categories, contacts, listings, locations, reviews } = require('../controllers')
+
+const defaultMiddleware = [ setServiceName, checkPermissions ]
 
 const api = express.Router()
 
-api
-	.use([setServiceName, checkPermissions])
-
 // Routes for any role
 api
-	.get(`/categories`,                  categories.readMany)
-	.get(`/locations`,                   locations.readMany)
-	.get(`/reviews`,                     reviews.readMany)
-	.get(`/listings`,                    listings.readMany)
-	.get(`/listings/:_id`, checkMongoId, listings.readSingle)
+	.get(`/categories`,    defaultMiddleware,               categories.readMany)
+	.get(`/locations`,     defaultMiddleware,               locations.readMany)
+	.get(`/reviews`,       defaultMiddleware,               reviews.readMany)
+	.get(`/listings`,      defaultMiddleware,               listings.readMany)
+	.get(`/listings/:_id`, defaultMiddleware, checkMongoId, listings.readSingle)
 
 // Secured routes
 api
-	.post(`/listings`,                      checkAuthenticated, listings.post)
-	.patch(`/listings/:_id`,  checkMongoId, checkAuthenticated, checkMongoId, listings.patch)
-	.delete(`/listings/:_id`, checkMongoId, checkAuthenticated, checkMongoId, listings.delete)
-	.post(`/reviews`,                       checkAuthenticated, reviews.post)
-	.post(`/contacts`,                      checkAuthenticated, contacts.post)
+	.post(`/listings`,        defaultMiddleware,                rejectNotAuthenticated, listings.post)
+	.patch(`/listings/:_id`,  defaultMiddleware,  checkMongoId, rejectNotAuthenticated, listings.patch)
+	.delete(`/listings/:_id`, defaultMiddleware,  checkMongoId, rejectNotAuthenticated, listings.delete)
+	.post(`/reviews`,         defaultMiddleware,                rejectNotAuthenticated, reviews.post)
+	.post(`/contacts`,        defaultMiddleware,                rejectNotAuthenticated, contacts.post)
 
 module.exports = api

@@ -62,8 +62,8 @@ export const createReview = () => {
 		const { values } = getState().form.review
 
 		const httpOptions = {
-			uri: `/reviews`,
-			json: values
+			url: `/reviews`,
+			data: values
 		}
 
 		apiRequestWrapper.post(httpOptions, (error, body) => {
@@ -83,8 +83,8 @@ export const sendMessage = () => {
 		const { values } = getState().form.contact
 
 		const httpOptions = {
-			uri: `/contacts`,
-			json: values
+			url: `/contacts`,
+			data: values
 		}
 
 		apiRequestWrapper.post(httpOptions, (error, body) => {

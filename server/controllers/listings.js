@@ -131,7 +131,7 @@ exports.readMany = (req, res, next) => {
 				req.coordinates = [longitude, latitude]
 			} else {
 				const err = new Error(`No coordinates found for zipcode ${zipcode}.`)
-				err.status = 400
+				res.status(400)
 				err.name = `NotFound:Coordinates`
 
 				return next(err)
@@ -177,7 +177,7 @@ const readSingle = (req, res, next) => {
 
 			if(!listing) {
 				const err = new Error(`Listing was not found or deleted: ${req.params._id}.`)
-				err.status = 404
+				res.status(404)
 				err.name = `NotFound:Listing`
 				return next(err)
 			}
@@ -231,14 +231,14 @@ exports.patch = (req, res, next) => {
 
 			if(!listing) {
 				const err = new Error(`Listing was not found or deleted: ${req.params._id}.`)
-				err.status = 404
+				res.status(404)
 				err.name = `NotFound:Listing`
 				return handleEnd()
 			}
 
 			if(listing.userId !== req.user._id) {
 				const err = new Error(`User ${req.user._id} (${req.user.email}) is not owner of listing: ${req.params._id}.`)
-				err.status = 404
+				res.status(404)
 				err.name = `Incorrect:User`
 				return handleEnd()
 			}
@@ -271,14 +271,14 @@ const deleteListing = (req, res, next) => {
 
 			if(!listing) {
 				const err = new Error(`Listing was not found or deleted: ${req.params._id}.`)
-				err.status = 404
+				res.status(404)
 				err.name = `NotFound:Listing`
 				return handleEnd()
 			}
 
 			if(listing.userId !== req.user._id) {
 				const err = new Error(`User ${req.user._id} (${req.user.email}) is not owner of listing: ${req.params._id}.`)
-				err.status = 404
+				res.status(404)
 				err.name = `Incorrect:User`
 				return handleEnd()
 			}

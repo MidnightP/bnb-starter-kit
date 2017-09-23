@@ -5,17 +5,27 @@ module.exports = {
 		httpOnly: true
 	},
 	reaperInterval: '*/5 * * * *',
-	// TODO use this:
-	// viewRoutes: ['/', 'advertenties'],
-	viewRoutes: ['*'],
 	apiVersion: '1',
 	authVersion: '1',
 	corsOptions: {
 		origin: ['http://localhost:3000'],
-		allowedHeaders: ['Content-Type', 'Authorization'],
-		methods: 'GET,PUT,PATCH,POST,DELETE',
-		preflightContinue: false,
-		optionsSuccessStatus: 204
+		allowedHeaders: [
+			'Content-Type',
+			'Authorization',
+			'Access-Control-Allow-Methods',
+			'Access-Control-Allow-Credentials',
+			'Access-Control-Allow-Origin',
+			'Access-Control-Allow-Headers'
+		],
+		methods: ['GET','PUT','PATCH','POST','DELETE'],
+		preflightContinue: false,             // TODO seems to have no effect?
+		optionsSuccessStatus: 204,            // TODO seems to have no effect?
+		credentials: true                     // sets header 'Access-Control-Allow-Credentials': true
+	},
+	defaultHeaders: {
+		// 'Access-Control-Request-Headers': ['Content-Type', 'Access-Control-Allow-Credentials'],
+		// 'Access-Control-Request-Method': 'GET,PUT,PATCH,POST,DELETE',
+		'Access-Control-Allow-Credentials': true
 	},
 	googleMapsLanguage: 'nl',
 	googleMapsRegion: 'NL',

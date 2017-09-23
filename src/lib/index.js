@@ -1,5 +1,5 @@
-import retry from  "async/retry"
-import request from  "request"
+import retry from  'async/retry'
+import axios from  'axios'
 
 import config from '../config'
 
@@ -17,56 +17,79 @@ export const getErrorObject = (error) => ({
 
 class RequestWrapper {
 
-	constructor({ baseUrl }) {
+	constructor({ baseURL }) {
 
-		if(!baseUrl) console.error('Must provide request wrapper a baseUrl')
+		if(!baseURL) console.error('Must provide request wrapper a baseURL')
 
-		this.baseUrl          = baseUrl
+		this.baseURL          = baseURL
 		this.retryTimes       = 4
 		this.baseAmount       = 200
-		this.maxTimeout       = 1000
+		this.maxRetryTimeout  = 1000
 		this.retryStatusCodes = [ 500, 502 ]
 
-		this.http = request.defaults({
-			baseUrl: this.baseUrl,
-			json: true
+		//  do we need to change these options?
+		// `xsrfCookieName` is the name of the cookie to use as a value for xsrf token
+		//  xsrfCookieName: 'XSRF-TOKEN', // default
+		// `xsrfHeaderName` is the name of the http header that carries the xsrf token value
+		//  xsrfHeaderName: 'X-XSRF-TOKEN', // default
+
+		this.axios = axios.create({
+			baseURL: this.baseURL,
+			withCredentials: true,
+			// xsrfCookieName: 'token',
+			// xsrfHeaderName: 'Token',
+			headers: {
+				'Access-Control-Allow-Credentials': true,
+				'Access-Control-Allow-Origin': window.location.origin,
+				'Access-Control-Allow-Methods': ['GET','PUT','PATCH','POST','DELETE'],
+				'Access-Control-Allow-Headers': [
+					'Content-Type',
+					'Authorization',
+					'Access-Control-Allow-Methods',
+					'Access-Control-Allow-Credentials',
+					'Access-Control-Allow-Origin',
+					'Access-Control-Allow-Headers'
+				]
+			},
+			timeout: 1000,         // default
+			responseType: 'json'   // default
 		})
 	}
 
 	put(httpOptions, cb) {
-		const options = Object.assign({}, httpOptions, { method: 'PUT' })
+		const options = Object.assign({}, httpOptions, { method: 'put' })
 		this.request(options, cb)
 	}
 
 	post(httpOptions, cb) {
-		const options = Object.assign({}, httpOptions, { method: 'POST' })
+		const options = Object.assign({}, httpOptions, { method: 'post' })
 		this.request(options, cb)
 	}
 
 	patch(httpOptions, cb) {
-		const options = Object.assign({}, httpOptions, { method: 'PATCH' })
+		const options = Object.assign({}, httpOptions, { method: 'patch' })
 		this.request(options, cb)
 	}
 
 	delete(httpOptions, cb) {
 		if(typeof httpOptions === 'string') {
 			return this.request({
-				uri: httpOptions
+				url: httpOptions
 			}, cb)
 		}
 
-		const options = Object.assign({}, httpOptions, { method: 'DELETE' })
+		const options = Object.assign({}, httpOptions, { method: 'delete' })
 		this.request(options, cb)
 	}
 
 	get(httpOptions, cb) {
 		if(typeof httpOptions === 'string') {
 			return this.request({
-				uri: httpOptions
+				url: httpOptions
 			}, cb)
 		}
 
-		const options = Object.assign({}, httpOptions, { method: 'GET' })
+		const options = Object.assign({}, httpOptions, { method: 'get' })
 		this.request(options, cb)
 	}
 
@@ -80,9 +103,9 @@ class RequestWrapper {
 			},
 			interval: (count) => {
 				const timeout = count === 2 ? 0 : this.baseAmount * Math.pow(2, count - 2)
-				const maxedTimeout = Math.min(timeout, this.maxTimeout)
+				const maxedRetryTimeout = Math.min(timeout, this.maxRetryTimeout)
 
-				return maxedTimeout
+				return maxedRetryTimeout
 			}
 		}
 
@@ -98,18 +121,21 @@ class RequestWrapper {
 	}
 
 	issueRequest(httpOptions, cb) {
-		this.http(httpOptions, (error, response, body) => {
 
-			if(error) return cb(error)
+		const { method, url, data } = httpOptions
 
-			if(this.retryStatusCodes.includes(response.statusCode)) {
-				return cb(`Request failed with status code ${response.statusCode}`)
-			}
+		this.axios(httpOptions)
+			.then(response => {
+				if(this.retryStatusCodes.includes(response.status)) {
+					return cb(`Request failed with status code ${response.status}`)
+				}
 
-			cb(null, body, response)
-		})
+				cb(null, response.data, { statusCode: response.status, statusText: response.statusText })
+			})
+			.catch(cb)
+
 	}
 }
 
-export const apiRequestWrapper  = new RequestWrapper({ baseUrl: __apiBase__ })
-export const authRequestWrapper = new RequestWrapper({ baseUrl: __authBase__ })
+export const apiRequestWrapper  = new RequestWrapper({ baseURL: __apiBase__ })
+export const authRequestWrapper = new RequestWrapper({ baseURL: __authBase__ })

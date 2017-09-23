@@ -56,7 +56,7 @@ exports.post = (req, res, next) => {
 
 							if(!listing) {
 								const err = new Error(`Listing was not found or deleted: ${req.params._id}.`)
-								err.status = 404
+								res.status(404)
 								err.name = `NotFound:Listing`
 								return next(err)
 							}
@@ -82,7 +82,7 @@ exports.post = (req, res, next) => {
 						})
 			} else {
 				const err = new Error(`Review for this listing was already written. Author: ${authorId}. Listing: ${req.params._id}.`)
-				err.status = 422
+				res.status(422)
 				err.name = `AlreadyExists:Review`
 
 				return next(err)

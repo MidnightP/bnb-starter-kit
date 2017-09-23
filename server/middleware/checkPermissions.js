@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
 
 		permissions.bind(null, req, res)
 
-	], (err, req, res) => {
+	], (err) => {
 		if(err) return next(err)
 
 		next()
@@ -37,10 +37,14 @@ module.exports = (req, res, next) => {
 const malicious = (req, res, cb) => {
 	debug('scanning for malicious content')
 
+	// TODO find out if cors module checks whether referers are whitelisted.
+	// If yes we can remove this.
+
 	if(req.body.referer) {
 		if(!whitelisted.includes(req.body.referer)) {
+
 			const err = new Error('Rejected:NotWhitelisted')
-			err.status = 400
+			res.status(403)
 
 			return cb(err)
 		}
@@ -120,6 +124,7 @@ const permissions = (req, res, cb) => {
 
 	// Please piss off
 	const err = new Error(`Rejected:${notAllowedFields.join(', ')}`)
-	err.status = 400
+	res.status(403)
+
 	cb(err)
 }

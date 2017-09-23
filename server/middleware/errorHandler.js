@@ -13,8 +13,13 @@ module.exports = (error, req, res, next) => {
 
 	if(badRequests.includes(error.name)) res.status(400)
 
+	statusCode = res.statusCode ?
+		res.statusCode === 200 ?
+			500 : res.statusCode
+		: 500
+
 	res
-		.status(res.statusCode ? res.statusCode === 200 ? 500 : res.statusCode : 500)
+		.status(statusCode)
 		.json({
 			message: error.message,
 			code:    res.statusCode,

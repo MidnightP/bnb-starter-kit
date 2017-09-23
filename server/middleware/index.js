@@ -1,6 +1,6 @@
 module.exports = {
 	checkPermissions: require('./checkPermissions'),
-	checkAuthenticated: require('./checkAuthenticated'),
+	rejectNotAuthenticated: require('./rejectNotAuthenticated'),
 	handleEnd: require('./handleEnd'),
 	checkMongoId: require('./checkMongoId'),
 	setServiceName: require('./setServiceName'),

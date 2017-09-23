@@ -40,7 +40,7 @@ export const getListings = (query) => {
 		dispatch(setLoading('listings'))
 
 		const httpOptions = {
-			uri: '/listings',
+			url: '/listings',
 			qs: query
 		}
 

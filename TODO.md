@@ -58,6 +58,8 @@ We don't need descriptive messages since no one is using the api yet.
 
 @@@ Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
 
+use `express-session` to simplify code?
+
 **bijlesismore** Grommet or MUI or something else?
 ----> Check out: http://redux-form.com/6.6.3/examples/material-ui/
 
@@ -74,7 +76,7 @@ Pull input fields to the right and put all in one column! `right: 0px` on `form-
 
 Use `getComponent` function on all pages' index.js . needed for code splitting
 
-use throttle in components itself to fully control when firing action when required
+use throttle as an option in request util and set a default. So we can specify throttling in individual reducers.
 
 @@@ Prevent too large image sizes to be uploaded. Check size on file.... --> dispatch error
 

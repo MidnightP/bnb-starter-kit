@@ -28,7 +28,7 @@ exports.authenticate = (req, res, next) => {
 
 	if(!token) {
 		const err = new Error(`No token was send!`)
-		err.status = 400
+		res.status(400)
 		return next(err)
 		err.name = `No Token`
 	}
@@ -39,7 +39,7 @@ exports.authenticate = (req, res, next) => {
 		if(!userToken) {
 			res.clearCookie('token', cookieOptions)
 			const err = new Error(`Token is expired.`)
-			err.status = 403
+			res.status(403)
 			err.name = `Expired Token`
 			return next(err)
 		}
@@ -50,7 +50,7 @@ exports.authenticate = (req, res, next) => {
 			if(!user) {
 				res.clearCookie('token', cookieOptions)
 				const err = new Error(`User not found.`)
-				err.status = 404
+				res.status(404)
 				err.name = `NotFound:User`
 				return next(err)
 			}
@@ -62,7 +62,7 @@ exports.authenticate = (req, res, next) => {
 			getListingId(user, (err, listing) => {
 				if(err) return next(err)
 
-				res.body.user.listingId = listing._id
+				if(listing) res.body.user.listingId = listing._id
 
 				next()
 			})
@@ -73,7 +73,7 @@ exports.authenticate = (req, res, next) => {
 exports.signUp = (req, res, next) => {
 	if(!req.body) {
 		const err = new Error(`Attempt to sign up without form data.`)
-		err.status = 404
+		res.status(404)
 		err.name = `Missing:FormData`
 		return next(err)
 	}
@@ -82,7 +82,7 @@ exports.signUp = (req, res, next) => {
 
 	if(!body) {
 		const err = new Error(`Attempt to sign up without form data.`)
-		err.status = 404
+		res.status(404)
 		err.name = `Missing:FormData`
 		return next(err)
 	}
@@ -175,7 +175,7 @@ exports.signIn = (req, res, next) => {
 
 	if(!req.body) {
 		const err = new Error(`Attempt to sign up without form data.`)
-		err.status = 403
+		res.status(403)
 		err.name = `Missing:FormData`
 		return next(err)
 	}
@@ -190,7 +190,7 @@ exports.signIn = (req, res, next) => {
 
 					if (!user) {
 						const err = new Error(`User not found: ${email}`)
-						err.status = 404
+						res.status(404)
 						err.name = `NotFound:User`
 						return next(err)
 					}
@@ -203,7 +203,7 @@ exports.signIn = (req, res, next) => {
 
 				if (!pwdMatch) {
 					const err = new Error(`Incorrect Password for ${user.email} (${user._id})`)
-					err.status = 403
+					res.status(403)
 					err.name = `Password:Incorrect`
 					return next(err)
 				}
@@ -238,7 +238,11 @@ exports.signIn = (req, res, next) => {
 			if (err) return next(err)
 		}
 
-		res.cookie('token', userToken.token, Object.assign({}, cookieOptions, { domain: `${process.env.REACT_APP_API_HOST}` + ':' + `${process.env.REACT_APP_API_PORT}` }))
+		// res.set({ 'Token': userToken.token })
+
+		res.cookie('token', userToken.token, Object.assign({}, cookieOptions, {
+			domain: `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`
+		}))
 
 		// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
 		// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
@@ -264,7 +268,7 @@ exports.signOut = (req, res, next) => {
 
 	if(!token) {
 		const err = new Error(`No token was sent.`)
-		err.status = 400
+		res.status(400)
 		err.name = `Missing:Token`
 		return next(err)
 	}

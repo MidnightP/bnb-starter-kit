@@ -1,9 +1,9 @@
 const async         = require('async')
 const bodyParser    = require('body-parser')
 const compress      = require('compression')
+const cors          = require('cors')
 const fs            = require('fs')
 const cookieParser  = require('cookie-parser')
-const cors          = require('cors')
 const nodemailer    = require('nodemailer')
 const express       = require('express')
 const http          = require('http')
@@ -21,11 +21,11 @@ const {
 	errorHandler
 } = require('./middleware')
 
+const { corsOptions, apiVersion, authVersion } = config
 const { mongoUri } = require('./lib/utils')
 
-const __apibase__     = `/api/v${config.apiVersion}`
-const __authbase__    = `/auth/v${config.authVersion}`
-const { corsOptions } = config
+const __apibase__     = `/api/v${apiVersion}`
+const __authbase__    = `/auth/v${authVersion}`
 const { reaper }      = jobs
 const app             = express()
 const logsPath        = path.join(__dirname, '../logs')
@@ -69,10 +69,14 @@ app.set('mailTransporter', nodemailer.createTransport({
 
 app
 	.disable('x-powered-by')
-	.use(cors(corsOptions))
 	.use(cookieParser(config.cookieSecret))
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: false }))
+
+	// NOTE we need both to enable cors, and preflight mode on OPTIONS requests.
+	.use(cors(corsOptions))
+	.options('*', cors(corsOptions))
+
 	.use(mongoSanitize())
 	.use(compress())
 	.use(__apibase__, require('./routes/api'))

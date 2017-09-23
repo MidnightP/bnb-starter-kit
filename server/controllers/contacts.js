@@ -30,7 +30,7 @@ exports.post = (req, res, next) => {
 
 					if(!listing) {
 						const err = new Error(`Listing was not found or deleted: ${req.params._id}.`)
-						err.status = 404
+						res.status(404)
 						err.name = `NotFound:Listing`
 						return cb(err)
 					}
@@ -49,7 +49,7 @@ exports.post = (req, res, next) => {
 
 					if(!receiver) {
 						const err = new Error(`Email recipient was not found or deleted: ${req.params._id}.`)
-						err.status = 404
+						res.status(404)
 						err.name = `NotFound:Receiver`
 						return cb(err)
 					}

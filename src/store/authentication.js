@@ -48,8 +48,8 @@ export const signUp = () => {
 		delete values.passwordConfirmation
 
 		const httpOptions = {
-			uri: '/signup',
-			json: values
+			url: '/signup',
+			data: values
 		}
 
 		console.log('VALUES', values)
@@ -75,8 +75,8 @@ export const signIn = () => {
 		let { values } = getState().form.user
 
 		const httpOptions = {
-			uri: '/signin',
-			json: values
+			url: '/signin',
+			data: values
 		}
 
 		dispatch(setLoading('signIn'))
