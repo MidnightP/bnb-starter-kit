@@ -12,6 +12,7 @@ const mongoose      = require('mongoose')
 const { Geocoder }  = require('./lib')
 const debug         = require('debug')('app:main')
 const mongoSanitize = require('express-mongo-sanitize')
+const helmet        = require('helmet')
 
 const log                = require('./lib/log')()
 const config             = require('./config')
@@ -68,7 +69,7 @@ app.set('mailTransporter', nodemailer.createTransport({
 )
 
 app
-	.disable('x-powered-by')
+	.use(helmet())
 	.use(cookieParser(config.cookieSecret))
 	.use(bodyParser.json())
 	.use(bodyParser.urlencoded({ extended: false }))

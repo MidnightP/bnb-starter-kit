@@ -12,6 +12,10 @@ supercluster   ^2.3.0  →  ^3.0.0
 See how referer is actually set in headers like `req.headers.referer`
 Redirect only (by giving a value to `req.redirectUrl`) when `req.headers.referer` is not equal to `req.headers.origin`.
 
+Session middleware should be as lean as possible. Think about when and how often to do a database query.
+`express-session` is built-in to Express 3.x.
+use it
+
 
 ### Front End
 
@@ -54,16 +58,12 @@ figure out how to use `serve build` and then run the docker container locally an
 
 ### Questions ***
 
-Session middleware should be as lean as possible. Think about when and how often to do a database query.
-
 SEO friendly HTMl and CSS. How?
 
 use uniform error messages (!) to let the the front end know what to do!
 We don't need descriptive messages since no one is using the api yet.
 
 @@@ Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
-
-use `express-session` to simplify code?
 
 **bijlesismore** Grommet or MUI or something else?
 ----> Check out: http://redux-form.com/6.6.3/examples/material-ui/

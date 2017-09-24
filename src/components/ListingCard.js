@@ -104,8 +104,9 @@ class ListingCard extends Component {
 							<span style={styles.number}>{reviewCount}</span>
 						</p>
 
-						<p style={styles.text}> AVERAGE RATING: </p>
-						<div style={styles.number}>{ratingAverage}</div>
+						<p style={styles.text}> AVERAGE RATING:
+							<span style={styles.number}>{ratingAverage}</span>
+						</p>
 
 						{
 							expanded ?
