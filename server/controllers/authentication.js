@@ -10,64 +10,18 @@ const { User, Listing, UserToken } = require('../models')
 
 const { cookieOptions } = config
 
-// TODO this should be middleware. On /authentication route or also routes?
-const getListingId = (user, cb) => {
-	if(user.role !== 'listingOwner') return cb(null, null)
-
-	Listing
-		.findOne({ user: user._id })
-		.select('_id')
-		.lean()
-		.exec(cb)
-}
 
 exports.authenticate = (req, res, next) => {
 
-	let { token } = req.headers
-	token = req.cookies ? req.cookies.token : token
+	// NOTE token and user are checked in previous middleware
 
-	if(!token) {
-		const err = new Error(`No token was send!`)
-		res.status(400)
-		return next(err)
-		err.name = `No Token`
+	res.body = {
+		user: R.pick(req.allowances[req.grantName].users.GET_OWN, req.user)
 	}
 
-	UserToken.validate(token, (err, userToken) => {
-		if (err) return next(err)
+	if(req.user.listingId) res.body.user.listingId = req.user.listingId
 
-		if(!userToken) {
-			res.clearCookie('token', cookieOptions)
-			const err = new Error(`Token is expired.`)
-			res.status(403)
-			err.name = `Expired Token`
-			return next(err)
-		}
-
-		User.findOne({ _id: userToken.userId, deleted: false }, (err, user) => {
-			if(err) return next(err)
-
-			if(!user) {
-				res.clearCookie('token', cookieOptions)
-				const err = new Error(`User not found.`)
-				res.status(404)
-				err.name = `NotFound:User`
-				return next(err)
-			}
-
-			res.body = {
-				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
-			}
-
-			getListingId(user, (err, listing) => {
-				if(err) return next(err)
-
-				if(listing) res.body.user.listingId = listing._id
-
-				next()
-			})
-		})
-	})
+	next()
 }
 
 exports.signUp = (req, res, next) => {
@@ -87,6 +41,7 @@ exports.signUp = (req, res, next) => {
 		return next(err)
 	}
 
+	console.log('BODY.AVATAR', body.avatar)
 	const avatar = body.avatar[0]
 
 	delete body.avatar
@@ -150,7 +105,7 @@ exports.signUp = (req, res, next) => {
 		}], (err, user, userToken) => {
 			if (err) return next(err)
 
-			res.cookie('token', userToken.token, Object.assign({}, cookieOptions, { domain: req.headers.origin }))
+			res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, { domain: req.headers.origin }))
 
 			// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
 			// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
@@ -159,13 +114,7 @@ exports.signUp = (req, res, next) => {
 				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
 			}
 
-			getListingId(user, (err, listingId) => {
-				if(err) return next(err)
-
-				res.body.user.listingId = listingId
-
-				next()
-			})
+			next()
 	})
 }
 
@@ -232,15 +181,11 @@ exports.signIn = (req, res, next) => {
 			}
 		}
 	], (err, user, userToken) => {
-		if (err) {
-			req.body.referrer = req.headers.origin
-
-			if (err) return next(err)
-		}
+		if (err) return next(err)
 
 		// res.set({ 'Token': userToken.token })
 
-		res.cookie('token', userToken.token, Object.assign({}, cookieOptions, {
+		res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, {
 			domain: `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`
 		}))
 
@@ -251,13 +196,9 @@ exports.signIn = (req, res, next) => {
 			user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
 		}
 
-		getListingId(user, (err, listingId) => {
-			if(err) return next(err)
+		if(req.user.listingId) res.body.user.listingId = req.user.listingId
 
-			res.body.user.listingId = listingId
-
-			next()
-		})
+		next()
 	})
 }
 
@@ -276,9 +217,7 @@ exports.signOut = (req, res, next) => {
 	UserToken.findOne({ token, expiresAt: { $gt: Date.now() } }, (err, userToken) => {
 		if (err) return next(err)
 
-		res.clearCookie('token')
-
-		if (!req.body.referrer) req.body.referrer = req.headers.origin
+		res.clearCookie(cookieOptions.name)
 
 		if(!userToken) {
 			next()

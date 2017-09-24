@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 
+import { getErrorObject } from '../lib'
 import { Dropdown, MultiSelect } from './'
 import config from '../config'
 import text from '../text'
@@ -99,7 +100,7 @@ const selector = formValueSelector('listing')
 const mapStateToProps = (state) => {
 	const { zipcode, price, description, categories } = selector(state, 'zipcode', 'price', 'description', 'categories')
 	return {
-		error: state.error,
+		...getErrorObject(state.error),
 		zipcode,
 		price,
 		description,

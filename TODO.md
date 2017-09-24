@@ -9,35 +9,38 @@ supercluster   ^2.3.0  →  ^3.0.0
 
 ### Back End
 
-Is `req.body.referrer` not used?
+See how referer is actually set in headers like `req.headers.referer`
+Redirect only (by giving a value to `req.redirectUrl`) when `req.headers.referer` is not equal to `req.headers.origin`.
+
 
 ### Front End
+
+Use everywhere redux-form Synchronous Validation to disable buttons (start made in ContactForm)
 
 `Set-Cookie` header not working.....
 START HERE https://github.com/request/request/issues/2747
 
 1) Can we get the buffer (in the back-end) from the preview reference to the blob?
 supposedly we need:
+
+```javascript
+file // received in my onDrop handler of the react-dropzone component
+
+file instanceof Blob === true
+file instanceof File === true
+
+var reader = new FileReader()
+
+reader.onLoad((e) => {
+	console.log(e)
+})
+
+reader.readAsText(file)
 ```
-blob
 
-var reader = new Reader()
+Looking at the documentation and many posts on stackoverflow, this should be right.
+The reader indeed changes to `{ readyState: 1, result: "" }` but does never continue to readyState 2 nor does it ever trigger any events.
 
-/** e.g. readAsText**/
-reader.readAsText(blob)
-
-/** check if it's onload or on('load', () => {}) **/
-reader.onLoad((res) => {
-	console.log(res)
-	})
-
-```
-But the reader keeps `reader.readyState === 1 && reader.result === ""`
-
-
-@@@ selector not defined in ContactForm !?!?
-
-Fix contact redux form returning undefined instead of {}
 
 ### production
 
@@ -50,6 +53,8 @@ figure out how to use `serve build` and then run the docker container locally an
 	How to fixate image faker after seeding ?
 
 ### Questions ***
+
+Session middleware should be as lean as possible. Think about when and how often to do a database query.
 
 SEO friendly HTMl and CSS. How?
 
@@ -176,10 +181,8 @@ FB, Instagram en Google login !!
 check what happens if user changes avatar on social medium
 --> use user.patch() to set missing data
 
-
 Follow these recommendations for Express:
 https://expressjs.com/en/advanced/best-practice-security.html
-
 
 Figure out how to deal with many malicious requests. This saves a lot of checking and sanitizing on the request bodies and headers.
 ---> Whitelisting + apiKey

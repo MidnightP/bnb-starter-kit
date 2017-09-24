@@ -114,16 +114,13 @@ class RequestWrapper {
 			(cb) => this.issueRequest(httpOptions, cb)
 
 		, (error, body, response) => {
-			if(error) return done(`Failed request. Reason: ${error}`)
+			if(error) return done(`Failed request for "${httpOptions.url}". Reason: ${error}`)
 
 			done(null, body, response)
 		})
 	}
 
 	issueRequest(httpOptions, cb) {
-
-		const { method, url, data } = httpOptions
-
 		this.axios(httpOptions)
 			.then(response => {
 				if(this.retryStatusCodes.includes(response.status)) {

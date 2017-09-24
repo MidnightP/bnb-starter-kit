@@ -11,6 +11,7 @@ export default {
 		description: 'Description',
 		location: 'Location',
 		review: 'Review',
-		rating: 'Rating'
+		rating: 'Rating',
+		message: 'Message'
 	}
 }

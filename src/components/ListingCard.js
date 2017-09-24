@@ -119,7 +119,7 @@ class ListingCard extends Component {
 						{
 							activeLocation ?
 								<div>
-									<p style={styles.text}>{activeLocation.name}</p>
+									<p style={styles.text}>LOCATION: {activeLocation.name}</p>
 									<img alt={activeLocation.name} style={styles.locationImage} src={activeLocation.image} />
 								</div>
 							: null

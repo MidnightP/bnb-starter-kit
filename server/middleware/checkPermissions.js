@@ -37,18 +37,23 @@ module.exports = (req, res, next) => {
 const malicious = (req, res, cb) => {
 	debug('scanning for malicious content')
 
-	// TODO find out if cors module checks whether referers are whitelisted.
+	// TODO find out if cors module checks whether referers are checked against whitelist.
 	// If yes we can remove this.
 
-	if(req.body.referer) {
-		if(!whitelisted.includes(req.body.referer)) {
-
-			const err = new Error('Rejected:NotWhitelisted')
-			res.status(403)
-
-			return cb(err)
-		}
-	}
+	// // TODO referer ends with a '/' and whitelist doesn't
+	// // To do this right, we need to reduce whitelist to a boolean and match each value with regex.
+	// console.log('REQ.HEADERS.REFERER', req.headers.referer)
+	// if(req.headers.referer) {
+	// 	console.log('WHITELISTED', whitelisted)
+	// 	console.log('WHITELISTED.INCLUDES(REQ.HEADERS.REFERER)', whitelisted.includes(req.headers.referer))
+	// 	if(!whitelisted.includes(req.headers.referer)) {
+	//
+	// 		const err = new Error('Rejected:NotWhitelisted')
+	// 		res.status(403)
+	//
+	// 		return cb(err)
+	// 	}
+	// }
 
 	cb()
 }
@@ -71,18 +76,37 @@ const session = (req, res, cb) => {
 			if (error) return cb(err)
 			if(!userToken) {
 				debug('user token is not valid')
-				res.cookie('token', 'deleted', cookieOptions)
+				res.cookie(cookieOptions.name, 'deleted', cookieOptions)
 				return cb()
 			}
 
 			User.findOne({ _id: userToken.userId, deleted: false }, (error, user) => {
 				if (error) return cb(error)
+				if(!user) {
+					res.clearCookie(cookieOptions.name, cookieOptions)
+					const err = new Error(`User not found.`)
+					err.name = `NotFound:User`
+					res.status(404)
+					return cb(err)
+				}
 
 				req.user = user
 
 				debug(`placed user ${user.firstName} on request`)
 
-				cb()
+				if(user.role !== 'listingOwner') return cb()
+
+				Listing
+					.findOne({ user: user._id })
+					.select('_id')
+					.lean()
+					.exec((error, listing) => {
+						if(error) return cb(error)
+
+						if(listing) req.user.listingId = listing._id
+
+						cb()
+					})
 			})
 		})
 	}

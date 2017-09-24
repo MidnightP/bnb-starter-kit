@@ -3,29 +3,21 @@ import ReactDropzone from 'react-dropzone'
 
 const Dropzone = (props) => {
 
-	const { onChange, value } = props.input
+	const { input, multiple } = props
+	const { onChange, value } = input
 
 	const onDrop = (accepted, rejected) => {
 		if(rejected.length > 0) return console.error('Dropzone rejected:', rejected)
 
-		console.log('ACCEPTED', accepted)
 		debugger
 
-		// const files = accepted.map(a => ({
-		// 	preview: a.preview,
-		// 	name: a.name,
-		// 	type: a.type,
-		// 	size: a.size
-		// }))
-		//
-		// const files = accepted.map(file => file.preview)
-
-		onChange(accepted)
+		if(multiple) return onChange(accepted)
+		onChange(accepted[0])
 	}
 
 	const dropZone =
 		<ReactDropzone accept="image/jpeg, image/png"
-			multiple={false}
+			multiple={ multiple }
 			onDrop={ onDrop }>
 			<div>
 				Click here or drop a file...
@@ -34,7 +26,7 @@ const Dropzone = (props) => {
 
 	const droppedZone =
 		<div>
-			<button onClick={ onChange }>x Remove</button>
+			<button onClick={ () => onChange() }>x Remove</button>
 			{
 				value ? Object.keys(value).map(i =>
 

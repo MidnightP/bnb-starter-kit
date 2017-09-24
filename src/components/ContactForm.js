@@ -2,8 +2,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 
+import { getErrorObject } from '../lib'
 import { sendMessage } from '../routes/SingleListing/reducer'
 import text from '../text'
+
+const validate = (values) => {
+
+	const { message } = values
+
+	const errors = {}
+
+	if(!message) {
+		errors.message = 'Must provide message'
+	} else if(message.length < 150) {
+		errors.message = 'Message is too short'
+	}
+
+	console.log('ERRORS', errors)
+	return errors
+}
 
 class ContactForm extends Component {
 	constructor() {
@@ -13,24 +30,9 @@ class ContactForm extends Component {
 		}
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	// 	this.validate(nextProps)
-	// }
-	//
-	// validate(props) {
-	// 	let disabled = true
-	// 	let messageCheck = false
-	//
-	// 	const { message, error } = props
-	//
-	// 	if(!error && message.length > 150) disabled = false
-	//
-	// 	this.setState({ disabled })
-	// }
-
 	render() {
 
-		const { error } = this.props
+		const { error, submitting } = this.props
 
 		return (
 			<form onSubmit={this.props.sendMessage}>
@@ -42,7 +44,7 @@ class ContactForm extends Component {
 						type="text"
 						maxLength="400"/>
 				</div>
-				<button disabled={this.state.disabled} type="submit">Send</button>
+				<button disabled={ !submitting } type="submit">Send</button>
 				{
 					error ?
 						<div className="error">{ error.message }</div>
@@ -53,19 +55,11 @@ class ContactForm extends Component {
 	}
 }
 
-ContactForm = reduxForm({ form: 'contact' })(ContactForm)
-
-const selector = formValueSelector('contact')
-
-// TODO
-// selector(state, 'message') should return an empty object instead of undefined
+ContactForm = reduxForm({ form: 'contact', validate: validate })(ContactForm)
 
 const mapStateToProps = (state) => {
-	// const { message } = selector(state, 'message')
-	console.log(1, selector(state, 'message'))
 	return {
-		error: state.error,
-		// message
+		...getErrorObject(state.error)
 	}
 }
 

@@ -165,6 +165,7 @@ class UserForm extends Component {
 														id="avatar"
 														name="avatar"
 														type="file"
+														multiple={ false }
 														component={ Dropzone }/>
 												</div>
 											: null

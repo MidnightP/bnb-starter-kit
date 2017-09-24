@@ -154,21 +154,27 @@ const readSingle = (req, res, next) => {
 		deleted: false
 	}
 
+	let selection = req.allowances[req.grantName].listings.GET.join(' ')
+
+	if(req.user)
+		if(req.user.listingId === query._id)
+			selection = req.allowances[req.grantName].listings.GET_OWN.join(' ')
+
 	Listing
 		.findOne(query)
-		.select(req.allReadFields.listings.join(' '))
+		.select(selection)
 		.populate({ path: 'categories', select: `_id` })
 		.populate({ path: 'location', select: `_id` })
 		.populate({ path: 'user', select: req.allowances['any'].users.GET.join(' ') })
 		.populate({
 			path: 'reviews',
-			select: req.allowences.reviews.GET.join(' '),
+			select: req.allowances['any'].reviews.GET.join(' '),
 			options: {
 				limit: 4
 			},
 			populate: {
 				path: 'author',
-				select: req.allowences.users.GET.join(' ')
+				select: req.allowances['any'].users.GET.join(' ')
 			}
 		})
 		.lean()
@@ -287,7 +293,7 @@ const deleteListing = (req, res, next) => {
 				if(err) return handleEnd(err)
 
 				// TODO think about redirecting
-				// if (!req.body.referrer) req.body.referrer = req.headers.origin
+				// if (!req.headers.referer) req.headers.referer = req.headers.origin
 
 				res.body = {
 					_id: deletedDoc._id

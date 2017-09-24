@@ -10,7 +10,7 @@ import { getErrorObject } from '../../lib'
 class SingleListing extends Component {
 
 	componentWillMount() {
-		const { _id } = this.props.routeParams
+		const { _id } = this.props.match.params
 		this.props.getListing(_id)
 		this.props.getReviews(_id)
 	}

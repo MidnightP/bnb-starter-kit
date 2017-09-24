@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 
+import { getErrorObject } from '../lib'
 import { createReview } from '../routes/SingleListing/reducer'
 import text from '../text'
 
@@ -56,7 +57,7 @@ const selector = formValueSelector('review')
 const mapStateToProps = (state) => {
 	const { text, rating } = selector(state, 'text', 'rating')
 	return {
-		error: state.error,
+		...getErrorObject(state.error),
 		text,
 		rating
 	}

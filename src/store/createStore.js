@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 
 import { history } from './location'
 import makeRootReducer from './reducers'
-import { updateLocation } from './location'
+// import { updateLocation } from './location'
 
 
 export default (initialState = {}) => {
@@ -35,7 +35,7 @@ export default (initialState = {}) => {
 	store.asyncReducers = {}
 
 	// To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-	store.unsubscribeHistory = history.listen(updateLocation(store))
+	// store.unsubscribeHistory = history.listen(updateLocation(store))
 
 	if(module.hot) {
 	module.hot.accept('./reducers', () => {
