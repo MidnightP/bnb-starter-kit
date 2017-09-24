@@ -18,7 +18,6 @@ const validate = (values) => {
 		errors.message = 'Message is too short'
 	}
 
-	console.log('ERRORS', errors)
 	return errors
 }
 
@@ -32,7 +31,7 @@ class ContactForm extends Component {
 
 	render() {
 
-		const { error, submitting } = this.props
+		const { error, valid } = this.props
 
 		return (
 			<form onSubmit={this.props.sendMessage}>
@@ -44,7 +43,7 @@ class ContactForm extends Component {
 						type="text"
 						maxLength="400"/>
 				</div>
-				<button disabled={ !submitting } type="submit">Send</button>
+				<button disabled={ !valid || error } type="submit">Send</button>
 				{
 					error ?
 						<div className="error">{ error.message }</div>

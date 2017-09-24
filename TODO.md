@@ -15,7 +15,7 @@ Redirect only (by giving a value to `req.redirectUrl`) when `req.headers.referer
 
 ### Front End
 
-Use everywhere redux-form Synchronous Validation to disable buttons (start made in ContactForm)
+Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
 `Set-Cookie` header not working.....
 START HERE https://github.com/request/request/issues/2747

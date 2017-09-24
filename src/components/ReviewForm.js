@@ -6,19 +6,30 @@ import { getErrorObject } from '../lib'
 import { createReview } from '../routes/SingleListing/reducer'
 import text from '../text'
 
-class ReviewForm extends Component {
+const validate = (values) => {
 
-	// onSubmit(e,b,c) {
-	// 	e.preventDefault()
-	// 	console.log(e);
-	// 	console.log(b);
-	// 	console.log(c);
-	// 	// this.props.createReview()
-	// }
+	const { rating, text } = values
+
+	const errors = {}
+
+	if(!rating) {
+		errors.rating = 'Must provide rating'
+	}
+
+	if(!text) {
+		errors.text = 'Must provide text'
+	} else if(text.length < 30) {
+		errors.text = 'Text is too short (min. 30)'
+	}
+
+	return errors
+}
+
+class ReviewForm extends Component {
 
 	render() {
 
-		const { error } = this.props
+		const { error, valid } = this.props
 
 		return (
 			<form onSubmit={this.props.createReview}>
@@ -39,7 +50,7 @@ class ReviewForm extends Component {
 						type="text"
 						maxLength="400"/>
 				</div>
-				<button type="submit">Opslaan</button>
+				<button type="submit" disabled={ !valid || error }>Opslaan</button>
 				{
 					error ?
 						<div className="error">{ error.message }</div>
@@ -50,16 +61,13 @@ class ReviewForm extends Component {
 	}
 }
 
-ReviewForm = reduxForm({ form: 'review' })(ReviewForm)
+ReviewForm = reduxForm({ form: 'review', validate: validate })(ReviewForm)
 
 const selector = formValueSelector('review')
 
 const mapStateToProps = (state) => {
-	const { text, rating } = selector(state, 'text', 'rating')
 	return {
 		...getErrorObject(state.error),
-		text,
-		rating
 	}
 }
 
