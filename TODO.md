@@ -9,46 +9,20 @@ supercluster   ^2.3.0  →  ^3.0.0
 
 ### Back End
 
-See how referer is actually set in headers like `req.headers.referer`
-Redirect only (by giving a value to `req.redirectUrl`) when `req.headers.referer` is not equal to `req.headers.origin`.
-
-Session middleware should be as lean as possible. Think about when and how often to do a database query.
-`express-session` is built-in to Express 3.x.
-use it
-
-
 ### Front End
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
-`Set-Cookie` header not working.....
-START HERE https://github.com/request/request/issues/2747
-
-1) Can we get the buffer (in the back-end) from the preview reference to the blob?
-supposedly we need:
-
-```javascript
-file // received in my onDrop handler of the react-dropzone component
-
-file instanceof Blob === true
-file instanceof File === true
-
-var reader = new FileReader()
-
-reader.onLoad((e) => {
-	console.log(e)
-})
-
-reader.readAsText(file)
-```
-
-Looking at the documentation and many posts on stackoverflow, this should be right.
-The reader indeed changes to `{ readyState: 1, result: "" }` but does never continue to readyState 2 nor does it ever trigger any events.
-
-
 ### production
 
 figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
+
+
+### Get out there!
+medium
+slack channels
+react starter kits
+http://yeoman.io/generators/
 
 
 ### Small Bugs ***
@@ -72,6 +46,8 @@ We don't need descriptive messages since no one is using the api yet.
 https://github.com/chenglou/react-motion
 
 ### Front end ***
+
+Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
 
 why is the first http request to api an OPTIONS reqest?
 
@@ -107,6 +83,18 @@ map needs to now bounds and size (!)
 Use `marginBounds` array to make sure that markers are not shown when on border of map.
 
 ### Back end ***
+
+Session middleware should be as lean as possible. Think about when and how often to do a database query.
+`express-session` is built-in to Express 3.x. use it
+
+expand session:
+- Set anonymous tokens.
+- Store lastVisit on userToken
+- Store visitAmount on userToken
+- Store known IP's on userToken (put it on all requests with redux middleware)
+
+use header 'Authorization' instead of a POST body
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization
 
 find out from where (in file structure) it is best do migrations and seeds
 preferably outside Docker container (using production config) or preferably in Docker container where production already applies?

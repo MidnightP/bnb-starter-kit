@@ -1,8 +1,12 @@
-import { authRequestWrapper } from '../lib/'
+import { RequestWrapper } from '../lib/'
 
 import { history } from './location'
 import { setLoading, removeLoading } from './loading'
 import { setError } from './error'
+import config from '../config'
+
+const { __authBase__ } = config
+const authRequestWrapper = new RequestWrapper({ baseURL: __authBase__ })
 
 // ------------------------------------
 // Constants
@@ -26,7 +30,10 @@ export const authenticate = () => {
 			authRequestWrapper.get('/authenticate', (error, body, response) => {
 				dispatch(removeLoading('authenticate'))
 
-				if(error) return console.error('Error in authenticating:', error)
+				if(error) {
+					if(process.env.NODE_ENV !== 'production') console.error('Error in authenticating:', error)
+					return dispatch(setError(error))
+				}
 
 				const { statusCode } = response
 
@@ -45,6 +52,9 @@ export const signUp = () => {
 	return (dispatch, getState) => {
 
 		let { values } = getState().form.user
+
+		if(!values) return dispatch(setError({ message: 'sign up form is empty' }))
+
 		delete values.passwordConfirmation
 
 		const httpOptions = {
@@ -52,14 +62,15 @@ export const signUp = () => {
 			data: values
 		}
 
-		console.log('VALUES', values)
-
 		dispatch(setLoading('signUp'))
 
 		authRequestWrapper.post(httpOptions, (error, body, response) => {
 			dispatch(removeLoading('signUp'))
 
-			if(error) return console.error('Error in signing up:', error)
+			if(error) {
+				if(process.env.NODE_ENV !== 'production') console.error('Error in signing up:', error)
+				return dispatch(setError(error))
+			}
 
 			if(response.statusCode !== 200) return dispatch(setError(body))
 
@@ -84,7 +95,10 @@ export const signIn = () => {
 		authRequestWrapper.post(httpOptions, (error, body, response) => {
 			dispatch(removeLoading('signIn'))
 
-			if(error) return console.error('Error in signing in:', error)
+			if(error) {
+				if(process.env.NODE_ENV !== 'production') console.error('Error in signing in:', error)
+				return dispatch(setError(error))
+			}
 
 			if(response.statusCode !== 200) return dispatch(setError(body))
 
@@ -104,7 +118,10 @@ export const signOut = () => {
 			history.push('/')
 			dispatch(signOutAction())
 
-			if(error) return console.error('Error in signing out:', error)
+			if(error) {
+				if(process.env.NODE_ENV !== 'production') console.error('Error in signing out:', error)
+				return dispatch(setError(error))
+			}
 
 			if(response.statusCode !== 200) dispatch(setError(body))
 		})

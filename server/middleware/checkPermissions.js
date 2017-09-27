@@ -11,14 +11,13 @@ const { User, UserToken }       = require('../models')
 const log                       = require('../lib/log')('middleware:permissions')
 const whitelisted               = corsOptions.origin
 
-// NOTE if async.series sequence becomes large and cumbersome,
-// divide into 3 individual middleware functions instead of one overarching function.
+// NOTE divide into 3 individual middleware functions instead of one overarching function.
 
 module.exports = (req, res, next) => {
 
 	async.series([
 
-		malicious.bind(null, req, res),
+		// malicious.bind(null, req, res),
 
 		session.bind(null, req, res),
 
@@ -31,45 +30,18 @@ module.exports = (req, res, next) => {
 	})
 }
 
-// TODO See whether CORS can also check referer address for us.
-// Look for referer-, user data and "AC kinda data"
-
-const malicious = (req, res, cb) => {
-	debug('scanning for malicious content')
-
-	// TODO find out if cors module checks whether referers are checked against whitelist.
-	// If yes we can remove this.
-
-	// // TODO referer ends with a '/' and whitelist doesn't
-	// // To do this right, we need to reduce whitelist to a boolean and match each value with regex.
-	// console.log('REQ.HEADERS.REFERER', req.headers.referer)
-	// if(req.headers.referer) {
-	// 	console.log('WHITELISTED', whitelisted)
-	// 	console.log('WHITELISTED.INCLUDES(REQ.HEADERS.REFERER)', whitelisted.includes(req.headers.referer))
-	// 	if(!whitelisted.includes(req.headers.referer)) {
-	//
-	// 		const err = new Error('Rejected:NotWhitelisted')
-	// 		res.status(403)
-	//
-	// 		return cb(err)
-	// 	}
-	// }
-
-	cb()
-}
-
-// TODO
-// Store lastVisit on userToken
-// Store visitAmount on userToken
-// Store known IP's on userToken (put it on all requests with redux middleware)
+// const malicious = (req, res, cb) => {
+// 	debug('scanning for malicious content')
+//
+// TODO scan for user data and "AC kinda data"
+//
+// 	cb()
+// }
 
 const session = (req, res, cb) => {
 	debug('session')
 
-	const token = req.headers.token ? req.headers.token : req.cookies.token
-	console.log('REQ.COOKIES', req.cookies)
-	console.log('REQ.SIGNEDCOOKIES', req.signedCookies)
-	console.log('REQ.HEADERS', req.headers)
+	const token = req.cookies[cookieOptions.name]
 
 	if(token) {
 		return UserToken.validate(token, (error, userToken) => {
@@ -92,7 +64,7 @@ const session = (req, res, cb) => {
 
 				req.user = user
 
-				debug(`placed user ${user.firstName} on request`)
+				log.info(`request with session from: ${user.firstName}`)
 
 				if(user.role !== 'listingOwner') return cb()
 
@@ -111,8 +83,6 @@ const session = (req, res, cb) => {
 		})
 	}
 
-	// TODO Set anonymous token here.
-	// First decide how to deal with it when getting the user in authentication routes.
 	cb()
 }
 

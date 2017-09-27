@@ -45,7 +45,7 @@ class NavBar extends PureComponent {
 					{
 						signedIn ?
 							<Col xs={2}>
-								<div onClick={signOut} className="link-router" activeClassName="link-router--active">
+								<div onClick={signOut} className="link-router">
 									<h3>Sign out</h3>
 								</div>
 							</Col>

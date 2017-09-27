@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 
-import { history } from './location'
+// import { history } from './location'
 import makeRootReducer from './reducers'
 // import { updateLocation } from './location'
 
@@ -11,7 +11,6 @@ export default (initialState = {}) => {
 	const middleware = [
 		thunk
 	]
-
 
 	const enhancers = []
 

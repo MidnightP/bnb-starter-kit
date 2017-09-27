@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 
 import { getErrorObject } from '../lib'
 import { createReview } from '../routes/SingleListing/reducer'
@@ -63,12 +63,8 @@ class ReviewForm extends Component {
 
 ReviewForm = reduxForm({ form: 'review', validate: validate })(ReviewForm)
 
-const selector = formValueSelector('review')
-
-const mapStateToProps = (state) => {
-	return {
-		...getErrorObject(state.error),
-	}
-}
+const mapStateToProps = (state) => ({
+	...getErrorObject(state.error),
+})
 
 export default connect(mapStateToProps, { createReview })(ReviewForm)

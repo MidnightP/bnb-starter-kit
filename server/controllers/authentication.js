@@ -10,7 +10,6 @@ const { User, Listing, UserToken } = require('../models')
 
 const { cookieOptions } = config
 
-
 exports.authenticate = (req, res, next) => {
 
 	// NOTE token and user are checked in previous middleware
@@ -42,8 +41,7 @@ exports.signUp = (req, res, next) => {
 	}
 
 	console.log('BODY.AVATAR', body.avatar)
-	const avatar = body.avatar[0]
-
+	const { avatar } = body
 	delete body.avatar
 
 	console.log('AVATAR', avatar)
@@ -105,10 +103,7 @@ exports.signUp = (req, res, next) => {
 		}], (err, user, userToken) => {
 			if (err) return next(err)
 
-			res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, { domain: req.headers.origin }))
-
-			// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
-			// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
+			res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, { domain: process.env.REACT_APP_API_HOST }))
 
 			res.body = {
 				user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
@@ -183,20 +178,15 @@ exports.signIn = (req, res, next) => {
 	], (err, user, userToken) => {
 		if (err) return next(err)
 
-		// res.set({ 'Token': userToken.token })
-
 		res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, {
-			domain: `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`
+			domain: process.env.REACT_APP_API_HOST
 		}))
-
-		// redirectBase = req.headers.referer ? req.headers.referer : req.headers.origin
-		// req.redirectUrl = `${redirectBase}?token=${userToken.token}`
 
 		res.body = {
 			user: R.pick(req.allowances[req.grantName].users.GET_OWN, user)
 		}
 
-		if(req.user.listingId) res.body.user.listingId = req.user.listingId
+		if(user.listingId) res.body.user.listingId = req.user.listingId
 
 		next()
 	})
@@ -204,8 +194,7 @@ exports.signIn = (req, res, next) => {
 
 exports.signOut = (req, res, next) => {
 
-	let { token } = req.headers
-	token = req.cookies ? req.cookies.token : token
+	const token = req.cookies[cookieOptions.name]
 
 	if(!token) {
 		const err = new Error(`No token was sent.`)

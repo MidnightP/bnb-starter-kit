@@ -165,6 +165,7 @@ class UserForm extends Component {
 														id="avatar"
 														name="avatar"
 														type="file"
+														readAs="readAsDataURL"
 														multiple={ false }
 														component={ Dropzone }/>
 												</div>

@@ -3,20 +3,25 @@ module.exports = {
 	cookieOptions: {
 		maxAge: 86400000,
 		httpOnly: true,
-		name: 'token'
+		name: '_starter-token',
+		sameSite: false  // 'Strict', 'Lax', true, false
 	},
 	reaperInterval: '*/5 * * * *',
 	apiVersion: '1',
 	authVersion: '1',
 	corsOptions: {
+		// using regex the 'Access-Control-Allow-Origin' header is set in the response on the 'OPTIONS' preflight
+		// but not on the response for the first POST
+		// but yet it is there on the first re-attempt at POST done by Axiios
+		// origin: [/\:\/\/localhost:/ig],
+
 		origin: ['http://localhost:3000'],
 		allowedHeaders: [
 			'Content-Type',
-			'Authorization',
-			'Access-Control-Allow-Methods',
-			'Access-Control-Allow-Credentials',
-			'Access-Control-Allow-Origin',
-			'Access-Control-Allow-Headers'
+		// 	'Authorization',
+		// 	'Access-Control-Allow-Methods',
+		//	'Access-Control-Allow-Origin',
+		// 	'Access-Control-Allow-Headers'
 		],
 		methods: ['GET','PUT','PATCH','POST','DELETE'],
 		preflightContinue: false,             // TODO seems to have no effect?
