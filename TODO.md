@@ -1,18 +1,3 @@
-### Questions
-
-css or sass or scss or less in combination with create-react-app ?
-
-Breaking changes???
-react-scripts  1.0.11  →  1.0.13
-react-widgets  ^3.4.8  →  ^4.0.0
-supercluster   ^2.3.0  →  ^3.0.0
-
-### Back End
-
-### Front End
-
-Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
-
 ### production
 
 figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
@@ -25,12 +10,40 @@ react starter kits
 http://yeoman.io/generators/
 
 
-### Small Bugs ***
+### Back End
 
-@@@ `faker.image.image()` and `faker.image.imageUrl()` and `faker.image.city()` give url that generates random image on every get
-	How to fixate image faker after seeding ?
+Change reviews route to `listings/:_id/reviews`
+
+Use patch & put for creating, updating and modifying.
+Leave post for actions.
+
+Exposing API : How to authenticate the application client? not only the users github issue #405
+Use apiTokens ??
+
+Send email if user receives review
+Use mail helper in contacts.js and reviews.js
+
+How to receive all emails in gmail.....?
+We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
+
+### Front End
+
+Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
+
+Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
+
+Make scroll movement have horizontal effect ?
+
+Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
+
+@@@ Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
+
 
 ### Questions ***
+
+Session middleware should be as lean as possible. Think about when and how often to do a database query.
+`express-session` is built-in to Express 3.x. use it
+
 
 SEO friendly HTMl and CSS. How?
 
@@ -38,6 +51,14 @@ use uniform error messages (!) to let the the front end know what to do!
 We don't need descriptive messages since no one is using the api yet.
 
 @@@ Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
+
+If requirements of geocoding get to special, construct google maps api get request end point instead of using Geocode module.
+
+A1) Figure out if it is wise to Calculate clusters server side ??
+A2) Place an async geocode request in the front end
+		` return await GeoCoder.geocode(sanitize(overrides.zipcode)) `
+		Back end: if coordinates available use them, else look for zipcode....
+		This allows us to 'instantly' recenter the map in the browser, before fetching the listings (?).....
 
 **bijlesismore** Grommet or MUI or something else?
 ----> Check out: http://redux-form.com/6.6.3/examples/material-ui/
@@ -47,30 +68,20 @@ https://github.com/chenglou/react-motion
 
 ### Front end ***
 
-Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
-
-why is the first http request to api an OPTIONS reqest?
-
 In index.html, if possible use variables for things likewebsitetitle
-
-Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
 
 Use `getComponent` function on all pages' index.js . needed for code splitting
 
 use throttle as an option in request util and set a default. So we can specify throttling in individual reducers.
-
-@@@ Prevent too large image sizes to be uploaded. Check size on file.... --> dispatch error
 
 @@@ Convert all inline style to css or sass or scss or less
 
 Use react-snapshot to create static html as explained by react-app
 https://www.npmjs.com/package/react-snapshot
 
-Make scroll movement have horizontal effect ?
-
 @@@ Make sure that there is NO text in components.... but in config/text
 
-Make map size properly with display flex with `{ flex: 1 }` so that searchfield can be on the map :)
+Make map size properly with display flex with `{ flex: 1 }` ?
 
 figure out how to use `fitBounds` function: https://github.com/istarkov/google-map-react/blob/master/API.md
 map needs to now bounds and size (!)
@@ -84,8 +95,9 @@ Use `marginBounds` array to make sure that markers are not shown when on border 
 
 ### Back end ***
 
-Session middleware should be as lean as possible. Think about when and how often to do a database query.
-`express-session` is built-in to Express 3.x. use it
+@@@ `faker.image.image()` and `faker.image.imageUrl()` and `faker.image.city()` give url that generates random image on every get
+	How to fixate image faker after seeding ?
+
 
 expand session:
 - Set anonymous tokens.
@@ -99,7 +111,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization
 find out from where (in file structure) it is best do migrations and seeds
 preferably outside Docker container (using production config) or preferably in Docker container where production already applies?
 
-debug colors are gawn... ;(
+development
+- debug colors are gawn... ;(
+- Nodemon restart with `rs` not working (see github issue in email)
 
 find a way to both source enviroment and set it in docker using a single file!
 
@@ -107,47 +121,7 @@ if the user is non-existent (for whatever reason), the user-less listing should 
 
 find a nice way to store logs outside of the container... package for winston protocol?
 
-CORS
-a) cors errors are not logged...
-b) we still receive proper responses, which I don't see in the front-end but only in network-tab, why?
-c) cors errors -> should not be retried
-
-Change reviews route to `listings/:_id/reviews`
-
-Use patch & put for creating, updating and modifying.
-Leave post for actions.
-
-Nodemon restart with `rs` not working (see github issue in email)
-
-Resize images to one size and resolution to make sure database size doesnt blow up.
-
-Exposing API : How to authenticate the application client? not only the users github issue #405
-Use apiTokens ??
-
-Mongoose validation resuls in `Unhandled rejection`. Are we handling it by logging or possibly catching it in post hooks?
-
-Send email if user receives review
-Use mail helper in contacts.js and reviews.js
-
-Add Avatar upload possibility ( Schema.Types.Buffer ?? )
-
-If requirements of geocoding get to special, construct google maps api get request end point instead of using Geocode module.
-
-A1) Figure out if it is wise to Calculate clusters server side ??
-A2) Place an async geocode request in the front end
-		` return await GeoCoder.geocode(sanitize(overrides.zipcode)) `
-		Back end: if coordinates available use them, else look for zipcode....
-		This allows us to 'instantly' recenter the map in the browser, before fetching the listings (?).....
-
-Use async await for parallel stuff instead of async module ?
-
-geocoding should happen in put / patch function if zipcode changed, not in pre save hook ??
-
-How to receive all emails in gmail.....?
-We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
-
-This acl package could be useful, want doesnt have functionality for specific fields...
-https://www.npmjs.com/package/acl
+geocoding should happen in put / patch function if zipcode changed, not in pre save hook
 
 
 ##### Express ***

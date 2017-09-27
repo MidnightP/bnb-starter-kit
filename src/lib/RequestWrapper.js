@@ -1,7 +1,7 @@
 import retry from  'async/retry'
 import axios from  'axios'
 
-class RequestWrapper {
+export class RequestWrapper {
 
 	constructor({ baseURL }) {
 
