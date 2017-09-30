@@ -1,29 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDropzone from 'react-dropzone'
 
 import fileReader from '../lib/fileReader'
 
-class Dropzone extends React.Component {
+class Dropzone extends Component {
 
-	constructor(props) {
-		super(props)
-		return this.state = {
+	constructor() {
+		super()
+		this.state = {
 			files: [],
 			readFiles: []
 		}
-	}
-
-	shouldComponentUpdate(a) {
-		console.log("update", a)
-		return true
 	}
 
 	// NOTE readAs can be 'readAsArrayBuffer', 'readAsBinaryString', 'readAsDataURL' or 'readAsText'
 	onDrop(accepted, rejected) {
 		if(rejected.length > 0) return console.error('Dropzone rejected:', rejected)
 
-		const { multiple, onChange, readAs } = this.props
+		const { multiple, input, readAs } = this.props
 		const { files, readFiles } = this.state
+		const { onChange } = input
 
 		const onProgress = (event) => {
 			// NOTE e.g. do something with event.loaded
@@ -37,7 +33,7 @@ class Dropzone extends React.Component {
 		const newFile = accepted[readFiles.length]
 
 		fileReader(newFile, readOptions, (err, outPut) => {
-			if(process.env.NODE_ENV !== 'production') console.error("ONERROR", err)
+			if(err && process.env.NODE_ENV !== 'production') console.error("ONERROR", err)
 
 			const updatedReadFiles = [].concat(readFiles, outPut)
 
@@ -73,7 +69,6 @@ class Dropzone extends React.Component {
 				</div>
 			</ReactDropzone>
 
-		console.log('FILES', files)
 		const droppedZone =
 			<div>
 				<button onClick={ this.emptyDropzone.bind(this) }>x Remove</button>

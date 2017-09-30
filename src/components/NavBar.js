@@ -19,14 +19,14 @@ class NavBar extends PureComponent {
 		return(
 			<Grid className="navbar">
 				<Row>
-					<Col xs={8}>
+					<Col xs={4}>
 						<NavLink to="/" className="link-router">
 							<h1>{ websiteTitle }</h1>
 						</NavLink>
 					</Col>
 					{
 						!signedIn ?
-							<Col xs={2}>
+							<Col xsOffset={4} xs={2}>
 								<NavLink to="/signin" className="link-router" activeClassName="link-router--active">
 									<h3>Sign in</h3>
 								</NavLink>
@@ -43,20 +43,20 @@ class NavBar extends PureComponent {
 						: null
 					}
 					{
-						signedIn ?
-							<Col xs={2}>
-								<div onClick={signOut} className="link-router">
-									<h3>Sign out</h3>
-								</div>
+						listingId ?
+							<Col xsOffset={4} xs={2}>
+								<NavLink to={`/listings/${listingId}`} className="link-router" activeClassName="link-router--active">
+									<h3>My listing</h3>
+								</NavLink>
 							</Col>
 						: null
 					}
 					{
-						listingId ?
-							<Col xs={2}>
-								<NavLink to={`/listings/${listingId}`} className="link-router" activeClassName="link-router--active">
-									<h3>My listing</h3>
-								</NavLink>
+						signedIn ?
+							<Col xsOffset={ listingId ? 0 : 10} xs={2}>
+								<div onClick={signOut} className="link-router">
+									<h3>Sign out</h3>
+								</div>
 							</Col>
 						: null
 					}
