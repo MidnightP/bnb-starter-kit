@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDropzone from 'react-dropzone'
 
-import { fileReader } from '../lib'
+import fileReader from '../lib/fileReader'
 
 class Dropzone extends React.Component {
 

@@ -1,10 +1,10 @@
-import { RequestWrapper } from '../lib'
+import RequestWrapper from '../lib/RequestWrapper'
 import { setLoading, removeLoading } from './loading'
 
 import config from '../config'
 
 const { __apiBase__ } = config
-const apiRequestWrapper = new RequestWrapper({ baseURL: __apiBase__ })
+const apiRequestWrapper = RequestWrapper({ baseURL: __apiBase__ })
 
 // ------------------------------------
 // Constants

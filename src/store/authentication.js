@@ -1,4 +1,4 @@
-import { RequestWrapper } from '../lib/'
+import RequestWrapper from '../lib/RequestWrapper'
 
 import { history } from './location'
 import { setLoading, removeLoading } from './loading'

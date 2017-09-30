@@ -1,9 +1,29 @@
+import _ from "underscore"
 import retry from  'async/retry'
 import axios from  'axios'
 
-export class RequestWrapper {
+const activeWrappers = []
+
+export default ({ baseURL }) => {
+
+	let wrapper
+
+	const active = _.find(activeWrappers, (wrapper) => wrapper.baseURL === baseURL)
+
+	if(active) {
+		wrapper = active
+	} else {
+		wrapper = new RequestWrapper({ baseURL })
+		activeWrappers.push(wrapper)
+	}
+
+	return wrapper
+}
+
+class RequestWrapper {
 
 	constructor({ baseURL }) {
+		console.log('BASEURL', baseURL)
 
 		if(!baseURL) console.error('Must provide request wrapper a baseURL')
 
@@ -115,5 +135,3 @@ export class RequestWrapper {
 			.catch(cb)
 	}
 }
-
-export default RequestWrapper

@@ -1,4 +1,4 @@
-import { RequestWrapper } from '../../lib'
+import RequestWrapper from '../../lib/RequestWrapper'
 
 import { setLoading, removeLoading } from '../../store/loading'
 import { setError } from '../../store/error'

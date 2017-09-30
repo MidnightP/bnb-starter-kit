@@ -31,6 +31,7 @@ We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmai
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
 Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
+Instead of 'hiding' them inside the respective routes
 
 Make scroll movement have horizontal effect ?
 
