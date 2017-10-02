@@ -8,7 +8,7 @@ const Schema = mongoose.Schema
 
 const userTokenSchema = new Schema({
 		token:       String,
-		userId:      { type: Schema.Types.ObjectId, unique: true },
+		userId:      { type: Schema.Types.ObjectId, unique: true, index: true },
 		expiresAt:   Number,
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }

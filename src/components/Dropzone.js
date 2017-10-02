@@ -44,6 +44,7 @@ class Dropzone extends Component {
 
 			if(multiple) return onChange(updatedReadFiles)
 			onChange(updatedReadFiles[0])
+			console.log('UPDATEDREADFILES[0]', updatedReadFiles[0])
 		})
 	}
 

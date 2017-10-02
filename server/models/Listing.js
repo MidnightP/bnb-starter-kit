@@ -8,13 +8,13 @@ const { GeoCoder } = require('../lib')
 const Schema = mongoose.Schema
 
 const listingSchema = new Schema({
+		user:        { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+		location:    { type: Schema.Types.ObjectId, ref: 'Location', index: true  },
+		categories:  [{ type: Schema.Types.ObjectId, ref: 'Category', required: true, index: true }],
 		price:       { type: Number, required: true, min: 1, max: 99 },
 		description: { type: String, required: true, maxlength: 1000 },
 		zipcode:     { type: String, required: true, maxlength: 10, trim: true },
-		location:    { type: Schema.Types.ObjectId, ref: 'Location' },
-		user:        { type: Schema.Types.ObjectId, ref: 'User', required: true },
-		coordinates: [{ type: Number, validate: validateCoordinates }],
-		categories:  [{ type: Schema.Types.ObjectId, ref: 'Category', required: true }]
+		coordinates: [{ type: Number, validate: validateCoordinates }]
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' },
 		toJSON: { virtuals: true }

@@ -17,7 +17,7 @@ exports.validateCoordinates = [(val) => {
 }, '{PATH} must (only) contain lat and lng: [<lat>, <lng>]']
 
 exports.toLowerFirst = (field) => {
-    return field.charAt(0).toUpperCase() + field.slice(1);
+	return field.charAt(0).toUpperCase() + field.slice(1);
 }
 
 exports.randomStr = (cb) => {

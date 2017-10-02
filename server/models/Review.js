@@ -6,11 +6,11 @@ const { validateHook } = require('./helpers')
 const Schema = mongoose.Schema
 
 const reviewSchema = new Schema({
+		author:           { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+		user:             { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+		listingId:        { type: Schema.Types.ObjectId, ref: 'Listing', required: true, index: true },
 		text:             { type: String, required: true, maxlength: 400 },
-		rating:           { type: Number, required: true, min: 1, max: 5 },
-		author:           { type: Schema.Types.ObjectId, ref: 'User', required: true },
-		user:             { type: Schema.Types.ObjectId, ref: 'User', required: true },
-		listingId:        { type: Schema.Types.ObjectId, ref: 'Listing', required: true }
+		rating:           { type: Number, required: true, min: 1, max: 5 }
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 })

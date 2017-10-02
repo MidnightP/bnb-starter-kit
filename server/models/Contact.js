@@ -7,7 +7,7 @@ const Schema = mongoose.Schema
 const contactSchema = new Schema({
 		sender:   { type: Schema.Types.ObjectId, ref: 'User', required: true },
 		receiver: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-		message:  { type: Object, required: true },
+		message:  { type: Object, required: true }
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 })

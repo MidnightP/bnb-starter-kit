@@ -18,6 +18,7 @@ const fileReader = (file, readOptions, done) => {
 
 	reader.onloadend = event => {
 		console.info('use this to measure total bytes received', event.total)
+		console.log('EVENT', event)
 		done(null, event.target.result)
 	}
 

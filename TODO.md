@@ -12,7 +12,19 @@ http://yeoman.io/generators/
 
 ### Back End
 
-request too large! --> release!
+update atom ????
+
+send & show avatar in front end
+
+--> release!
+
+place indexes on searchedby and referenced fields
+
+remove Ramda
+
+add avatar seeders and remove old ones
+
+optimize signUp flow
 
 Change reviews route to `listings/:_id/reviews`
 
@@ -30,6 +42,10 @@ We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmai
 
 ### Front End
 
+remove button on dropzone sends http request!?
+
+remove Ramda
+
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
 Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
@@ -44,9 +60,10 @@ Pull input fields to the right and put all in one column! `right: 0px` on `form-
 
 ### Questions ***
 
+use XFSR (?) tokens ?
+
 Session middleware should be as lean as possible. Think about when and how often to do a database query.
 `express-session` is built-in to Express 3.x. use it
-
 
 SEO friendly HTMl and CSS. How?
 

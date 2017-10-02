@@ -2,11 +2,17 @@ const debug  = require('debug')('app:routes:authentication')
 const bcrypt = require('bcrypt')
 const async  = require('async')
 const R      = require('ramda')
+const path   = require('path')
 const fs     = require('fs')
 
 const config                       = require('../config')
 const getLogger                    = require('../lib/log')
-const { User, Listing, UserToken } = require('../models')
+const {
+	User,
+	Listing,
+	UserToken,
+	Avatar
+} = require('../models')
 
 const { cookieOptions } = config
 
@@ -40,39 +46,23 @@ exports.signUp = (req, res, next) => {
 		return next(err)
 	}
 
-	console.log('BODY.AVATAR', body.avatar)
-	const { avatar } = body
-	delete body.avatar
+	const { avatar, avatarUrl } = body
 
-	console.log('AVATAR', avatar)
 	console.log('TYPEOF AVATAR', typeof avatar)
+
+	delete body.avatar
+	delete body.avatUrl
 
 	async.waterfall([
 
 		(cb) => {
-			cb(null, new User(body))
-		},
 
-		(user, cb) => {
-			async.parallel({
+			new User(body).save((err, user) => {
+				if (err) return cb(err)
 
-				user: (cb) => {
-					user.save((err, user) => {
-						if (err) return cb(err)
-
-						debug(user.email + ' signing up')
-						cb(null, user)
-					})
-				},
-
-				avatar: (cb) => fs.writeFile(avatar, `../../public/avatars/${user._id}.jpg`, cb)
-
-			}, (error, { user }) => {
-				if(error) return cb(error)
-
+				debug(user.email + ' signing up')
 				cb(null, user)
 			})
-
 		},
 
 		(user, cb) => {
@@ -93,6 +83,7 @@ exports.signUp = (req, res, next) => {
 		},
 
 		(user, cb) => {
+
 			new UserToken({ userId: user._id })
 				.save((err, userToken) => {
 					if (err) return cb(err)
@@ -100,8 +91,20 @@ exports.signUp = (req, res, next) => {
 					debug('UserToken created')
 					cb(null, user, userToken)
 				})
+
 		}], (err, user, userToken) => {
 			if (err) return next(err)
+
+			const { _id } = user
+
+			// NOTE only do this when everything else went right
+			new Avatar({ user: _id, url: avatarUrl, image: avatar }).save(err => {
+
+				// NOTE we don't want to slow down the signup flow
+				if (err) return log.error(err)
+
+				debug(`Stored avatar for ${user.email} (${_id}).`)
+			})
 
 			res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, { domain: process.env.REACT_APP_API_HOST }))
 

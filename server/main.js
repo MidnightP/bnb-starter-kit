@@ -71,8 +71,8 @@ app.set('mailTransporter', nodemailer.createTransport({
 app
 	.use(helmet())
 	.use(cookieParser(config.cookieSecret))
-	.use(bodyParser.json())
-	.use(bodyParser.urlencoded({ extended: false }))
+	.use(bodyParser.json({ limit: '3mb' }))
+	.use(bodyParser.urlencoded({ limit: '3mb', extended: false }))
 
 	// NOTE we need both to enable cors, and preflight mode on OPTIONS requests.
 	.use(cors(corsOptions))

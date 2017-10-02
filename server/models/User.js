@@ -15,10 +15,7 @@ const userSchema = new Schema({
 		lastName:           { type: String, required: true, trim: true, maxlength: 30, trim: true, set: toLowerFirst },
 		prefix:             { type: String, trim: true, maxlength: 15, trim: true, lowercase: true },
 		role:               { type: String, required: true, enum: { values: roles } },
-		password:           { type: String },
-
-		avatarUrl:          { type: String },
-		// avatar:             { type: Buffer },
+		password:           { type: String }
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 })
