@@ -35,18 +35,30 @@ button {
 /* TODO check widgets library about styling -> which classNames to use?
 
 .rw-widget {
-	margin: 5px;
-	padding: 5px;
-	background: lightgrey;
+    margin: 5px;
+    padding: 5px;
+    background: lightgrey;
 }
 
 .rc-slider {
-	margin: 5px;
-	padding: 5px;
-	background: lightgrey;
+    margin: 5px;
+    padding: 5px;
+    background: lightgrey;
 }
 
 */
+
+.avatar-small {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar-large {
+  width: 100px;
+  height: 1000px;
+  border-radius: 50%;
+}
 
 .navbar {
   background-color: white;

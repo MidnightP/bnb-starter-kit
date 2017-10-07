@@ -150,7 +150,7 @@ class UserForm extends Component {
 													<label htmlFor="avatarUrl">Avatar (URL)</label>
 													<Field className="form-field"
 														id="avatarUrl"
-														name="avatarUrl"
+														name="avatar.url"
 														type="text"
 														component="input"
 														maxLength="500"/>
@@ -163,9 +163,9 @@ class UserForm extends Component {
 													<label htmlFor="avatar">Avatar (upload a file)</label>
 													<Field className="form-field"
 														id="avatar"
-														name="avatar"
+														name="avatar.dataUrl"
 														type="file"
-														readAs="readAsBinaryString"
+														readAs="readAsDataURL"
 														multiple={ false }
 														component={ Dropzone }/>
 												</div>

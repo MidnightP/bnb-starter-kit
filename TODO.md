@@ -4,11 +4,15 @@ figure out how to use `serve build` and then run the docker container locally an
 
 
 ### Get out there!
+
 medium
 slack channels
 react starter kits
 http://yeoman.io/generators/
 
+### Front End
+
+Sometimes no cookie send upon signout ... ?
 
 ### Back End
 
@@ -59,6 +63,9 @@ Pull input fields to the right and put all in one column! `right: 0px` on `form-
 
 
 ### Questions ***
+
+should we need request wrapper ?
+
 
 use XFSR (?) tokens ?
 

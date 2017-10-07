@@ -98,15 +98,19 @@ exports.readMany = (req, res, next) => {
 					.populate('location', `_id`)
 					.populate('categories', `_id`)
 					.populate('reviews', `rating`)
-					.populate({ path: 'user', select: req.allowances['any'].users.GET.join(' ') })
+					.populate({
+						path: 'user',
+						select: req.allowances['any'].users.GET.join(' '),
+						populate: 'avatar'
+					})
 					.lean()
 					.sort(sort)
 					.limit(limit)
 					.skip(skip)
 					.exec(cb)
 			}
-		], (e, [ count, docs ]) => {
-			if(e) return next(e)
+		], (err, [ count, docs ]) => {
+			if(err) return next(err)
 
 			res.body = {
 				count,

@@ -8,13 +8,18 @@ import { signOut } from '../store/authentication'
 
 const { websiteTitle } = text
 
-
 class NavBar extends PureComponent {
 
 	render() {
 
-		const { signedIn, signOut } = this.props
-		const listingId = signedIn ? signedIn.listingId : null
+		let listingId, firstName, avatar
+		const { currentUser, signOut } = this.props
+
+		if(currentUser){
+			listingId = currentUser.listingId
+			firstName = currentUser.firstName
+			avatar    = currentUser.avatar
+		}
 
 		return(
 			<Grid className="navbar">
@@ -25,7 +30,7 @@ class NavBar extends PureComponent {
 						</NavLink>
 					</Col>
 					{
-						!signedIn ?
+						!currentUser ?
 							<Col xsOffset={4} xs={2}>
 								<NavLink to="/signin" className="link-router" activeClassName="link-router--active">
 									<h3>Sign in</h3>
@@ -34,7 +39,7 @@ class NavBar extends PureComponent {
 						: null
 					}
 					{
-						!signedIn ?
+						!currentUser ?
 							<Col xs={2}>
 								<NavLink to="/signup" className="link-router" activeClassName="link-router--active">
 									<h3>Sign up</h3>
@@ -52,8 +57,15 @@ class NavBar extends PureComponent {
 						: null
 					}
 					{
-						signedIn ?
-							<Col xsOffset={ listingId ? 0 : 10} xs={2}>
+						currentUser ?
+							<Col xsOffset={ listingId ? 0 : 4 } xs={2}>
+								<img alt={`avatar for ${firstName}`} className="avatar-small" src={avatar} />
+							</Col>
+						: null
+					}
+					{
+						currentUser ?
+							<Col xs={2}>
 								<div onClick={signOut} className="link-router">
 									<h3>Sign out</h3>
 								</div>
@@ -68,7 +80,7 @@ class NavBar extends PureComponent {
 
 const mapStateToProps = (state) => {
 	return {
-		signedIn: !!state.authentication.currentUser
+		currentUser: state.authentication.currentUser
 	}
 }
 

@@ -14,7 +14,7 @@ class AppContainer extends Component {
 
 		const { currentUser, authenticate, getCategories, getLocations } = this.props
 
-		if(currentUser) authenticate()
+		authenticate()
 		getCategories()
 		getLocations()
 	}
@@ -37,7 +37,7 @@ class AppContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	currentUser: state.currentUser
+	currentUser: state.authentication.currentUser
 })
 
 export default connect(mapStateToProps, { getCategories, getLocations, authenticate })(AppContainer)

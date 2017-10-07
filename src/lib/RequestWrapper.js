@@ -54,8 +54,10 @@ class RequestWrapper {
 			timeout: 1000,         // default
 			responseType: 'json',  // default
 			validateStatus: status => {
+
+				// NOTE What can we use this for?
+
 				console.log('STATUS', status)
-				console.log("!this.retryStatusCodes.includes(status)", !this.retryStatusCodes.includes(status))
 				return !this.retryStatusCodes.includes(status)
 			}
 		})

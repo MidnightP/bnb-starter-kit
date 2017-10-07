@@ -206,9 +206,7 @@ let currentUser
 try {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'))
 } catch (error) {
-	if(error) {
-		currentUser = null
-	}
+	currentUser = null
 }
 
 const initialState = { currentUser }

@@ -26,7 +26,13 @@ exports.authenticate = (req, res, next) => {
 
 	if(req.user.listingId) res.body.user.listingId = req.user.listingId
 
-	next()
+	Avatar.findById(req.user.avatar, (err, doc) => {
+		if(err) return next(err)
+
+		res.body.user.avatar = doc.url ? doc.url : doc.dataUrl
+
+		next()
+	})
 }
 
 exports.signUp = (req, res, next) => {
@@ -46,12 +52,9 @@ exports.signUp = (req, res, next) => {
 		return next(err)
 	}
 
-	const { avatar, avatarUrl } = body
-
-	console.log('TYPEOF AVATAR', typeof avatar)
+	const { avatar } = body
 
 	delete body.avatar
-	delete body.avatUrl
 
 	async.waterfall([
 
@@ -97,15 +100,6 @@ exports.signUp = (req, res, next) => {
 
 			const { _id } = user
 
-			// NOTE only do this when everything else went right
-			new Avatar({ user: _id, url: avatarUrl, image: avatar }).save(err => {
-
-				// NOTE we don't want to slow down the signup flow
-				if (err) return log.error(err)
-
-				debug(`Stored avatar for ${user.email} (${_id}).`)
-			})
-
 			res.cookie(cookieOptions.name, userToken.token, Object.assign({}, cookieOptions, { domain: process.env.REACT_APP_API_HOST }))
 
 			res.body = {
@@ -113,6 +107,22 @@ exports.signUp = (req, res, next) => {
 			}
 
 			next()
+
+			// NOTE only do this when everything else went right
+			new Avatar({ url: avatar.url, dataUrl: avatar.dataUrl }).save((err, success) => {
+
+				// NOTE we don't want to slow down the signup flow
+				if (err) return log.error(`Error creating avatar: ${err}`)
+
+				User.findByIdAndUpdate(user._id, { $set: { avatar: success._id }}, (err) => {
+
+					// NOTE we don't want to slow down the signup flow
+					if (err) return log.error(`Error updating user with avatar: ${err}`)
+
+					debug(`Stored avatar for ${user.email} (${_id}) and avatarId (${success._id})`)
+
+				})
+			})
 	})
 }
 
@@ -132,6 +142,7 @@ exports.signIn = (req, res, next) => {
 	async.waterfall([
 		(cb) => {
 			User.findOne({ email: email, deleted: false })
+				.populate('avatar')
 				.exec((err, user) => {
 					if (err) return cb(err)
 

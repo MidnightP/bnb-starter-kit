@@ -5,11 +5,11 @@ const config  = require('../config')
 const async   = require('async')
 
 const { cookieOptions, corsOptions,
-	apiVersion, authVersion }   = config
-const { allAllowances }         = require('./permissions')
-const { User, UserToken }       = require('../models')
-const log                       = require('../lib/log')('middleware:permissions')
-const whitelisted               = corsOptions.origin
+	apiVersion, authVersion }      = config
+const { allAllowances }            = require('./permissions')
+const { User, UserToken, Listing } = require('../models')
+const log                          = require('../lib/log')('middleware:permissions')
+const whitelisted                  = corsOptions.origin
 
 // NOTE divide into 3 individual middleware functions instead of one overarching function.
 

@@ -6,9 +6,8 @@ const Schema = mongoose.Schema
 
 const avatarSchema = new Schema({
 
-		user:  { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-		url:   { type: String },
-		image: { type: Buffer }
+		url:     { type: String },
+		dataUrl: { type: String }
 
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }

@@ -8,11 +8,6 @@ import { Map, ReviewForm, ContactForm } from './'
 import { setHighlightedListing } from '../routes/Listings/reducer'
 
 const styles = {
-	avatar: {
-		width: '100px',
-		height: '100px',
-		borderRadius: '50%'
-	},
 	categoryImage: {
 		width: '80px',
 		height: '80px',
@@ -70,14 +65,14 @@ class ListingCard extends Component {
 		console.log("ARE WE highlighted ?", highlight);
 
 		return (
-			<div style={ highlight ? Object.assign({}, styles.listingHighlight, styles.listing) : styles.listing }
+			<div style={highlight ? Object.assign({}, styles.listingHighlight, styles.listing) : styles.listing}
 				onMouseEnter={this.onMouseEnter.bind(this)}
 				onMouseLeave={this.onMouseLeave.bind(this)}
 				onClick={ () => link ? history.push(link) : null }>
 
 				<Row>
 					<Col xs={6}>
-						<img alt={firstName} style={styles.avatar} src={avatar}/>
+						<img alt={firstName} className={ expanded ? "avatar-large" : "avatar-small" } src={avatar}/>
 						<h1 style={styles.text}>{firstName}</h1>
 						<p style={styles.text}> PRICE: {price}</p>
 					</Col>
