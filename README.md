@@ -128,4 +128,4 @@ How to run database migrations
 
 ##### To do's
 
-For an overview of my current to do's, go here[https://github.com/MidnightP/bnb-starter-kit/blob/master/TODO.md]
+For information on current development, I've included a [tentative overview of my to do's](https://github.com/MidnightP/bnb-starter-kit/blob/master/TODO.md).
