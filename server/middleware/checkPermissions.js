@@ -1,5 +1,4 @@
 const debug   = require('debug')('app:middleware:permissions')
-const R       = require('ramda')
 const express = require('express')
 const config  = require('../config')
 const async   = require('async')

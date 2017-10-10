@@ -1,12 +1,11 @@
 const debug  = require('debug')('app:routes:authentication')
 const bcrypt = require('bcrypt')
 const async  = require('async')
-const R      = require('ramda')
 const path   = require('path')
 const fs     = require('fs')
 
-const config                       = require('../config')
-const getLogger                    = require('../lib/log')
+const config    = require('../config')
+const getLogger = require('../lib/log')
 const {
 	User,
 	Listing,

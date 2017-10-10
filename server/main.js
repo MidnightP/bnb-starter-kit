@@ -38,7 +38,6 @@ const {
 	SEED
 } = process.env
 
-console.log('!FS.EXISTSSYNC(LOGSPATH)', !fs.existsSync(logsPath))
 if(!fs.existsSync(logsPath)) fs.mkdir(logsPath)
 
 process.on('unhandledRejection', (error, promise) => {

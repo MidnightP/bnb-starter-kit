@@ -1,5 +1,4 @@
 const config  = require('../config')
-const R       = require('ramda')
 const debug   = require('debug')('app:routes:helpers')
 
 const { grants, services } = config

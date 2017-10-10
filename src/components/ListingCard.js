@@ -72,7 +72,7 @@ class ListingCard extends Component {
 
 				<Row>
 					<Col xs={6}>
-						<img alt={firstName} className={ expanded ? "avatar-large" : "avatar-small" } src={avatar}/>
+						<img alt={firstName} className={ expanded ? "avatar-large" : "avatar-small" } src={avatar.url ? avatar.url : avatar.dataUrl}/>
 						<h1 style={styles.text}>{firstName}</h1>
 						<p style={styles.text}> PRICE: {price}</p>
 					</Col>

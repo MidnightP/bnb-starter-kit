@@ -1,6 +1,5 @@
 const async      = require('async')
 const log        = require('../lib/log')('controllers:contact')
-const R          = require('ramda')
 
 const config                     = require('../config')
 const { Contact, Listing, User } = require('../models')

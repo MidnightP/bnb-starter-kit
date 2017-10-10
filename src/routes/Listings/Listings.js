@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import deepEqual from 'deep-equal'
-import R from 'ramda'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
 import config from '../../config'
@@ -21,7 +20,7 @@ class Listings extends Component {
 	constructor() {
 		super()
 		this.state = {
-			query: R.merge(config.__queryDefaults__, {
+			query: Object.assign({}, config.__queryDefaults__, {
 				zipcode: null,
 				category: null,
 				location: null,
@@ -41,7 +40,7 @@ class Listings extends Component {
 
 	getListings(overrides) {
 		const { query } = this.state
-		const newQuery = R.merge(query, overrides)
+		const newQuery = Object.assign({}, query, overrides)
 		if(!deepEqual(query, newQuery)) {
 			this.props.getListings(newQuery)
 			this.setState({query: newQuery})

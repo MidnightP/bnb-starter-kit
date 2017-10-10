@@ -1,5 +1,3 @@
-const R = require('ramda')
-
 const log = require('../../lib/log')('middleware:permissions')
 
 // NOTE All actions below are HTTP methods with one exception: GET_OWN.
@@ -23,6 +21,12 @@ const grants = {
 			GET:     ['-_id', 'role', 'firstName', 'avatar', 'createdAt'],
 			POST:    ['-_id', 'role', 'email', 'password', 'firstName', 'prefix', 'lastName', 'avatar'],
 			PATCH:   ['-_id', 'role', 'email', 'firstName', 'prefix', 'lastName', 'avatar']
+		},
+		avatars: {
+			GET:     ['-_id', 'url', 'dataUrl'],
+			PATCH:   ['-_id', 'url', 'dataUrl'],
+			POST:    ['-_id', 'url', 'dataUrl']
+
 		}
 	},
 	listingOwner: {
@@ -52,7 +56,7 @@ const grants = {
 const allGrantNames = Object.keys(grants)
 
 const allAllowances = allGrantNames.reduce((grantsForGrant, grantName) => {
-	grantsForGrant[grantName] = R.mergeDeepLeft(grants[grantName], grants['any'])
+	grantsForGrant[grantName] = Object.assign({}, grants['any'], grants[grantName])
 	return grantsForGrant
 }, {})
 
@@ -73,13 +77,13 @@ module.exports = {
 //
 // 			if(grants[grantName][serviceName]) {
 //
-// 				R.mapObjIndexed((method, methodName) => {
+// 				grants[grantName][serviceName].map((method, methodName) => {
 // 					if(condition(methodName)) {
 // 						if(method) {
 // 							services[serviceName][methodName] = grants[grantName][serviceName][methodName]
 // 						}
 // 					}
-// 				}, grants[grantName][serviceName])
+// 				})
 // 			}
 // 			return services
 // 		}, {})

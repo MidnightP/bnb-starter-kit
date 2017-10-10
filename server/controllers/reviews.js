@@ -1,5 +1,4 @@
 const config = require('../config')
-const R = require('ramda')
 
 const { Review, Listing }  = require('../models')
 

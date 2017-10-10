@@ -11,8 +11,8 @@
     "build": "better-npm-run build",
     "build:prod": "better-npm-run build:prod",
     "test": "better-npm-run test",
-    "eject": "react-scripts eject",
-    "seed": "better-npm-run seed"
+	"seed": "better-npm-run seed",
+    "eject": "react-scripts eject"
   },
   "betterScripts": {
     "start": {
@@ -25,16 +25,15 @@
         "DEBUG": "app:*"
       }
     },
+	"start:prod": {
+		"command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 80 build\"",
+		"env": {
+			"NODE_ENV": "production"
+		}
+	},
     "seed": {
       "command": "node server/seeds/index.js",
-      "env": {
-      }
-    },
-    "start:prod": {
-      "command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 80 build\"",
-      "env": {
-        "NODE_ENV": "production"
-      }
+      "env": {}
     },
     "build": {
       "command": "react-scripts build",
@@ -75,6 +74,7 @@
     "file-loader": "^0.11.2",
     "google-map-react": "^0.24.0",
     "helmet": "^3.8.1",
+    "history": "^4.7.2",
     "ip": "^1.1.5",
     "moment": "^2.18.1",
     "mongodb": "^2.2.31",

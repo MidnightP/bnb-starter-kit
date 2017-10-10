@@ -15,21 +15,15 @@ http://yeoman.io/generators/
 
 Sometimes no cookie send upon signout ... ?
 
+show reviews
+
 ### Back End
-
-create seeds for avatars
-
-update atom ????
-
-send & show avatar in front end
 
 --> release!
 
-place indexes on searchedby and referenced fields
+store token reference on user instead of UserToken?
 
-remove Ramda
-
-add avatar seeders and remove old ones
+set fixed images!
 
 optimize signUp flow
 

@@ -1,7 +1,6 @@
 const async   = require('async')
 const config  = require('../config')
 const express = require('express')
-const R       = require('ramda')
 
 const {
 	setReviewsMeta,
@@ -101,7 +100,10 @@ exports.readMany = (req, res, next) => {
 					.populate({
 						path: 'user',
 						select: req.allowances['any'].users.GET.join(' '),
-						populate: 'avatar'
+						populate: {
+							path: 'avatar',
+							select: req.allowances['any'].avatars.GET.join(' ')
+						}
 					})
 					.lean()
 					.sort(sort)
@@ -169,7 +171,14 @@ const readSingle = (req, res, next) => {
 		.select(selection)
 		.populate({ path: 'categories', select: `_id` })
 		.populate({ path: 'location', select: `_id` })
-		.populate({ path: 'user', select: req.allowances['any'].users.GET.join(' ') })
+		.populate({
+			path: 'user',
+			select: req.allowances['any'].users.GET.join(' '),
+			populate: {
+				path: 'avatar',
+				select: req.allowances['any'].avatars.GET.join(' ')
+			}
+		})
 		.populate({
 			path: 'reviews',
 			select: req.allowances['any'].reviews.GET.join(' '),
@@ -178,7 +187,11 @@ const readSingle = (req, res, next) => {
 			},
 			populate: {
 				path: 'author',
-				select: req.allowances['any'].users.GET.join(' ')
+				select: req.allowances['any'].users.GET.join(' '),
+				populate: {
+					path: 'avatar',
+					select: req.allowances['any'].avatars.GET.join(' ')
+				}
 			}
 		})
 		.lean()
