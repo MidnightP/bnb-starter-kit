@@ -21,9 +21,9 @@ find a way to run production on port 5000 locally but on 80 on server
 
 store token reference on user instead of UserToken?
 
-set fixed seed images!
+Set fixed seed images!
 
-optimize signUp flow
+Optimize signUp flow
 
 Change reviews route to `listings/:_id/reviews`
 
@@ -38,6 +38,9 @@ Use mail helper in contacts.js and reviews.js
 
 How to receive all emails in gmail.....?
 We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
+
+Find a good way to send content of `src/config` and `src/text` up from the server so we can use modules like config to fill in some fields there.
+First thing is a request to `/config` and put the result in general state.
 
 ### Front End
 
@@ -114,10 +117,6 @@ Use `marginBounds` array to make sure that markers are not shown when on border 
 
 ### Back end ***
 
-@@@ `faker.image.image()` and `faker.image.imageUrl()` and `faker.image.city()` give url that generates random image on every get
-	How to fixate image faker after seeding ?
-
-
 expand session:
 - Set anonymous tokens.
 - Store lastVisit on userToken
@@ -143,15 +142,6 @@ find a nice way to store logs outside of the container... package for winston pr
 geocoding should happen in put / patch function if zipcode changed, not in pre save hook
 
 
-##### Express ***
-
-Figure out how to send errors with Express (and create Errors) and catching them with Super Agent
-	Currently errors are just send as a body which is wrong!
-	------Send real errors instead of message + name object only
-				1) Why is error thrown when I use new Error here?
-								-> Because of a setting in main.js ?
-				2) Why is error.message just the string "[object Object]"
-
 ##### Authentication & Security ***
 
 FB, Instagram en Google login !!
@@ -167,37 +157,23 @@ https://expressjs.com/en/advanced/best-practice-security.html
 
 Figure out how to deal with many malicious requests. This saves a lot of checking and sanitizing on the request bodies and headers.
 ---> Whitelisting + apiKey
-		General prevention against too many requests from same address ?
-		Front picking of fields is still desired. This prevents against too large bodies or headers.
-
+	General prevention against too many requests from same address ?
+	Front picking of fields is still desired. This prevents against too large bodies or headers.
 
 ### Research / decisions ***
-
-Find a good way to send content of `src/config` and `src/text` up from the server.
 
 Think about how to search for fixed location (e.g. Central OBA or OBA Zuid-West).
 Think about amenities model and reference in listings
 
-Figure out how to use localStorage to store important parts of state ( use LockR )
-
-How to acheive this: "with Node, you can push the database writes off to the side and deal with them later, proceeding as if they succeeded."
+Figure out how to use localStorage to store important parts of state ( use LockR or serviceWorker ?)
 
 Restore scroll position. See: [React Starter Kit](https://www.reactstarterkit.com) by Kriasoft.
 
 Promise.all for multiple async calls:::::: -->
 https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-Connect or connect-redis:
-https://www.npmjs.com/package/connect
-
 Storybook
 https://github.com/storybooks/react-storybook
-
-Use FireBase for storage of images?
-https://firebase.google.com/docs/storage/web/start
-
-Koa is more performant and versatile than Express. It programs much like Express.
-Use Koa?
 
 
 #### Code examples for specific locale:
