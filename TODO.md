@@ -21,7 +21,7 @@ find a way to run production on port 5000 locally but on 80 on server
 
 store token reference on user instead of UserToken?
 
-set fixed images!
+set fixed seed images!
 
 optimize signUp flow
 
@@ -45,20 +45,19 @@ the remove (x) button next to droppred files sends an http request when clicked?
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
-Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder
-Instead of 'hiding' them inside the respective routes
+Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder with name of particular route
+instead of 'hiding' them inside the respective routes. Else you'll have to search and that is never good.
 
 Make scroll movement have horizontal effect ?
 
 Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
 
-@@@ Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
-
+Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
+--> check again in back-end...!
 
 ### Questions ***
 
-should we need request wrapper ?
-
+do we actually need request wrapper ? maybe only for headers and retry on 502 ...
 
 use XFSR (?) tokens ?
 
@@ -70,7 +69,7 @@ SEO friendly HTMl and CSS. How?
 use uniform error messages (!) to let the the front end know what to do!
 We don't need descriptive messages since no one is using the api yet.
 
-@@@ Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
+Mongoose validation resuls in `Unhandled rejection`. How and where to handle it? Is it handled when logged?
 
 If requirements of geocoding get to special, construct google maps api get request end point instead of using Geocode module.
 
@@ -83,7 +82,7 @@ A2) Place an async geocode request in the front end
 **bijlesismore** Grommet or MUI or something else?
 ----> Check out: http://redux-form.com/6.6.3/examples/material-ui/
 
-**bijlesismore** Use react motion
+**bijlesismore** Use react motion?
 https://github.com/chenglou/react-motion
 
 ### Front end ***
