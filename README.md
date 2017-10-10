@@ -60,18 +60,13 @@ To Change the language of the random generator use e.g. `const faker = require('
 
 ##### production
 
-When the app is ready to go live and the production build has succeeded, build a Docker container.
+Create a production build with `npm run build:prod`. When the app is ready to go live and the production build has succeeded, build a Docker container.
 
-If you are using a docker registry make sure you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
+If you are using a docker registry make sure you are logged in and that you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
 Then push the newly build image `docker push ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` to the registry.
 
-You can now pulled it somewhere else and run it by using the following command `${DOCKER_ID_USER}/bnb-starter-kit:latest`. Create a `.env` file using the `.env.sample` as a guide and copy the `docker-compose.yml`.
-
-WORKING: `docker run -d --name bnb-starter-kit --net host --env-file=.env  heijden/bnb-starter-kit`
-NOT WORKING: Run `docker-compose up -d` to run the container.
-
-Note: Make you have a version of mongodb running and that the host corresponds to the one specified in `.env`.
+You can now pull it on a server with `docker pull ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1`. Create a `.env` file using the `.env.sample` as a guide and source it. Also make sure that mongodb is running. The hostname of mongo service specified in specified in `.env` should correspond to the hostname of mongo on the server. Finally, run the container by using the following command `docker run -d --name bnb-starter-kit --net host --env-file=.env  ${DOCKER_ID_USER}/bnb-starter-kit`.
 
 ## What you should now
 

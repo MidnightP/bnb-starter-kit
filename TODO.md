@@ -2,6 +2,7 @@
 
 figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
 
+NOT WORKING: Run `docker-compose up -d` to run the container.
 
 ### Get out there!
 
@@ -15,6 +16,8 @@ http://yeoman.io/generators/
 Sometimes no cookie send upon signout ... ?
 
 ### Back End
+
+create seeds for avatars
 
 update atom ????
 

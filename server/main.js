@@ -88,6 +88,7 @@ app
 const server = http.createServer(app)
 
 async.series([
+
 	(cb) => {
 		log.info('Connecting Mongoose to: ', mongoUri)
 		mongoose.connect(mongoUri, cb)
@@ -96,7 +97,6 @@ async.series([
 	(cb) => {
 
 		server.on('listening', () => {
-			log.info(`Server is running:`)
 			log.info(`API running on:  http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}${__apibase__}`)
 			log.info(`AUTH running on: http://${REACT_APP_API_HOST}:${REACT_APP_API_PORT}${__authbase__}`)
 		})
@@ -108,6 +108,6 @@ async.series([
 
 	(cb) => {
 		new CronTask('Reaper', config.reaperInterval, reaper).start(cb)
-	},
+	}
 
 ], (error) => { if(error) throw error })
