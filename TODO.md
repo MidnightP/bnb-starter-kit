@@ -1,9 +1,3 @@
-### production
-
-figure out how to use `serve build` and then run the docker container locally and then if and how to use apache2 ?
-
-NOT WORKING: Run `docker-compose up -d` to run the container.
-
 ### Get out there!
 
 medium
@@ -18,6 +12,10 @@ Sometimes no cookie send upon signout ... ?
 show reviews
 
 ### Back End
+
+find a way to run production on port 5000 locally but on 80 on server
+
+`serve build` on 6000 isnt working! WHY? See issues create-react-app
 
 --> release!
 
@@ -43,9 +41,7 @@ We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmai
 
 ### Front End
 
-remove button on dropzone sends http request!?
-
-remove Ramda
+the remove (x) button next to droppred files sends an http request when clicked?
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
@@ -94,7 +90,7 @@ https://github.com/chenglou/react-motion
 
 In index.html, if possible use variables for things likewebsitetitle
 
-Use `getComponent` function on all pages' index.js . needed for code splitting
+Use `getComponent` function on all pages' index.js . needed for code splitting (see create-react-app docs for code splitting?)
 
 use throttle as an option in request util and set a default. So we can specify throttling in individual reducers.
 

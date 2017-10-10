@@ -26,7 +26,7 @@
       }
     },
 	"start:prod": {
-		"command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 80 build\"",
+		"command": "concurrently --allow-restart --restart-tries 5 --kill-others \"node server/main.js\" \"serve -s -p 6000 build\"",
 		"env": {
 			"NODE_ENV": "production"
 		}
@@ -83,7 +83,6 @@
     "node-cron": "^1.2.1",
     "node-geocoder": "^3.19.0",
     "nodemailer": "^4.0.1",
-    "ramda": "^0.24.1",
     "rc-slider": "^8.3.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
