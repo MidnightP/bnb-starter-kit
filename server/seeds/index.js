@@ -119,5 +119,5 @@ async.series([
 ], (error) => {
 	if(error) throw error
 
-	log.info('Inserted seed data. Done after geocode...')
+	log.info('Inserted seed data. Done after running geocode hooks...')
 })

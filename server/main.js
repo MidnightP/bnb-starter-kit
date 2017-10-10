@@ -25,11 +25,11 @@ const {
 const { corsOptions, apiVersion, authVersion } = config
 const { mongoUri } = require('./lib/utils')
 
-const __apibase__     = `/api/v${apiVersion}`
-const __authbase__    = `/auth/v${authVersion}`
-const { reaper }      = jobs
-const app             = express()
-const logsPath        = path.join(__dirname, '../logs')
+const __apibase__  = `/api/v${apiVersion}`
+const __authbase__ = `/auth/v${authVersion}`
+const { reaper }   = jobs
+const app          = express()
+const logsPath     = path.join(__dirname, '../logs')
 
 const {
 	REACT_APP_API_HOST,
@@ -38,6 +38,7 @@ const {
 	SEED
 } = process.env
 
+console.log('!FS.EXISTSSYNC(LOGSPATH)', !fs.existsSync(logsPath))
 if(!fs.existsSync(logsPath)) fs.mkdir(logsPath)
 
 process.on('unhandledRejection', (error, promise) => {

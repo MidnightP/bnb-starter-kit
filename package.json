@@ -12,7 +12,7 @@
     "build:prod": "better-npm-run build:prod",
     "test": "better-npm-run test",
     "eject": "react-scripts eject",
-    "seed": "node server/seeds/index.js"
+    "seed": "better-npm-run seed"
   },
   "betterScripts": {
     "start": {
@@ -25,8 +25,13 @@
         "DEBUG": "app:*"
       }
     },
+    "seed": {
+      "command": "node server/seeds/index.js",
+      "env": {
+      }
+    },
     "start:prod": {
-      "command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 6000 build\"",
+      "command": "concurrently --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 80 build\"",
       "env": {
         "NODE_ENV": "production"
       }
