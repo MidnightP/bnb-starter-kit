@@ -5,10 +5,8 @@ const config = require('../config')
 const Schema = mongoose.Schema
 
 const avatarSchema = new Schema({
-
 		url:     { type: String },
 		dataUrl: { type: String }
-
 	}, {
 		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 })

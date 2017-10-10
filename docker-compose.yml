@@ -1,12 +1,17 @@
 version: "2"
 
 services:
-  bnb-starter-kit:
-    container_name: bnb-starter-kit
-    image:          ${DOCKER_ID_USER}/bnb-starter-kit:latest
-    network: host
-    ports:
-      - 4000:4000
-      - 6000:6000
-    env_file:
-      - .env
+  mongodb:
+    container_name: mongo
+    image: mongo:3.4
+    ports: ["27017:27017"]
+    volumes: ["./data/mongo:/data/db"]
+    command: ["mongod", --storageEngine, wiredTiger]
+  # bnb-starter-kit:
+  #   container_name: bnb-starter-kit
+  #   image:          ${DOCKER_ID_USER}/bnb-starter-kit:latest
+  #   ports:
+  #     - 4000:4000
+  #     - 6000:6000
+  #   env_file:
+  #     - .env

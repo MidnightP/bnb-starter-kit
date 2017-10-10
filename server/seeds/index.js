@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
 const log = require('../lib/log')('seed')
-const { Listing, Category, Location, User, Review } = require('../models')
+const { Avatar, Listing, Category, Location, User, Review } = require('../models')
 const { mongoUri } = require('../lib/utils')
 
 const usersData = require('./users')
+const avatarsData = require('./avatars')
 const listingsData = require('./listings')
 const categoriesData = require('./categories')
 const locationsData = require('./locations')
@@ -83,6 +84,8 @@ const seedDatabase = (cb) => {
 		Location.insertMany.bind(null, locationsData),
 
 		Review.insertMany.bind(null, reviewsData),
+
+		Avatar.insertMany.bind(null, avatarsData),
 
 		createUsersAndHashPasswords
 
