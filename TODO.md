@@ -13,9 +13,11 @@ show reviews
 
 ### Back End
 
-find a way to run production on port 5000 locally but on 80 on server
+Load the index.html directly and check the network tab and the build folder. Why can't the files be loaded?
 
-`serve build` on 6000 isnt working! WHY? See issues create-react-app
+are we using Etags ?
+
+find a way to run production on port 5000 locally but on 80 on server
 
 --> release!
 

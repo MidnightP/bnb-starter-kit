@@ -62,6 +62,8 @@ To Change the language of the random generator use e.g. `const faker = require('
 
 Create a production build with `npm run build:prod`. When the app is ready to go live and the production build has succeeded, build a Docker container.
 
+Install the serve module. The bundle i served with `serve -s build`. You can start the server concurrently with `npm run stat:prod`. Notice that if you run the previous command locally, the server will try to restart on killing the process. Change it to 0 in package.json for local testing. Type `serve --help` for options, such as caching 
+
 If you are using a docker registry make sure you are logged in and that you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
 Then push the newly build image `docker push ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` to the registry.

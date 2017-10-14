@@ -11,7 +11,7 @@
     "build": "better-npm-run build",
     "build:prod": "better-npm-run build:prod",
     "test": "better-npm-run test",
-	"seed": "better-npm-run seed",
+    "seed": "better-npm-run seed",
     "eject": "react-scripts eject"
   },
   "betterScripts": {
@@ -25,12 +25,12 @@
         "DEBUG": "app:*"
       }
     },
-	"start:prod": {
-		"command": "concurrently --allow-restart --restart-tries 5 --kill-others \"node server/main.js\" \"serve -s -p 6000 build\"",
-		"env": {
-			"NODE_ENV": "production"
-		}
-	},
+    "start:prod": {
+        "command": "concurrently --kill-others --allow-restart --restart-tries 0 \"node server/main.js\" \"serve -h -s -p 6000 build\"",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    },
     "seed": {
       "command": "node server/seeds/index.js",
       "env": {}
@@ -91,7 +91,7 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
-    "react-scripts": "1.0.13",
+    "react-scripts": "1.0.14",
     "react-widgets": "^4.0.0",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
