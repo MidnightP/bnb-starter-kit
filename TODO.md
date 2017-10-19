@@ -13,13 +13,14 @@ show reviews
 
 ### Back End
 
+check if we really need to set serviceName to `user` like that for authentication routes? Do we really need it? This is inconvenient and confusing.
+Instead of logging the service we want to just log the route so that we can figure out exactly we're it comes from.
+
+Does react-maps support google maps v3 key ?
+
 Load the index.html directly and check the network tab and the build folder. Why can't the files be loaded?
 
-are we using Etags ?
-
 find a way to run production on port 5000 locally but on 80 on server
-
---> release!
 
 store token reference on user instead of UserToken?
 
@@ -89,6 +90,28 @@ A2) Place an async geocode request in the front end
 
 **bijlesismore** Use react motion?
 https://github.com/chenglou/react-motion
+
+are we using Etags ?
+
+Think about using express for serving the statics.  This way we can add more security and control. See example:
+```javascript
+// NOTE Express can be used to serve build
+
+const express = require('express')
+const path = require('path')
+const log = require('./server/lib/log')('production-server')
+const http = require('http')
+// const os = require('os')
+const port = 3002
+// const host = os.hostname()
+const app = express()
+// app.use(express.static(path.join(__dirname, 'build')))
+const server = http.createServer(app)
+server
+	.on('listening', () => log.info(`Production server serving build on: http://localhost:${port}`))
+	.on('error', (error) => log.error('Server error', error))
+	.listen(port)
+```
 
 ### Front end ***
 

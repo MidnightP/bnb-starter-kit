@@ -26,7 +26,7 @@
       }
     },
     "start:prod": {
-        "command": "concurrently --kill-others --allow-restart --restart-tries 0 \"node server/main.js\" \"serve -h -s -p 6000 build\"",
+        "command": "concurrently --kill-others --allow-restart --restart-tries 100 \"node server/main.js\" \"serve -s -p 3002 build\"",
         "env": {
             "NODE_ENV": "production"
         }
@@ -51,7 +51,7 @@
       "command": "react-scripts test --env=jsdom",
       "env": {
         "REACT_APP_API_HOST": "localhost",
-        "REACT_APP_API_PORT": "4000",
+        "REACT_APP_API_PORT": 4000,
         "NODE_ENV": "test"
       }
     }

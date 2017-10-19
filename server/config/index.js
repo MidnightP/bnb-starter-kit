@@ -15,7 +15,7 @@ module.exports = {
 		// but yet it is there on the first re-attempt at POST done by Axiios
 		// origin: [/\:\/\/localhost:/ig],
 
-		origin: ['http://localhost:3000'],
+		origin: ['http://localhost:3000', 'http://localhost:3002'],
 		allowedHeaders: [
 			'Content-Type',
 		// 	'Authorization',

@@ -7,7 +7,7 @@ const { cookieOptions, corsOptions,
 	apiVersion, authVersion }      = config
 const { allAllowances }            = require('./permissions')
 const { User, UserToken, Listing } = require('../models')
-const log                          = require('../lib/log')('middleware:permissions')
+const log                          = require('../lib/log')('middleware:check-permissions')
 const whitelisted                  = corsOptions.origin
 
 // NOTE divide into 3 individual middleware functions instead of one overarching function.

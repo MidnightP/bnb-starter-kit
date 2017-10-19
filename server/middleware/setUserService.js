@@ -1,4 +1,4 @@
-const log = require('../lib/log')('middleware:permissions')
+const log = require('../lib/log')('middleware:set-user-service')
 
 module.exports = (req, res, next) => {
 

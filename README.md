@@ -34,7 +34,7 @@ export DB_PORT="xxxxx"
 
 ```
 
-Replace the secrets with your own, generated with the respective services. Make sure to create the right Google Javascript API-keys. The GOOGLE_API_WEBSERVER key needs to be a **webserver key (webservers, cron jobs enz.)**, which needs to whitelist the relevant IP-address or multiple IP-addresses. The REACT_APP_GOOGLE_API_BROWSER key needs to be a key for **HTTP-requests (websites)**, which needs to whitelist the relevant host names, that is `localhost:3000` for starters.
+Replace the secrets with your own, generated with the respective services. Make sure to create the right Google Javascript API-keys. Find it at https://console.developers.google.com/apis The GOOGLE_API_WEBSERVER key needs to be a **webserver key (webservers, cron jobs enz.)**, which needs to whitelist the relevant IP-address or multiple IP-addresses. The REACT_APP_GOOGLE_API_BROWSER key needs to be a key for **HTTP-requests (websites)**, which needs to whitelist the relevant host names, that is `localhost:3000` for starters.
 
 You are ready to go!
 
@@ -62,7 +62,9 @@ To Change the language of the random generator use e.g. `const faker = require('
 
 Create a production build with `npm run build:prod`. When the app is ready to go live and the production build has succeeded, build a Docker container.
 
-Install the serve module. The bundle i served with `serve -s build`. You can start the server concurrently with `npm run stat:prod`. Notice that if you run the previous command locally, the server will try to restart on killing the process. Change it to 0 in package.json for local testing. Type `serve --help` for options, such as caching 
+To have corrert paths in the final build, create-react-app needs an environment variable for the public url, so the environment needs to export something like `PUBLIC_URL="public_url"`. Read here for more info on environment for create-react-app. [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder)
+
+Install the serve module. The bundle i served with `serve -s build`. You can start the server concurrently with `npm run start:prod`. Notice that if you run the previous command locally, the server will try to restart on killing the process. Change it to 0 in package.json for local testing. Type `serve --help` for options, such as caching
 
 If you are using a docker registry make sure you are logged in and that you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
