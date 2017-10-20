@@ -72,7 +72,7 @@ app
 	.use(helmet())
 	.use(cookieParser(config.cookieSecret))
 	.use(bodyParser.json({ limit: '3mb' }))
-	.use(bodyParser.urlencoded({ limit: '3mb', extended: false }))
+	.use(bodyParser.urlencoded({ limit: '3mb', extended: true /* qs */ }))
 
 	// NOTE we need both to enable cors, and preflight mode on OPTIONS requests.
 	.use(cors(corsOptions))

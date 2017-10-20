@@ -26,10 +26,10 @@
       }
     },
     "start:prod": {
-        "command": "concurrently --kill-others --allow-restart --restart-tries 100 \"node server/main.js\" \"serve -s -p 3002 build\"",
-        "env": {
-            "NODE_ENV": "production"
-        }
+      "command": "concurrently --kill-others --allow-restart --restart-tries 100 \"node server/main.js\" \"serve -s -p 3002 build\"",
+      "env": {
+        "NODE_ENV": "production"
+      }
     },
     "seed": {
       "command": "node server/seeds/index.js",
@@ -83,6 +83,7 @@
     "node-cron": "^1.2.1",
     "node-geocoder": "^3.19.0",
     "nodemailer": "^4.0.1",
+    "qs": "^6.5.1",
     "rc-slider": "^8.3.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

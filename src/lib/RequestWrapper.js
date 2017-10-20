@@ -1,4 +1,5 @@
-import _ from "underscore"
+import _ from 'underscore'
+import qs from 'qs'
 import retry from  'async/retry'
 import axios from  'axios'
 
@@ -23,8 +24,6 @@ export default ({ baseURL }) => {
 class RequestWrapper {
 
 	constructor({ baseURL }) {
-		console.log('BASEURL', baseURL)
-
 		if(!baseURL) console.error('Must provide request wrapper a baseURL')
 
 		this.baseURL          = baseURL
@@ -55,7 +54,7 @@ class RequestWrapper {
 			responseType: 'json',  // default
 			validateStatus: status => {
 
-				// NOTE What can we use this for?
+				// NOTE How can we use this in combination with async.retry ?
 
 				console.log('STATUS', status)
 				return !this.retryStatusCodes.includes(status)
@@ -126,6 +125,10 @@ class RequestWrapper {
 	}
 
 	issueRequest(httpOptions, cb) {
+
+		httpOptions.qs = qs.stringify(httpOptions.qs)
+		console.log('HTTPOPTIONS', httpOptions)
+
 		this.axios(httpOptions)
 			.then(response => {
 				if(this.retryStatusCodes.includes(response.status)) {

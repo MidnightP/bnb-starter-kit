@@ -7,9 +7,13 @@ http://yeoman.io/generators/
 
 ### Front End
 
-Sometimes no cookie send upon signout ... ?
-
 show reviews
+
+patchListing and createListing stores are redundant since we're using Redux form??
+
+alt tags of images should be something meaningful and something that is not the name of the image, or location or category etc.
+
+signout thunk should not redirect to home if the page that was requested is available for any user (e.g. /listings/:id)
 
 ### Back End
 
@@ -17,8 +21,6 @@ check if we really need to set serviceName to `user` like that for authenticatio
 Instead of logging the service we want to just log the route so that we can figure out exactly we're it comes from.
 
 Does react-maps support google maps v3 key ?
-
-Load the index.html directly and check the network tab and the build folder. Why can't the files be loaded?
 
 find a way to run production on port 5000 locally but on 80 on server
 
@@ -29,12 +31,6 @@ Set fixed seed images!
 Optimize signUp flow
 
 Change reviews route to `listings/:_id/reviews`
-
-Use patch & put for creating, updating and modifying.
-Leave post for actions.
-
-Exposing API : How to authenticate the application client? not only the users github issue #405
-Use apiTokens ??
 
 Send email if user receives review
 Use mail helper in contacts.js and reviews.js
@@ -47,7 +43,7 @@ First thing is a request to `/config` and put the result in general state.
 
 ### Front End
 
-the remove (x) button next to droppred files sends an http request when clicked?
+The remove (x) button next to dropped files sends an http request when clicked?
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
@@ -63,9 +59,12 @@ Prevent too large image sizes to be uploaded. Check size on file.... if too larg
 
 ### Questions ***
 
+Exposing API : How to authenticate the application client? not only the users github issue #405
+Use apiTokens? or is whitelisting using CORS sufficient?
+
 do we actually need request wrapper ? maybe only for headers and retry on 502 ...
 
-use XFSR (?) tokens ?
+use XFSR (?) tokens ? What are they for?
 
 Session middleware should be as lean as possible. Think about when and how often to do a database query.
 `express-session` is built-in to Express 3.x. use it

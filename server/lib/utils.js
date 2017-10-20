@@ -25,9 +25,9 @@ exports.notZero = (radius) => {
 }
 
 exports.setReviewsMeta = (doc) => {
-	if(doc.reviews.length) {
-		doc.reviewCount = doc.reviews.length
-		doc.ratingAverage = doc.reviews.reduce((prev, next) => prev.rating + next.rating ) / doc.reviewCount
-	}
+	doc.reviewCount = doc.reviews.length
+	doc.ratingAverage = doc.reviewCount === 0 ?
+		0 : doc.reviews.reduce((prev, next) => prev.rating + next.rating ) / doc.reviewCount
+
 	return doc
 }

@@ -32,30 +32,28 @@ class SingleListing extends Component {
 	render() {
 		const { listing, reviews } = this.props
 
-		if(listing) {
-			return (
-				<Grid fluid>
-					<Row>
-						<Col xs={12}>
-							<ListingCard {...listing}
-								key={ listing.user.firstName }
-								categoriesList={ this.props.categoriesList }
-								locationsList={ this.props.locationsList }
-								expanded />
-						</Col>
-					</Row>
-					<Row>
-						{
-							reviews ?
-								reviews.map(this.setReviewCards.bind(this))
-							: null
-						}
-					</Row>
-				</Grid>
-			)
-		} else {
-			return <div className="loader" />
-		}
+		if(!listing) return <div className="loader" />
+
+		return (
+			<Grid fluid>
+				<Row>
+					<Col xs={12}>
+						<ListingCard {...listing}
+							key={ listing.user.firstName }
+							categoriesList={ this.props.categoriesList }
+							locationsList={ this.props.locationsList }
+							expanded />
+					</Col>
+				</Row>
+				<Row>
+					{
+						reviews ?
+							reviews.map(this.setReviewCards.bind(this))
+						: null
+					}
+				</Row>
+			</Grid>
+		)
 	}
 }
 

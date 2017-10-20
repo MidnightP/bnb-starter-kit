@@ -10,15 +10,24 @@ const { grants } = config
 
 exports.readMany = (req, res, next) => {
 
-	const query = {
-		listingId: req.params._id,
-		deleted: false
-	}
+	const { query = {} } = req
+
+	let { where = {} } = query
+
+	where.deleted = false
+	console.log('WHERE', where)
 
 	Review
-		.find(query)
+		.find(where)
 		.select(req.allowances[req.grantName].reviews.GET.join(' '))
-		.populate({ path: 'author', select: req.allowances['any'].users.GET.join(' ') })
+		.populate({
+			path: 'author',
+			select: req.allowances['any'].users.GET.join(' '),
+			populate: {
+				path: 'avatar',
+				select: req.allowances['any'].avatars.GET.join(' ')
+			}
+		})
 		.lean()
 		.exec((err, reviews) => {
 			if(err) return next(err)

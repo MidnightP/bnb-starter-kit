@@ -181,18 +181,7 @@ const readSingle = (req, res, next) => {
 		})
 		.populate({
 			path: 'reviews',
-			select: req.allowances['any'].reviews.GET.join(' '),
-			options: {
-				limit: 4
-			},
-			populate: {
-				path: 'author',
-				select: req.allowances['any'].users.GET.join(' '),
-				populate: {
-					path: 'avatar',
-					select: req.allowances['any'].avatars.GET.join(' ')
-				}
-			}
+			select: 'rating',
 		})
 		.lean()
 		.exec((err, listing) => {

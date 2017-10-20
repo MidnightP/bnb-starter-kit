@@ -48,7 +48,16 @@ export const getReviews = (_id) => {
 	return (dispatch, getState) => {
 		dispatch(setLoading('reviews'))
 
-		apiRequestWrapper.get(`/reviews/${_id}`, (error, body) => {
+		const request = {
+			url: 'reviews',
+			queryString: {
+				where: {
+					listingId: _id
+				}
+			}
+		}
+
+		apiRequestWrapper.get(request, (error, body) => {
 			dispatch(removeLoading('reviews'))
 
 			if(error) return dispatch(setError(error))
@@ -115,21 +124,10 @@ const getListingAction = (payload) => ({
 // 	payload
 // })
 
-// TODO fix this action dispatch
-const getReviewsAction = (payload) => {
-	const rvs = payload ?
-		payload.reviews ?
-			payload.reviews
-		: null
-	: null
-
-	return {
-		type: GET_REVIEWS,
-		payload: {
-			reviews: rvs
-		}
-	}
-}
+const getReviewsAction = (payload) => ({
+	type: GET_REVIEWS,
+	payload
+})
 
 const createReviewAction = (payload) => ({
 	type: CREATE_REVIEW,
@@ -144,7 +142,11 @@ const sendMessageAction = () => ({
 // Action Handlers
 // ------------------------------------
 
-const handleGetListing = (state, payload) => ({ ...state, listing: payload.listing })
+const handleGetListing = (state, payload) => ({
+	...state,
+	listing: payload.listing
+})
+
 // const handleDeleteListing = (state, payload) => ({ ...state, listing: payload.listing })
 
 const handleGetReviews = (state, payload) => ({ ...state, reviews: payload.reviews })
