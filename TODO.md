@@ -24,8 +24,6 @@ Make scroll movement have horizontal effect ?
 
 Does react-maps support google maps v3 key ?
 
-PatchListing and createListing stores are redundant since we're using Redux form? Keep them for now, since we need the related thunks to perform form request and receive the response.
-
 Make sure every request with axios:
 - do we need a request wrapper ? What for? Isn't axios our request wrapper? Does Axios have a retry option?
 - We can use it partly to return two instances of axios (for api and for auth)
@@ -47,9 +45,6 @@ The remove (x) button next to dropped files sends an http request when clicked?
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
-Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder with name of particular route
-instead of 'hiding' them inside the respective routes. Else you'll have to search and that is never good.
-
 Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
 
 Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
@@ -57,6 +52,9 @@ Prevent too large image sizes to be uploaded. Check size on file.... if too larg
 
 
 ### Questions ***
+
+
+PatchListing and createListing stores are redundant since we're using Redux form? Keep them for now, since we need the related thunks to perform form request and receive the response.
 
 store token reference on user instead of UserToken?
 
@@ -114,6 +112,10 @@ server
 ```
 
 ### Front end ***
+
+Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder with name of particular route
+instead of 'hiding' them inside the respective routes. Else you'll have to search and that is never good.
+
 
 Think about protecting routes when not signed in. In any case, signout action should not redirect by default!
 
