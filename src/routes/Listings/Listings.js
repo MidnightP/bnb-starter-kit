@@ -14,7 +14,7 @@ import './listings.css'
 import 'react-widgets/dist/css/react-widgets.css'
 
 // TODO __queryDefaults__ not defined?
-console.log('CONFIG __queryDefaults__ not defined?', config)
+console.log('CONFIG __queryDefaults__ not defined?', config.__queryDefaults__)
 
 class Listings extends Component {
 	constructor() {
@@ -50,19 +50,21 @@ class Listings extends Component {
 	setListingCards(listing, i) {
 		const highlight = this.props.highlighted.includes(listing._id)
 		return (
-			<ListingCard { ...listing }
-				link={`listings/${listing._id}`}
-				key={listing.user.firstName + '-' + i}
-				highlight={highlight}
-				categoriesList={this.props.categoriesList}
-				locationsList={this.props.locationsList} />
+			<div className="listing-container-small">
+				<ListingCard { ...listing }
+					key={listing.user.firstName + '-' + i}
+					link={`listings/${listing._id}`}
+					highlight={highlight}
+					categoriesList={this.props.categoriesList}
+					locationsList={this.props.locationsList} />
+			</div>
 		)
 	}
 
 	render() {
 		const { loading, count, listings } = this.props
 		return (
-			<Grid className="listings-container" fluid>
+			<Grid fluid>
 				<Row>
 					<Col className="map" xs={0} sm={12}>
 						<Map listings={listings}/>
@@ -73,23 +75,24 @@ class Listings extends Component {
 						<SearchField onSubmit={this.getListings.bind(this)}/>
 					</Col>
 				</Row>
-				<Row>
-					<Col className="listings-list" xs={9} mdOffset={3} md={6} >
-						{
-							listings ?
-								listings.map(this.setListingCards.bind(this))
-							: null
-						}
-					</Col>
-					<Col className="listings-meta" xs={3} md={3}>
+				<div className="listings-list" >
+					{
+						listings ?
+							listings.map(this.setListingCards.bind(this))
+						: null
+					}
+				</div>
+				{/* TODO center prop not doing anything !? */}
+				<Row center="xs" className="listings-meta">
+					<Col xs={6}>
 						<div>
 							Found  { count ? count : 0 } listings!
+							{
+								loading.length ?
+									<span className="loader"/>
+								: null
+							}
 						</div>
-						{
-							loading.length ?
-								<div className="loader"/>
-							: null
-						}
 					</Col>
 				</Row>
 			</Grid>

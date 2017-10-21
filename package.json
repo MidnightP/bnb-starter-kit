@@ -26,7 +26,7 @@
       }
     },
     "start:prod": {
-      "command": "concurrently --kill-others --allow-restart --restart-tries 100 \"node server/main.js\" \"serve -s -p 3002 build\"",
+      "command": "concurrently --kill-others --allow-restart --restart-tries 5 \"node server/main.js\" \"serve -s -p 3002 build\"",
       "env": {
         "NODE_ENV": "production"
       }

@@ -67,20 +67,20 @@ module.exports = {
 
 // NOTE Needs more complex merging ?
 
-// const serviceNames = Object.keys(grants.any)
+// const resourceNames = Object.keys(grants.any)
 //
 // const lookupAllAllowances = (condition) => {
 // 	return allGrantNames.reduce((allAllowances, grantName) => {
-// 		allAllowances[grantName] = serviceNames.reduce((services, serviceName) => {
+// 		allAllowances[grantName] = resourceNames.reduce((services, resourceName) => {
 //
-// 			if(services[serviceName] === undefined) services[serviceName] = {}
+// 			if(services[resourceName] === undefined) services[resourceName] = {}
 //
-// 			if(grants[grantName][serviceName]) {
+// 			if(grants[grantName][resourceName]) {
 //
-// 				grants[grantName][serviceName].map((method, methodName) => {
+// 				grants[grantName][resourceName].map((method, methodName) => {
 // 					if(condition(methodName)) {
 // 						if(method) {
-// 							services[serviceName][methodName] = grants[grantName][serviceName][methodName]
+// 							services[resourceName][methodName] = grants[grantName][resourceName][methodName]
 // 						}
 // 					}
 // 				})

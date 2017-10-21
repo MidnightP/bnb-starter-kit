@@ -40,6 +40,8 @@ module.exports = (req, res, next) => {
 const session = (req, res, cb) => {
 	debug('session')
 
+	log.info(`${req.method}:${req.path}`)
+
 	const token = req.cookies[cookieOptions.name]
 
 	if(token) {
@@ -102,7 +104,7 @@ const permissions = (req, res, cb) => {
 	}
 
 	const receivedFields = Object.keys(body)
-	const allowedFields = allAllowances[req.grantName][req.serviceName][req.method].filter((field) => field[0] !== "-")
+	const allowedFields = allAllowances[req.grantName][req.resourceName][req.method].filter((field) => field[0] !== "-")
 
 	const notAllowedFields = R.difference(receivedFields, allowedFields)
 

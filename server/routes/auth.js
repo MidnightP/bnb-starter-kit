@@ -3,7 +3,7 @@ const express = require('express')
 const { authentication}  = require('../controllers')
 const { setUserService, rejectNotAuthenticated, checkPermissions } = require('../middleware')
 
-const defaultMiddleware = [ setUserService, checkPermissions ]
+const defaultMiddleware = [ setResourceName('users'), checkPermissions ]
 
 const auth = express.Router()
 

@@ -16,6 +16,6 @@ COPY build        /app/build
 RUN npm install -g --silent concurrently
 RUN npm install --silent --only=production
 
-EXPOSE 5000 4000
+EXPOSE 80 4000
 
 CMD ["npm", "run", "start:prod"]

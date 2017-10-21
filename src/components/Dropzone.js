@@ -77,7 +77,7 @@ class Dropzone extends Component {
 
 						<div key={ file.name + "-" + i }>
 							<span>{ file.name }</span>
-							<img className="dropzone-preview" alt={file.name} src={file.preview} />
+							<img className="dropzone-preview" alt={`${file.name} img unavailable`} src={file.preview} />
 						</div>
 
 					) : null

@@ -9,10 +9,15 @@ const { grants } = config
 // ----------------------------------------
 
 exports.readMany = (req, res, next) => {
+	console.log('REQ.originalUrl', req.originalUrl)
+	console.log('REQ.url', req.url)
+	console.log('REQ.path', req.path)
+	console.log('REQ.params', req.params)
 
 	const { query = {} } = req
 
 	let { where = {} } = query
+	console.log('QUERY', query)
 
 	where.deleted = false
 	console.log('WHERE', where)

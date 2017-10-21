@@ -21,7 +21,7 @@ export const getCategories = () => {
 	return (dispatch, getState) => {
 		dispatch(setLoading('categories'))
 
-		apiRequestWrapper.get('/categories', (error, body) => {
+		apiRequestWrapper.get('categories', (error, body) => {
 			dispatch(removeLoading('categories'))
 
 			if(error) return console.error('Error in retrieving categories:', error)
@@ -35,7 +35,7 @@ export const getLocations = () => {
 	return async (dispatch, getState) => {
 		dispatch(setLoading('locations'))
 
-		apiRequestWrapper.get('/locations', (error, body) => {
+		apiRequestWrapper.get('locations', (error, body) => {
 			dispatch(removeLoading('locations'))
 
 			if(error) return console.error('Error in retrieving locations:', error)

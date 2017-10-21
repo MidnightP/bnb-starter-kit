@@ -27,7 +27,7 @@ export const authenticate = () => {
 		if(getState().authentication.currentUser) {
 			dispatch(setLoading('authenticate'))
 
-			authRequestWrapper.get('/authenticate', (error, body, response) => {
+			authRequestWrapper.get('authenticate', (error, body, response) => {
 				dispatch(removeLoading('authenticate'))
 
 				if(error) {
@@ -58,7 +58,7 @@ export const signUp = () => {
 		delete values.passwordConfirmation
 
 		const httpOptions = {
-			url: '/signup',
+			url: 'signup',
 			data: values
 		}
 
@@ -86,7 +86,7 @@ export const signIn = () => {
 		let { values } = getState().form.user
 
 		const httpOptions = {
-			url: '/signin',
+			url: 'signin',
 			data: values
 		}
 
@@ -112,7 +112,7 @@ export const signOut = () => {
 	return (dispatch, getState) => {
 		dispatch(setLoading('signOut'))
 
-		authRequestWrapper.get('/signout', (error, body, response) => {
+		authRequestWrapper.get('signout', (error, body, response) => {
 			dispatch(removeLoading('signOut'))
 
 			history.push('/')

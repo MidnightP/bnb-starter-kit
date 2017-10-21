@@ -5,32 +5,12 @@ slack channels
 react starter kits
 http://yeoman.io/generators/
 
-### Front End
-
-show reviews
-
-patchListing and createListing stores are redundant since we're using Redux form??
-
-alt tags of images should be something meaningful and something that is not the name of the image, or location or category etc.
-
-signout thunk should not redirect to home if the page that was requested is available for any user (e.g. /listings/:id)
 
 ### Back End
-
-check if we really need to set serviceName to `user` like that for authentication routes? Do we really need it? This is inconvenient and confusing.
-Instead of logging the service we want to just log the route so that we can figure out exactly we're it comes from.
-
-Does react-maps support google maps v3 key ?
-
-find a way to run production on port 5000 locally but on 80 on server
-
-store token reference on user instead of UserToken?
 
 Set fixed seed images!
 
 Optimize signUp flow
-
-Change reviews route to `listings/:_id/reviews`
 
 Send email if user receives review
 Use mail helper in contacts.js and reviews.js
@@ -38,10 +18,34 @@ Use mail helper in contacts.js and reviews.js
 How to receive all emails in gmail.....?
 We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
 
-Find a good way to send content of `src/config` and `src/text` up from the server so we can use modules like config to fill in some fields there.
-First thing is a request to `/config` and put the result in general state.
-
 ### Front End
+
+Make scroll movement have horizontal effect ?
+
+Does react-maps support google maps v3 key ?
+
+PatchListing and createListing stores are redundant since we're using Redux form??
+
+Alt tags of images should be something meaningful and something that is not the name of the image, or location or category etc.
+
+Signout thunk should not redirect to home if the page that was requested is available for any user (e.g. /listings/:id)
+
+Make sure every request with axios:
+- do we need a request wrapper ? What for? Isn't axios our request wrapper? Does Axios have a retry option?
+- We can use it partly to return two instances of axios (for api and for auth)
+- Axios can do a retry: can we make it set a timeout? See: https://github.com/axios/axios/issues/934
+```javascript
+axios.interceptors.response.use(null, (error) => {
+  if (error.config && error.response && error.response.status === 401) {
+    return updateToken().then((token) => {
+      error.config.headers.xxxx <= set the token
+      return axios.request(config);
+    });
+  }
+
+  return Promise.reject(error);
+});
+```
 
 The remove (x) button next to dropped files sends an http request when clicked?
 
@@ -50,14 +54,15 @@ Use everywhere redux-form Synchronous Validation to disable buttons (example mad
 Place 'modules' (/routes/*/reducer.js) inside the store folder in dedicated 'modules' folder with name of particular route
 instead of 'hiding' them inside the respective routes. Else you'll have to search and that is never good.
 
-Make scroll movement have horizontal effect ?
-
 Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
 
 Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
 --> check again in back-end...!
 
+
 ### Questions ***
+
+store token reference on user instead of UserToken?
 
 Exposing API : How to authenticate the application client? not only the users github issue #405
 Use apiTokens? or is whitelisting using CORS sufficient?
@@ -119,6 +124,7 @@ In index.html, if possible use variables for things likewebsitetitle
 Use `getComponent` function on all pages' index.js . needed for code splitting (see create-react-app docs for code splitting?)
 
 use throttle as an option in request util and set a default. So we can specify throttling in individual reducers.
+Axios has cancel option?
 
 @@@ Convert all inline style to css or sass or scss or less
 

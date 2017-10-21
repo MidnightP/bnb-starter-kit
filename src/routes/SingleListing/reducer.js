@@ -50,7 +50,7 @@ export const getReviews = (_id) => {
 
 		const request = {
 			url: 'reviews',
-			queryString: {
+			params: {
 				where: {
 					listingId: _id
 				}
@@ -75,7 +75,7 @@ export const createReview = () => {
 		const { values } = getState().form.review
 
 		const httpOptions = {
-			url: `/reviews`,
+			url: `reviews`,
 			data: values
 		}
 
@@ -96,7 +96,7 @@ export const sendMessage = () => {
 		const { values } = getState().form.contact
 
 		const httpOptions = {
-			url: `/contacts`,
+			url: `contacts`,
 			data: values
 		}
 

@@ -59,7 +59,7 @@ class NavBar extends PureComponent {
 					{
 						currentUser ?
 							<Col xsOffset={ listingId ? 0 : 4 } xs={2}>
-								<img alt={`avatar for ${firstName}`} className="avatar-small" src={avatar} />
+								<img alt={`${firstName} img unavailable`} className="avatar-small" src={avatar} />
 							</Col>
 						: null
 					}

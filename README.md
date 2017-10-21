@@ -66,7 +66,7 @@ To have corrert paths in the final build, create-react-app needs an environment 
 
 Install the serve module. The bundle i served with `serve -s build`. You can start the server concurrently with `npm run start:prod`. Notice that if you run the previous command locally, the server will try to restart on killing the process. Change it to 0 in package.json for local testing. Type `serve --help` for options, such as caching
 
-If you are using a docker registry make sure you are logged in and that you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
+If you are using a docker registry make sure you are logged in and that you have the user id set in your environment under the key `DOCKER_ID_USER`. Then use docker login to make sure you're logged in. Build the container by running the `docker build -t ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1 .` command. The `-t` flag makes sure it has the right tag for your registry, `${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` being the name of the image with it's version. Be sure to up the version each time you build. Or remove the image on the server before pulling it. Note the dot at the end of the command. This makes sure that the Dockerfile in the root of the project is used.
 
 Then push the newly build image `docker push ${DOCKER_ID_USER}/bnb-starter-kit:0.0.1` to the registry.
 

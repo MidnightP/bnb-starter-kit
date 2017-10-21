@@ -38,7 +38,7 @@ class ReviewCard extends PureComponent {
 
 		return (
 			<Col onClick={ () => link ? history.push(link) : null } style={styles.card} xs={12}>
-				<img alt={firstName} style={styles.avatar} src={avatar}/>
+				<img alt={`${firstName} img unavailable`} style={styles.avatar} src={avatar}/>
 				<h1 style={styles.text}>{firstName}</h1>
 
 				<p style={styles.text}> USER JOINED AT: </p>

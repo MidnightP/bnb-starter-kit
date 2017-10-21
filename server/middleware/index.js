@@ -3,7 +3,6 @@ module.exports = {
 	rejectNotAuthenticated: require('./rejectNotAuthenticated'),
 	handleEnd: require('./handleEnd'),
 	checkMongoId: require('./checkMongoId'),
-	setServiceName: require('./setServiceName'),
-	setUserService: require('./setUserService'),
+	setResourceName: require('./setResourceName'),
 	errorHandler: require('./errorHandler'),
 }

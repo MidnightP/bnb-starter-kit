@@ -25,7 +25,7 @@ export const patchListing = () => {
 		const { values, _id } = getState().form.listing
 
 		const httpOptions = {
-			url: `/listings/${_id}`,
+			url: `listings/${_id}`,
 			data: values
 		}
 

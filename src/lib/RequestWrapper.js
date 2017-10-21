@@ -58,6 +58,10 @@ class RequestWrapper {
 
 				console.log('STATUS', status)
 				return !this.retryStatusCodes.includes(status)
+			},
+			paramsSerializer: (param) => {
+				console.log(param);
+				return qs.stringify(param)
 			}
 		})
 
@@ -125,10 +129,6 @@ class RequestWrapper {
 	}
 
 	issueRequest(httpOptions, cb) {
-
-		httpOptions.qs = qs.stringify(httpOptions.qs)
-		console.log('HTTPOPTIONS', httpOptions)
-
 		this.axios(httpOptions)
 			.then(response => {
 				if(this.retryStatusCodes.includes(response.status)) {

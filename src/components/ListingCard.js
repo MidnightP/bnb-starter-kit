@@ -1,43 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Row, Col } from 'react-flexbox-grid'
+import { Row, Col, Grid } from 'react-flexbox-grid'
 import _ from 'underscore'
 
 import { history } from '../store/location'
 import { Map, ReviewForm, ContactForm } from './'
 import { setHighlightedListing } from '../routes/Listings/reducer'
-
-const styles = {
-	categoryImage: {
-		width: '80px',
-		height: '80px',
-		borderRadius: '50%'
-	},
-	locationImage: {
-		width: '240px'
-	},
-	text: {
-		margin: '4px',
-		padding: '4px'
-	},
-	number: {
-		border: '1px solid',
-		borderRadius: '50%',
-		margin: '4px',
-		padding: '4px',
-		width: '27px',
-		height: '27px'
-	},
-	listing: {
-		border: '1px solid',
-		marginBottom: '12px',
-		padding: '25px',
-		width: '100%'
-	},
-	listingHighlight: {
-		background: 'grey'
-	}
-}
 
 class ListingCard extends Component {
 
@@ -65,16 +33,16 @@ class ListingCard extends Component {
 		console.log("ARE WE highlighted ?", highlight);
 
 		return (
-			<div style={highlight ? Object.assign({}, styles.listingHighlight, styles.listing) : styles.listing}
+			<Grid className={highlight ? "listing listing-highlighted" : "listing"}
 				onMouseEnter={this.onMouseEnter.bind(this)}
 				onMouseLeave={this.onMouseLeave.bind(this)}
-				onClick={ () => link ? history.push(link) : null }>
+				onClick={ () => link ? history.push(link) : null } >
 
 				<Row>
 					<Col xs={6}>
-						<img alt={firstName} className={ expanded ? "avatar-large" : "avatar-small" } src={avatar.url ? avatar.url : avatar.dataUrl}/>
-						<h1 style={styles.text}>{firstName}</h1>
-						<p style={styles.text}> PRICE: {price}</p>
+						<img alt={`${firstName} img unavailable`} className={ expanded ? "avatar-large" : "avatar-small" } src={avatar.url ? avatar.url : avatar.dataUrl}/>
+						<h1 className="text">{`${firstName} img unavailable`}</h1>
+						<p className="text"> PRICE: {price}</p>
 					</Col>
 					{
 						expanded ?
@@ -87,7 +55,7 @@ class ListingCard extends Component {
 
 				<Row>
 					<Col xs={12}>
-						<p style={styles.text}>
+						<p className="text">
 							{ expanded ? description : description.substring(0, 250).trim() + '...' }
 						</p>
 					</Col>
@@ -95,19 +63,19 @@ class ListingCard extends Component {
 
 				<Row>
 					<Col xs={9}>
-						<p style={styles.text}> AMOUNT OF REVIEWS:
-							<span style={styles.number}>{reviewCount}</span>
+						<p className="text"> AMOUNT OF REVIEWS:
+							<span className="number">{reviewCount}</span>
 						</p>
 
-						<p style={styles.text}> AVERAGE RATING:
-							<span style={styles.number}>{ratingAverage}</span>
+						<p className="text"> AVERAGE RATING:
+							<span className="number">{ratingAverage}</span>
 						</p>
 
 						{
 							expanded ?
 								<div>
-									<p style={styles.text}> LISTED SINCE: {createdAt}</p>
-									<p style={styles.text}> USER JOINED AT: {user.createdAt}</p>
+									<p className="text"> LISTED SINCE: {createdAt}</p>
+									<p className="text"> USER JOINED AT: {user.createdAt}</p>
 								</div>
 							: null
 						}
@@ -115,8 +83,8 @@ class ListingCard extends Component {
 						{
 							activeLocation ?
 								<div>
-									<p style={styles.text}>LOCATION: {activeLocation.name}</p>
-									<img alt={activeLocation.name} style={styles.locationImage} src={activeLocation.image} />
+									<p className="text">LOCATION: {activeLocation.name}</p>
+									<img alt={`${activeLocation.name} img unavailable`} className="image image-location" src={activeLocation.image} />
 								</div>
 							: null
 						}
@@ -142,20 +110,20 @@ class ListingCard extends Component {
 
 					</Col>
 					<Col xs={3}>
-						<p style={styles.text}> CATEGORIES: </p>
+						<p className="text"> CATEGORIES: </p>
 						{
 							activeCategories.map((c, i) => {
 								return (
-									<div  key={c._id + '-' + i}>
-										<p style={styles.text} key={c.name}>{c.name}</p>
-										<img alt={c.name} style={styles.categoryImage} src={c.image} />
+									<div key={c._id + '-' + i}>
+										<p className="text" key={c.name}>{c.name}</p>
+										<img alt={`${c.name} img unavailable`} className="image image-category" src={c.image} />
 									</div>
 								)
 							})
 						}
 					</Col>
 				</Row>
-			</div>
+			</Grid>
 		)
 	}
 }

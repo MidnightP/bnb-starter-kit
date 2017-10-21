@@ -8,15 +8,15 @@ const nodemailer    = require('nodemailer')
 const express       = require('express')
 const http          = require('http')
 const path          = require('path')
+const pckg          = require('../package.json')
 const mongoose      = require('mongoose')
-const { Geocoder }  = require('./lib')
 const debug         = require('debug')('app:main')
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet        = require('helmet')
 
-const log                = require('./lib/log')()
-const config             = require('./config')
-const { jobs, CronTask } = require('./lib')
+const log                          = require('./lib/log')()
+const config                       = require('./config')
+const { jobs, CronTask, Geocoder } = require('./lib')
 const {
 	handleEnd,
 	errorHandler
@@ -50,7 +50,8 @@ process.on('unhandledRejection', (error, promise) => {
 
 mongoose.Promise = global.Promise
 
-log.info(`Registering Mongoose models`)
+log.info(`Running version: ${pckg.version}`)
+
 require('./models')
 
 app.set('mongoUri', mongoUri)
@@ -88,7 +89,6 @@ app
 const server = http.createServer(app)
 
 async.series([
-
 	(cb) => {
 		log.info('Connecting Mongoose to: ', mongoUri)
 		mongoose.connect(mongoUri, cb)

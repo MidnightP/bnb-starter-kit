@@ -24,7 +24,7 @@ export const createListing = () => {
 		let { values } = getState().form.listing
 
 		const httpOptions = {
-			url: '/listings',
+			url: 'listings',
 			data: values
 		}
 
