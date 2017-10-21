@@ -115,7 +115,6 @@ export const signOut = () => {
 		authRequestWrapper.get('signout', (error, body, response) => {
 			dispatch(removeLoading('signOut'))
 
-			history.push('/')
 			dispatch(signOutAction())
 
 			if(error) {

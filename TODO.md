@@ -24,11 +24,7 @@ Make scroll movement have horizontal effect ?
 
 Does react-maps support google maps v3 key ?
 
-PatchListing and createListing stores are redundant since we're using Redux form??
-
-Alt tags of images should be something meaningful and something that is not the name of the image, or location or category etc.
-
-Signout thunk should not redirect to home if the page that was requested is available for any user (e.g. /listings/:id)
+PatchListing and createListing stores are redundant since we're using Redux form? Keep them for now, since we need the related thunks to perform form request and receive the response.
 
 Make sure every request with axios:
 - do we need a request wrapper ? What for? Isn't axios our request wrapper? Does Axios have a retry option?
@@ -118,6 +114,8 @@ server
 ```
 
 ### Front end ***
+
+Think about protecting routes when not signed in. In any case, signout action should not redirect by default!
 
 In index.html, if possible use variables for things likewebsitetitle
 
