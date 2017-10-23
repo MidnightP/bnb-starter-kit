@@ -42,8 +42,6 @@ export const authenticate = () => {
 				dispatch(signOut())
 				dispatch(setError(body))
 			})
-		} else {
-			dispatch(signOut())
 		}
 	}
 }

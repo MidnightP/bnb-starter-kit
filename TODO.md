@@ -1,4 +1,4 @@
-### Get out there!
+ct### Get out there!
 
 medium
 slack channels
@@ -19,6 +19,8 @@ How to receive all emails in gmail.....?
 We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
 
 ### Front End
+
+standardise front end errors in redux form and show them. Start with file size of dropZone
 
 Make scroll movement have horizontal effect ?
 
@@ -41,11 +43,11 @@ axios.interceptors.response.use(null, (error) => {
 });
 ```
 
-The remove (x) button next to dropped files sends an http request when clicked?
+The remove (x) button next to dropped files triggers onChange if redux form....!?
 
 Use everywhere redux-form Synchronous Validation to disable buttons (example made in ContactForm & ReviewForm)
 
-Pull input fields to the right and put all in one column! `right: 0px` on `form-field` and `align-items: space-between` on form tag and `display: inline-block` on form tag all not doing anything.
+Pull input fields to the right
 
 Prevent too large image sizes to be uploaded. Check size on file.... if too large --> dispatch error
 --> check again in back-end...!
@@ -53,6 +55,7 @@ Prevent too large image sizes to be uploaded. Check size on file.... if too larg
 
 ### Questions ***
 
+Always use `fluid` to prevent horizontal scrolling -.don't use react grid, find an alternative
 
 PatchListing and createListing stores are redundant since we're using Redux form? Keep them for now, since we need the related thunks to perform form request and receive the response.
 

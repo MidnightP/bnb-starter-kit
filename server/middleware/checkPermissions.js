@@ -1,7 +1,8 @@
+const _       = require('underscore')
+const async   = require('async')
 const debug   = require('debug')('app:middleware:permissions')
 const express = require('express')
 const config  = require('../config')
-const async   = require('async')
 
 const { cookieOptions, corsOptions,
 	apiVersion, authVersion }      = config
@@ -61,7 +62,7 @@ const session = (req, res, cb) => {
 					err.name = `NotFound:User`
 					res.status(404)
 					return cb(err)
-				}
+				}sends an http request when clicked?
 
 				req.user = user
 
@@ -106,7 +107,7 @@ const permissions = (req, res, cb) => {
 	const receivedFields = Object.keys(body)
 	const allowedFields = allAllowances[req.grantName][req.resourceName][req.method].filter((field) => field[0] !== "-")
 
-	const notAllowedFields = R.difference(receivedFields, allowedFields)
+	const notAllowedFields = _.difference(receivedFields, allowedFields)
 
 	if(notAllowedFields.length === 0) {
 

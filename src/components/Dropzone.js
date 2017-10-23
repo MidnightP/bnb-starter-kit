@@ -17,7 +17,7 @@ class Dropzone extends Component {
 	onDrop(accepted, rejected) {
 		if(rejected.length > 0) return console.error('Dropzone rejected:', rejected)
 
-		const { multiple, input, readAs } = this.props
+		const { multiple, input, readAs, maxSize } = this.props
 		const { files, readFiles } = this.state
 		const { onChange } = input
 
@@ -27,7 +27,8 @@ class Dropzone extends Component {
 
 		const readOptions = {
 			readAs,
-			onProgress
+			onProgress,
+			maxSize
 		}
 
 		const newFile = accepted[readFiles.length]
@@ -42,6 +43,8 @@ class Dropzone extends Component {
 				readFiles: updatedReadFiles
 			})
 
+			console.log("ONCHANGE ONCHANGE");
+
 			if(multiple) return onChange(updatedReadFiles)
 			onChange(updatedReadFiles[0])
 		})
@@ -52,12 +55,12 @@ class Dropzone extends Component {
 			files: [],
 			readFiles: []
 		})
-		this.props.input.onChange()
+		// this.props.input.onChange()
 	}
 
 	render() {
 		const { files } = this.state
-		const { input, multiple } = this.props
+		const { input, multiple, maxSize } = this.props
 		const { value } = input
 
 		const dropZone =
@@ -65,7 +68,7 @@ class Dropzone extends Component {
 				multiple={ multiple }
 				onDrop={ this.onDrop.bind(this) }>
 				<div>
-					Click here or drop a file...
+					Click here or drop a file (maxSize: {`${maxSize}`}MB)...
 				</div>
 			</ReactDropzone>
 

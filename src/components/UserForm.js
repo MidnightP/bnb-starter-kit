@@ -71,7 +71,7 @@ class UserForm extends Component {
 		// TODO pull form field right (using css, but how...?) so that they are all aligned....
 
 		return (
-			<Grid>
+			<Grid fluid>
 				<Row>
 					<Col xs={12} sm={6}>
 						<form onSubmit={this.props.handleSubmit}>
@@ -166,6 +166,7 @@ class UserForm extends Component {
 														name="avatar.dataUrl"
 														type="file"
 														readAs="readAsDataURL"
+														maxSize={2}
 														multiple={ false }
 														component={ Dropzone }/>
 												</div>

@@ -1,7 +1,7 @@
 const log = require('../lib/log')('middleware:set-service')
 
 module.exports = (forResource) => {
-	(req, res, next) => {
+	return (req, res, next) => {
 		if(forResource){
 			req.resourceName = forResource
 		} else {

@@ -49,22 +49,21 @@ class Listings extends Component {
 
 	setListingCards(listing, i) {
 		const highlight = this.props.highlighted.includes(listing._id)
+
 		return (
-			<div className="listing-container-small">
-				<ListingCard { ...listing }
-					key={listing.user.firstName + '-' + i}
-					link={`listings/${listing._id}`}
-					highlight={highlight}
-					categoriesList={this.props.categoriesList}
-					locationsList={this.props.locationsList} />
-			</div>
+			<ListingCard { ...listing }
+				key={listing.user.firstName + '-' + i}
+				link={`listings/${listing._id}`}
+				highlight={highlight}
+				categoriesList={this.props.categoriesList}
+				locationsList={this.props.locationsList} />
 		)
 	}
 
 	render() {
 		const { loading, count, listings } = this.props
 		return (
-			<Grid fluid>
+			<Grid>
 				<Row>
 					<Col className="map" xs={0} sm={12}>
 						<Map listings={listings}/>
@@ -84,15 +83,13 @@ class Listings extends Component {
 				</div>
 				{/* TODO center prop not doing anything !? */}
 				<Row center="xs" className="listings-meta">
-					<Col xs={6}>
-						<div>
-							Found  { count ? count : 0 } listings!
-							{
-								loading.length ?
-									<span className="loader"/>
-								: null
-							}
-						</div>
+					<Col className="text" xs={10}>
+						{ "Found " +  ( count ? count : 0 ) + " listings!" }
+						{
+							loading.length ?
+							<span className="loader"/>
+							: null
+						}
 					</Col>
 				</Row>
 			</Grid>

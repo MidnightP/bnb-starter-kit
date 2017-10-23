@@ -2,6 +2,9 @@
 // NOTE readAs can be 'readAsArrayBuffer', 'readAsBinaryString', 'readAsDataURL' or 'readAsText'
 
 const fileReader = (file, readOptions, done) => {
+	console.log('FILE', file.size)
+
+	if(file.size > readOptions.maxSize * 1000 * 1000) return done(new Error(`Filesize (${file.size} exceeds maximum)!`))
 
 	const { readAs, onProgress } = readOptions
 
@@ -18,7 +21,6 @@ const fileReader = (file, readOptions, done) => {
 
 	reader.onloadend = event => {
 		console.info('use this to measure total bytes received', event.total)
-		console.log('EVENT', event)
 		done(null, event.target.result)
 	}
 

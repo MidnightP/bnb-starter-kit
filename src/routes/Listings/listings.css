@@ -1,6 +1,6 @@
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
   display: none;
-}
+}*/
 
 .map {
   width: 100%;
@@ -20,16 +20,17 @@
 }
 
 .listings-list {
+  display: inline-flex;
+  display: -webkit-inline-box; /* is this sufficient? */
+  width: 3600px;
   overflow-x: scroll;
   position: fixed;
   height: 50%;
   top: 50%;
 }
 
-/* TODO this text should be in the center*/
 .listings-meta {
   top: 43%;
   height: 7%;
   position: fixed;
-  text-align: center;
 }

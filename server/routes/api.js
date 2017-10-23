@@ -4,7 +4,9 @@ const cors = require('cors')
 const { setResourceName, checkPermissions, rejectNotAuthenticated, checkMongoId } = require('../middleware')
 const { categories, contacts, listings, locations, reviews } = require('../controllers')
 
-const defaultMiddleware = [ setResourceName(), checkPermissions ]
+const setResourceNameMiddleware = setResourceName()
+
+const defaultMiddleware = [ setResourceNameMiddleware, checkPermissions ]
 
 const api = express.Router()
 
