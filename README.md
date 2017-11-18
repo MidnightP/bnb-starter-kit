@@ -14,7 +14,7 @@ Place the necessary environment variables in the environment. Variables to be in
 
 ```
 # google API key for clients
-export REACT_APP_GOOGLE_API_BROWSER="AIzaSyBxE7hVIvXCDWZNUJRR97bkx7WBdbrApAk"
+export REACT_APP_GOOGLE_API_BROWSER="xxxxx"
 
 # google API key for servers
 export GOOGLE_API_WEBSERVER="xxx-secret-xxx"
@@ -48,9 +48,9 @@ If all configuration is in place you should now can now visiti the webapp in the
 
 ##### Seeds
 
-In order to start with a freshly seeded MongoDB, run with the `SEED` flag:
+In order to start with a freshly seeded MongoDB, run:
 
-`npm run start:seed`
+`npm run seed`
 
 It is now possible to login with **test@test.com** and password **123456**.
 

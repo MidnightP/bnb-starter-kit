@@ -1,4 +1,4 @@
-ct### Get out there!
+### Get out there!
 
 medium
 slack channels
@@ -17,6 +17,8 @@ Use mail helper in contacts.js and reviews.js
 
 How to receive all emails in gmail.....?
 We can send from Gmail as @bijlesismore.nl but somehow don't receive.... in Gmail
+
+no such file or directory, open 'logs/filelog-info.log'
 
 ### Front End
 

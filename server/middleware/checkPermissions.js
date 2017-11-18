@@ -62,7 +62,7 @@ const session = (req, res, cb) => {
 					err.name = `NotFound:User`
 					res.status(404)
 					return cb(err)
-				}sends an http request when clicked?
+				}
 
 				req.user = user
 
